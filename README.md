@@ -1,4 +1,5 @@
-# YourBuddyStrona będzie zawierać:
+#YourBuddy
+będzie zawierać:
 <ul>
 <li>Stronę logowania/rejestracji</li>
 <li>Panel użytkownika</li>
