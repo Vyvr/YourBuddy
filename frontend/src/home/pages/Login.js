@@ -33,7 +33,9 @@ const Login = () => {
           />
         </div>
         <div className="button-div">
-          <button className="login-button">Login</button>
+          <button className="login-button" type="submit">
+            Login
+          </button>
         </div>
       </div>
     </div>
