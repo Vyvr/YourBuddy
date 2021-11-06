@@ -10,6 +10,7 @@ import {
 
 import Home from "./home/pages/Home";
 import Login from "./home/pages/Login";
+import Register from "./home/pages/Register";
 
 const App = () => {
   return (
@@ -21,6 +22,9 @@ const App = () => {
           </Route>
           <Route path="/login" exact>
             <Login />
+          </Route>
+          <Route path="/register" exact>
+            <Register />
           </Route>
         </Switch>
       </main>

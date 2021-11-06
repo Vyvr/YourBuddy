@@ -16,6 +16,9 @@ const Home = () => {
             <NavLink to="/login">LOGIN</NavLink>
           </li>
           <li>
+            <NavLink to="/register">REGISTER</NavLink>
+          </li>
+          <li>
             <NavLink to="/">ABOUT</NavLink>
           </li>
         </ul>
