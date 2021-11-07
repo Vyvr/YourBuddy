@@ -10,6 +10,7 @@ const userSchema = new Schema({
   surname: { type: String, required: true },
   mail: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
+  pets: [{ type: mongoose.Types.ObjectId, required: true, ref: "Pet" }],
 });
 
 userSchema.plugin(uniqueValidator);

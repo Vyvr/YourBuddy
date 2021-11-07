@@ -1,59 +1,13 @@
 /** @format */
+//const uuid = require("uuid/v4");
+const { validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 
 const HttpError = require("../models/http-error");
+const Pet = require("../models/pet");
+const User = require("../models/user");
 
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "lisa",
-    surname: "johnes",
-    mail: "lisajohnes@gmail.com",
-    pets: {
-      dogs: [
-        {
-          id: "d1",
-          name: "bobby",
-          age: "2",
-          owner: "u1",
-        },
-      ],
-      cats: [
-        {
-          id: "c1",
-          name: "kitty",
-          age: "4",
-          owner: "u1",
-        },
-      ],
-    },
-  },
-];
-
-const DUMMY_PETS = [
-  {
-    id: "d1",
-    name: "bobby",
-    age: "2",
-    type: "dog",
-    owner: "u1",
-  },
-  {
-    id: "c1",
-    name: "kitty",
-    age: "4",
-    type: "cat",
-    owner: "u1",
-  },
-  {
-    id: "d2",
-    name: "doggy",
-    age: "3",
-    type: "dog",
-    owner: "u2",
-  },
-];
-
-const getPetById = (req, res, next) => {
+const getPetById = async (req, res, next) => {
   const petId = req.params.uid;
   const pet = DOMMY_PETS.find((p) => {
     return p.uid === petId;
@@ -64,29 +18,78 @@ const getPetById = (req, res, next) => {
   res.json({ pet });
 };
 
-const getPetByUserId = (req, res, next) => {
+const getPetByUserId = async (req, res, next) => {
   const userId = req.params.uid;
+  let userPets;
 
-  const pet = DUMMY_PETS.filter((p) => {
-    return p.owner === userId;
-  });
-  if (!pet) {
+  try {
+    userPets = await User.findById(userId).populate("pets");
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching pets failes, please try again later",
+      500
+    );
+    return next(error);
+  }
+
+  if (!userPets || userPets.pets.length === 0) {
     throw new HttpError("Could not find a pet for the provided user id.", 404);
   }
-  res.json({ pet });
+  res.json({
+    pets: userPets.pets.map((pet) => pet.toObject({ getters: true })),
+  });
 };
 
-const createPet = (req, res, next) => {
-  const { name, age, type, owner } = req.body;
+const createPet = async (req, res, next) => {
+  const errors = validationResult(req);
 
-  const createdPet = {
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed. Please check your data",
+      422
+    );
+    return next(error);
+  }
+  const { name, age, family, owner } = req.body;
+
+  const createdPet = new Pet({
     name,
     age,
-    type,
+    family,
     owner,
-  };
+  });
 
-  DUMMY_PETS.push(createdPet);
+  let user;
+
+  try {
+    user = await User.findById(owner);
+  } catch (err) {
+    const error = new HttpError(
+      "Creating new pet failed. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError("No user find with provided id.", 404);
+    return next(error);
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdPet.save({ session: sess });
+    user.pets.push(createdPet);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError(
+      "Creating pet failed. Please try again later.",
+      500
+    );
+    return next(error);
+  }
 
   res.status(201).json({ pet: createdPet });
 };
@@ -98,7 +101,9 @@ const updatePet = (req, res, next) => {
   const updatePet = DUMMY_PETS.find((p) => p.id === petId);
 };
 
-const deletePet = (req, res, next) => {};
+const deletePet = (req, res, next) => {
+  const petId = req.params.pid;
+};
 
 exports.getPetById = getPetById;
 exports.getPetByUserId = getPetByUserId;
