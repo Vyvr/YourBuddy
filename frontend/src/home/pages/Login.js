@@ -22,7 +22,7 @@ const Login = () => {
           <input
             className="nick-input"
             type="text"
-            placeholder="enter your nickname"
+            placeholder="enter your e-mail"
           />
         </div>
         <div>
