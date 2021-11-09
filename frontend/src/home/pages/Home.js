@@ -21,6 +21,9 @@ const Home = () => {
           <li>
             <NavLink to="/">ABOUT</NavLink>
           </li>
+          <li>
+            <NavLink to="/user">USER PROFILES</NavLink>
+          </li>
         </ul>
       </HomeHeader>
     </div>
