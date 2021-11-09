@@ -11,20 +11,18 @@ const Home = () => {
   return (
     <div className="home-content">
       <HomeHeader>
-        <ul className="home-nav-links">
-          <li>
-            <NavLink to="/login">LOGIN</NavLink>
-          </li>
-          <li>
-            <NavLink to="/register">REGISTER</NavLink>
-          </li>
-          <li>
-            <NavLink to="/">ABOUT</NavLink>
-          </li>
-          <li>
-            <NavLink to="/user">USER PROFILES</NavLink>
-          </li>
-        </ul>
+        <li>
+          <NavLink to="/login">LOGIN</NavLink>
+        </li>
+        <li>
+          <NavLink to="/register">REGISTER</NavLink>
+        </li>
+        <li>
+          <NavLink to="/">ABOUT</NavLink>
+        </li>
+        <li>
+          <NavLink to="/user">USER PROFILES</NavLink>
+        </li>
       </HomeHeader>
     </div>
   );

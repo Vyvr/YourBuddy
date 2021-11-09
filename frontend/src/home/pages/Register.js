@@ -11,11 +11,9 @@ const Login = () => {
   return (
     <div className="login-content">
       <HomeHeader>
-        <ul className="login-nav-links">
-          <li>
-            <NavLink to="/">GO BACK</NavLink>
-          </li>
-        </ul>
+        <li>
+          <NavLink to="/">GO BACK</NavLink>
+        </li>
       </HomeHeader>
       <div className="login-form">
         <div>
