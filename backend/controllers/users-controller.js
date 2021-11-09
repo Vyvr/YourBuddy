@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
+const { v4: uuid } = require("uuid");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -47,6 +48,7 @@ const signup = async (req, res, next) => {
   }
 
   const createdUser = new User({
+    id: uuid(),
     name,
     surname,
     mail,

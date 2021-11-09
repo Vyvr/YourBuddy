@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
-app.use("/api/pets", petRoutes);
+app.use("/api/pet", petRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
