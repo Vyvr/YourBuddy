@@ -4,7 +4,7 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
+  /**Redirect,*/
   Switch,
 } from "react-router-dom";
 
@@ -14,23 +14,6 @@ import Register from "./home/pages/Register";
 import UserProfile from "./user/pages/userProfile";
 
 const App = () => {
-  const DUMMY_USERS = [
-    {
-      id: 1,
-      name: "Maciek",
-      surname: "Lucinski",
-    },
-    {
-      id: 2,
-      name: "Czesiek",
-      surname: "Testowy",
-    },
-    {
-      name: "Franklin",
-      surname: "Zapasowy",
-    },
-  ];
-
   return (
     <Router>
       <main>
@@ -45,7 +28,7 @@ const App = () => {
             <Register />
           </Route>
           <Route path="/user" exact>
-            <UserProfile items={DUMMY_USERS} />
+            <UserProfile />
           </Route>
         </Switch>
       </main>

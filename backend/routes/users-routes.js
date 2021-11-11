@@ -19,7 +19,14 @@ router.post(
   ],
   usersController.signup
 );
-router.post("/login", usersController.login);
+router.post(
+  "/login",
+  [
+    check("mail").not().isEmpty().bail().isEmail(),
+    check("password").isLength({ min: 6 }),
+  ],
+  usersController.login
+);
 router.patch("/:uid");
 router.delete("/:uid");
 
