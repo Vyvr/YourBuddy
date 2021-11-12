@@ -1,15 +1,27 @@
 /** @format */
 
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-import "./HomeHeader.css";
+import Header from "./Header";
 
-const Home = (props) => {
+const HomeHeader = () => {
   return (
-    <div className="home-header-content">
-      <ul className="home-nav-links">{props.children}</ul>
-    </div>
+    <Header>
+      <li>
+        <NavLink to="/login">LOGIN</NavLink>
+      </li>
+      <li>
+        <NavLink to="/register">REGISTER</NavLink>
+      </li>
+      <li>
+        <NavLink to="/">ABOUT</NavLink>
+      </li>
+      <li>
+        <NavLink to="/user/user-list">USERS LIST</NavLink>
+      </li>
+    </Header>
   );
 };
 
-export default Home;
+export default HomeHeader;

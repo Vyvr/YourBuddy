@@ -3,7 +3,7 @@
 .home-header-content {
   width: 100%;
   height: 60px;
-  display: flex;
+  display: block;
   align-items: center;
   position: fixed;
   top: 0;

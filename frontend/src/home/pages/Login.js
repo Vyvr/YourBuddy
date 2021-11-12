@@ -1,15 +1,20 @@
 /** @format */
 
 import React from "react";
-
-import HomeHeader from "../../shared/components/navigation/HomeHeader";
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
+import AuthContent from "../../shared/components/content/AuthContent";
+
+import SessionStorage from "../../scripts/sessionStorage";
 
 import "./Login.css";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const [mail, setMail] = SessionStorage();
+  const [loggedIn, setLoggedIn] = SessionStorage(false);
+
   const authSubmitHandler = async (data) => {
     try {
       const response = await fetch("http://localhost:5000/api/user/login", {
@@ -23,43 +28,54 @@ const Login = () => {
           password: data.password,
         }),
       });
+
       const responseData = await response.json();
       console.log(responseData);
+
+      if (response.status === 200) {
+        setLoggedIn(true);
+        setMail(responseData.mail);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  const history = useHistory();
+
   return (
-    <div className="login-content">
-      <HomeHeader>
-        <li>
-          <NavLink to="/">GO BACK</NavLink>
-        </li>
-      </HomeHeader>
+    <AuthContent>
+      {loggedIn ? history.push("/user/user-list") : undefined}
       <form className="login-form" onSubmit={handleSubmit(authSubmitHandler)}>
-        <div>
-          <input
-            className="mail-input"
-            type="text"
-            placeholder="enter your e-mail"
-            {...register("mail")}
-          />
-        </div>
-        <div>
-          <input
-            className="password-input"
-            type="password"
-            placeholder="enter your password"
-            {...register("password")}
-          />
-        </div>
-        <div className="button-div">
-          <button className="login-button" type="submit">
-            Login
-          </button>
+        <div className="login-form-content">
+          <div>
+            <input
+              className="mail-input"
+              type="text"
+              placeholder="enter your e-mail"
+              {...register("mail")}
+            />
+          </div>
+          <div>
+            <input
+              className="password-input"
+              type="password"
+              placeholder="enter your password"
+              {...register("password")}
+            />
+          </div>
+          <div className="button-div">
+            <button
+              className="login-button"
+              type="submit"
+              onClick={loggedIn ? history.push("/user/dashboard") : undefined}
+            >
+              Login
+            </button>
+          </div>
         </div>
       </form>
-    </div>
+    </AuthContent>
   );
 };
 

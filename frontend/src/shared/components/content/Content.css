@@ -1,0 +1,10 @@
+/** @format */
+
+.content {
+  width: 98vw;
+  height: 90vh;
+  background: #ccc;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 72px;
+}

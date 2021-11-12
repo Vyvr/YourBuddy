@@ -11,7 +11,8 @@ import {
 import Home from "./home/pages/Home";
 import Login from "./home/pages/Login";
 import Register from "./home/pages/Register";
-import UserProfile from "./user/pages/userProfile";
+import UsersList from "./user/pages/usersList";
+import Dashboard from "./user/pages/dashboard";
 
 const App = () => {
   return (
@@ -27,8 +28,11 @@ const App = () => {
           <Route path="/register" exact>
             <Register />
           </Route>
-          <Route path="/user" exact>
-            <UserProfile />
+          <Route path="/user/dashboard" exact>
+            <Dashboard />
+          </Route>
+          <Route path="/user/user-list" exact>
+            <UsersList />
           </Route>
         </Switch>
       </main>

@@ -1,14 +1,13 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 
-import Header from "../../shared/components/navigation/HomeHeader";
+import AuthContent from "../../shared/components/content/AuthContent";
 import UserCard from "../components/userCard";
 
-import "./userProfile.css";
+import "./usersList.css";
 
-const UserProfile = (props) => {
+const UsersList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [loadedUsers, setLoadedUsers] = useState();
@@ -34,15 +33,9 @@ const UserProfile = (props) => {
   const errorHandler = () => {
     setError(null);
   };
+
   return (
-    <div>
-      <Header>
-        <ul>
-          <li>
-            <NavLink to="/">BACK</NavLink>
-          </li>
-        </ul>
-      </Header>
+    <AuthContent>
       <div className="center">
         <ul>
           {!isLoading &&
@@ -58,8 +51,8 @@ const UserProfile = (props) => {
             })}
         </ul>
       </div>
-    </div>
+    </AuthContent>
   );
 };
 
-export default UserProfile;
+export default UsersList;
