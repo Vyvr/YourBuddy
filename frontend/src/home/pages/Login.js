@@ -14,6 +14,8 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const [mail, setMail] = SessionStorage();
   const [loggedIn, setLoggedIn] = SessionStorage(false);
+  const [name, setName] = SessionStorage();
+  const [surname, setSurname] = SessionStorage();
 
   const authSubmitHandler = async (data) => {
     try {
@@ -35,6 +37,8 @@ const Login = () => {
       if (response.status === 200) {
         setLoggedIn(true);
         setMail(responseData.mail);
+        setName(responseData.name);
+        setSurname(responseData.surname);
       }
     } catch (err) {
       console.log(err);
