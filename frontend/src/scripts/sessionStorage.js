@@ -1,6 +1,6 @@
 /** @format */
 
-import { Reace, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const useStateWithSessionStorage = (sessionStorageKey) => {
   const [value, setValue] = useState(

@@ -12,6 +12,12 @@ const UserHeader = () => {
   return (
     <Header>
       <li>
+        <NavLink to="/user/dashboard">YOUR PROFILE</NavLink>
+      </li>
+      <li>
+        <NavLink to="/user/create-pet">ADD NEW PET</NavLink>
+      </li>
+      <li>
         <NavLink to="/" onClick={logout}>
           LOGOUT
         </NavLink>

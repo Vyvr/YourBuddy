@@ -13,6 +13,7 @@ import Login from "./home/pages/Login";
 import Register from "./home/pages/Register";
 import UsersList from "./user/pages/usersList";
 import Dashboard from "./user/pages/dashboard";
+import CreatePet from "./user/pages/createPet";
 
 const App = () => {
   return (
@@ -30,6 +31,9 @@ const App = () => {
           </Route>
           <Route path="/user/dashboard" exact>
             <Dashboard />
+          </Route>
+          <Route path="/user/create-pet" exact>
+            <CreatePet />
           </Route>
           <Route path="/user/user-list" exact>
             <UsersList />

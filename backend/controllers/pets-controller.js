@@ -2,6 +2,7 @@
 //const uuid = require("uuid/v4");
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
+const { v4: uuid } = require("uuid");
 
 const HttpError = require("../models/http-error");
 const Pet = require("../models/pet");
@@ -50,12 +51,12 @@ const createPet = async (req, res, next) => {
     );
     return next(error);
   }
-  const { name, age, family, owner } = req.body;
+  const { name, age, weight, owner } = req.body;
 
   const createdPet = new Pet({
     name,
     age,
-    family,
+    weight,
     owner,
   });
 
@@ -85,7 +86,7 @@ const createPet = async (req, res, next) => {
     await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
-      "Creating pet failed. Please try again later.",
+      "Creating pet failed. Please try again later." + err,
       500
     );
     return next(error);

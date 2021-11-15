@@ -13,6 +13,4 @@ const userSchema = new Schema({
   pets: [{ type: mongoose.Types.ObjectId, required: true, ref: "Pet" }],
 });
 
-userSchema.plugin(uniqueValidator);
-
 module.exports = mongoose.model("User", userSchema);

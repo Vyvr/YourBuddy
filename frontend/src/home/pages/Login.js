@@ -1,21 +1,16 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 
-import SessionStorage from "../../scripts/sessionStorage";
-
 import "./Login.css";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [mail, setMail] = SessionStorage();
-  const [loggedIn, setLoggedIn] = SessionStorage(false);
-  const [name, setName] = SessionStorage();
-  const [surname, setSurname] = SessionStorage();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const authSubmitHandler = async (data) => {
     try {
@@ -36,9 +31,11 @@ const Login = () => {
 
       if (response.status === 200) {
         setLoggedIn(true);
-        setMail(responseData.mail);
-        setName(responseData.name);
-        setSurname(responseData.surname);
+        sessionStorage.setItem("loggedIn", true);
+        sessionStorage.setItem("userId", responseData.existingUser._id);
+        sessionStorage.setItem("mail", responseData.existingUser.mail);
+        sessionStorage.setItem("name", responseData.existingUser.name);
+        sessionStorage.setItem("surname", responseData.existingUser.surname);
       }
     } catch (err) {
       console.log(err);

@@ -1,27 +1,31 @@
 /** @format */
 
-.login-form {
-  /*width: 300px;*/
+.create-pet-form {
   position: absolute;
   width: 100%;
   height: 100%;
   text-align: center;
 }
 
-.login-form-content {
+.create-pet-form div div {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  margin: 5px;
+}
+
+.create-pet-form div {
   margin-top: 15%;
+  display: inline-block;
 }
 
-.login-form div,
-input {
-  padding: 5px 0px;
-}
-
-.login-form input {
+.create-pet-form input {
   height: 20px;
   width: 280px;
   padding-left: 20px;
-
+  margin-left: 10px;
   border: none;
   background-color: #c95226;
   color: #ffff;
@@ -29,23 +33,17 @@ input {
   transition-duration: 0.4s;
 }
 
-.login-form input::placeholder {
+.create-pet-form input::placeholder {
   color: rgba(255, 255, 255, 0.774);
 }
 
-.login-form input:focus {
+.create-pet-form input:focus {
   background-color: #e93e00cc;
   color: white;
   outline: 3px solid #c95226;
 }
 
-.button-div {
-  height: 20px;
-  width: 150px;
-  margin: auto;
-  align-items: center;
-}
-.login-button {
+.create-pet-button {
   width: 100%;
   padding: 10px;
 
@@ -57,7 +55,7 @@ input {
   transition-duration: 0.4s;
 }
 
-.login-button:hover {
+.create-pet-button:hover {
   background-color: #e93e009f;
   color: white;
   box-shadow: 0 0 0 2px #c95226;

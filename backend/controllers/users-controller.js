@@ -90,15 +90,14 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Logged in!", mail });
+  res.json({ message: "Logged in!", existingUser });
 };
 
 exports.getAllUsers = getAllUsers;
 exports.signup = signup;
 exports.login = login;
 
-//exports.getUserById = getUserById;
-
+// exports.getUserById = getUserById;
 // const getUserById = (req, res, next) => {
 //   const userId = req.body;
 //   console.log(userId);
