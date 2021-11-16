@@ -22,3 +22,8 @@
 .user-pets {
   background-color: blueviolet;
 }
+
+.pet-list {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -19,7 +19,7 @@ const getPetById = async (req, res, next) => {
   res.json({ pet });
 };
 
-const getPetByUserId = async (req, res, next) => {
+const getPetsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
   let userPets;
 
@@ -107,7 +107,7 @@ const deletePet = (req, res, next) => {
 };
 
 exports.getPetById = getPetById;
-exports.getPetByUserId = getPetByUserId;
+exports.getPetsByUserId = getPetsByUserId;
 exports.createPet = createPet;
 exports.updatePet = updatePet;
 exports.deletePet = deletePet;

@@ -14,9 +14,9 @@ const PetCard = (props) => {
         alt="pet_profile_pic"
         className="pet-profile-picture"
       />
-      <div className="pet-name">Burek</div>
-      <div className="pet-age">age: 3</div>
-      <div className="pet-weight">weight: 5kg</div>
+      <div className="pet-name">{props.name}</div>
+      <div className="pet-age">{props.age}</div>
+      <div className="pet-weight">{props.weight}</div>
     </div>
   );
 };

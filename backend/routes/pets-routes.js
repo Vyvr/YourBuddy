@@ -16,6 +16,6 @@ router.post(
   ],
   petsController.createPet
 );
-router.get("/:uid", petsController.getPetByUserId);
+router.get("/:uid", petsController.getPetsByUserId);
 
 module.exports = router;
