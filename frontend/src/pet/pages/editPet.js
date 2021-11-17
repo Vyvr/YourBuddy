@@ -13,14 +13,16 @@ const EditPet = (props) => {
   let location = useLocation();
 
   const editPetHandler = async (data) => {
+    console.log(location.state);
     try {
       const response = await fetch("http://localhost:5000/api/pet/edit", {
-        method: "PATCH",
+        method: "POST",
         headers: {
           "Content-type": "application/json",
         },
 
         body: JSON.stringify({
+          id: location.state.id,
           name: data.name,
           age: data.age,
           weight: data.weight,

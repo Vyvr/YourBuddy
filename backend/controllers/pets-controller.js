@@ -108,8 +108,9 @@ const editPet = async (req, res, next) => {
   }
 
   const { id, name, age, weight } = req.body;
-  const petId = req.body.id;
+  const petId = id;
 
+  console.log(id);
   let updatedPet;
 
   try {
@@ -119,7 +120,7 @@ const editPet = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(name);
+  console.log(updatedPet);
 
   updatedPet.name = name;
   updatedPet.age = age;
@@ -129,7 +130,7 @@ const editPet = async (req, res, next) => {
     await updatedPet.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong with saving place to database",
+      "Something went wrong with saving pet to database",
       500
     );
     return next(error);

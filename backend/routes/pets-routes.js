@@ -16,7 +16,7 @@ router.post(
   ],
   petsController.createPet
 );
-router.patch(
+router.post(
   "/edit",
   [
     check("name").not().isEmpty(),
