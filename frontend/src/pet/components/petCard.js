@@ -1,6 +1,7 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import petProfilePic from "../../resources/pet/pet_profile_pic.jpg";
 
@@ -15,8 +16,23 @@ const PetCard = (props) => {
         className="pet-profile-picture"
       />
       <div className="pet-name">{props.name}</div>
-      <div className="pet-age">{props.age}</div>
-      <div className="pet-weight">{props.weight}</div>
+      <div className="pet-age">{props.age}yo.</div>
+      <div className="pet-weight">{props.weight}kg</div>
+      <NavLink
+        className="edit-pet-button"
+        to={{
+          pathname: "/user/edit-pet",
+          state: {
+            id: props.id,
+            name: props.name,
+            age: props.age,
+            weight: props.weight,
+          },
+        }}
+        exact
+      >
+        EDIT
+      </NavLink>
     </div>
   );
 };

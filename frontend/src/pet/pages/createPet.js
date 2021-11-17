@@ -7,7 +7,7 @@ import UserContent from "../../shared/components/content/UserContent";
 
 import "./createPet.css";
 
-const Login = () => {
+const CreatePet = () => {
   const { register, handleSubmit } = useForm();
   const [userId, setUserId] = useState("");
 
@@ -71,4 +71,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default CreatePet;

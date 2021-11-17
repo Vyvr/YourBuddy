@@ -2,6 +2,8 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+
 const HttpError = require("./models/http-error");
 
 const userRoutes = require("./routes/users-routes");
@@ -13,6 +15,13 @@ const databaseURL =
 const app = express();
 
 app.use(express.json());
+
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+//   })
+// );
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

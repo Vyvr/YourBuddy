@@ -57,6 +57,7 @@ const Dashboard = () => {
               loadedPets.map((pet) => {
                 return (
                   <PetCard
+                    id={pet.id}
                     key={pet.id}
                     name={pet.name}
                     age={pet.age}

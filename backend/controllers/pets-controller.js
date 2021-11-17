@@ -95,11 +95,47 @@ const createPet = async (req, res, next) => {
   res.status(201).json({ pet: createdPet });
 };
 
-const updatePet = (req, res, next) => {
-  const { name, age } = req.body;
-  const petId = req.params.uid;
+const editPet = async (req, res, next) => {
+  const errors = validationResult(req);
 
-  const updatePet = DUMMY_PETS.find((p) => p.id === petId);
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed. Please check your data",
+      422
+    );
+
+    return next(error);
+  }
+
+  const { id, name, age, weight } = req.body;
+  const petId = req.body.id;
+
+  let updatedPet;
+
+  try {
+    updatedPet = await Pet.findById(petId);
+  } catch (err) {
+    const error = new HttpError("Can not find pet with provided id.", 500);
+    return next(error);
+  }
+
+  console.log(name);
+
+  updatedPet.name = name;
+  updatedPet.age = age;
+  updatedPet.weight = weight;
+
+  try {
+    await updatedPet.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong with saving place to database",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ pet: updatedPet.toObject({ getters: true }) });
 };
 
 const deletePet = (req, res, next) => {
@@ -109,5 +145,5 @@ const deletePet = (req, res, next) => {
 exports.getPetById = getPetById;
 exports.getPetsByUserId = getPetsByUserId;
 exports.createPet = createPet;
-exports.updatePet = updatePet;
+exports.editPet = editPet;
 exports.deletePet = deletePet;

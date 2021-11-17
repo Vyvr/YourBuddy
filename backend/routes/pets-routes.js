@@ -16,6 +16,15 @@ router.post(
   ],
   petsController.createPet
 );
+router.patch(
+  "/edit",
+  [
+    check("name").not().isEmpty(),
+    check("age").not().isEmpty().bail().isInt({ min: 0 }),
+    check("weight").not().isEmpty().bail().isInt({ min: 0 }),
+  ],
+  petsController.editPet
+);
 router.get("/:uid", petsController.getPetsByUserId);
 
 module.exports = router;
