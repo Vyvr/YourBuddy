@@ -25,8 +25,7 @@ const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      // new HttpError("Invalid inputs passed, please check your data", 422)
-      new HttpError(JSON.stringify(errors), 422)
+      new HttpError("Invalid inputs passed, please check your data", 422)
     );
   }
   const { name, surname, mail, password } = req.body;

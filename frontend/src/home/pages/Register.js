@@ -13,7 +13,7 @@ const Login = () => {
 
   const authSubmitHandler = async (data) => {
     try {
-      const response = await fetch("http://localhost:5000/api/user/signup", {
+      await fetch("http://localhost:5000/api/user/signup", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -26,8 +26,6 @@ const Login = () => {
           password: data.password,
         }),
       });
-      const responseData = await response.json();
-      console.log(responseData);
     } catch (err) {
       console.log(err);
     }

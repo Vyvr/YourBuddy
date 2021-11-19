@@ -13,11 +13,11 @@ const CreatePet = () => {
 
   useEffect(() => {
     setUserId(sessionStorage.getItem("userId").toString());
-  });
+  }, []);
 
   const addPetHandler = async (data) => {
     try {
-      const response = await fetch("http://localhost:5000/api/pet/create", {
+      await fetch("http://localhost:5000/api/pet/create", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -30,9 +30,6 @@ const CreatePet = () => {
           owner: userId,
         }),
       });
-
-      const responseData = await response.json();
-      console.log(responseData);
     } catch (err) {
       console.log(err);
     }

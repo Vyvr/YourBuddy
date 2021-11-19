@@ -9,10 +9,8 @@ import PetCard from "../../pet/components/petCard";
 import "./dashboard.css";
 
 const Dashboard = () => {
-  const [userId, setUserId] = useState();
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [loadedPets, setLoadedPets] = useState();
 
@@ -21,7 +19,6 @@ const Dashboard = () => {
     setSurname(sessionStorage.getItem("surname"));
 
     const sendRequest = async () => {
-      console.log("StartRequest");
       setIsLoading(true);
       try {
         const response = await fetch(
@@ -34,17 +31,12 @@ const Dashboard = () => {
 
         setLoadedPets(responseData.pets);
       } catch (err) {
-        setError(err.message);
+        throw new Error(err.message);
       }
       setIsLoading(false);
     };
     sendRequest();
-    console.log(userId);
   }, []);
-
-  const errorHandler = () => {
-    setError(null);
-  };
 
   return (
     <div>

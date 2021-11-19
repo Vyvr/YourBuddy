@@ -9,7 +9,6 @@ import "./usersList.css";
 
 const UsersList = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
   const [loadedUsers, setLoadedUsers] = useState();
   useEffect(() => {
     const sendRequest = async () => {
@@ -23,16 +22,12 @@ const UsersList = () => {
 
         setLoadedUsers(responseData.users);
       } catch (err) {
-        setError(err.message);
+        throw new Error(err.message);
       }
       setIsLoading(false);
     };
     sendRequest();
   }, []);
-
-  const errorHandler = () => {
-    setError(null);
-  };
 
   return (
     <AuthContent>

@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -15,7 +15,7 @@ const EditPet = (props) => {
   const editPetHandler = async (data) => {
     console.log(location.state);
     try {
-      const response = await fetch("http://localhost:5000/api/pet/edit", {
+      await fetch("http://localhost:5000/api/pet/edit", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -28,9 +28,6 @@ const EditPet = (props) => {
           weight: data.weight,
         }),
       });
-
-      const responseData = await response.json();
-      console.log(responseData);
     } catch (err) {
       console.log(err);
     }

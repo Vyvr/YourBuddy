@@ -110,17 +110,17 @@ const editPet = async (req, res, next) => {
   const { id, name, age, weight } = req.body;
   const petId = id;
 
-  console.log(id);
   let updatedPet;
 
   try {
     updatedPet = await Pet.findById(petId);
   } catch (err) {
-    const error = new HttpError("Can not find pet with provided id.", 500);
+    const error = new HttpError(
+      "Edit pet failed. Please try again later.",
+      500
+    );
     return next(error);
   }
-
-  console.log(updatedPet);
 
   updatedPet.name = name;
   updatedPet.age = age;
