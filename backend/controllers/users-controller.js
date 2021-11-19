@@ -6,6 +6,7 @@ const { v4: uuid } = require("uuid");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const Pet = require("../models/pet");
 
 const getAllUsers = async (req, res, next) => {
   let users;
@@ -92,31 +93,44 @@ const login = async (req, res, next) => {
   res.json({ message: "Logged in!", existingUser });
 };
 
+const deleteUser = async (req, res, next) => {
+  const { id } = req.body;
+
+  let user;
+  let userPets;
+
+  try {
+    user = User.findOne({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Finding user error", 500);
+    return next(error);
+  }
+
+  try {
+    userPets = await User.findById(id).populate("pets");
+  } catch (err) {
+    const error = new HttpError("Finding user pets error", 500);
+    return next(error);
+  }
+  console.log(userPets);
+  try {
+    await Pet.deleteMany({ id: { $in: userPets.pets.id } });
+  } catch (err) {
+    const error = new HttpError("Deleting pets error", 500);
+    return next(error);
+  }
+
+  try {
+    await User.findByIdAndDelete({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Failed to delete user", 500);
+    return next(error);
+  }
+
+  res.json({ message: "Deleted!", id });
+};
+
 exports.getAllUsers = getAllUsers;
 exports.signup = signup;
 exports.login = login;
-
-// exports.getUserById = getUserById;
-// const getUserById = (req, res, next) => {
-//   const userId = req.body;
-//   console.log(userId);
-//   if (!user) {
-//     throw new HttpError("Could not find a user for the provided id.", 404);
-//   }
-//   res.json({ user: user });
-// };
-
-// exports.createUser = createUser;
-
-// const createUser = async (req, res, next) => {
-//   const { name, surname, mail, password } = req.body;
-//   const newUser = new User({
-//     name,
-//     surname,
-//     mail,
-//     password,
-//   });
-//   const result = await newUser.save();
-
-//   res.status(201).json(result);
-// };
+exports.deleteUser = deleteUser;

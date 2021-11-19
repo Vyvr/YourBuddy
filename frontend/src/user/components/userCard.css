@@ -3,6 +3,7 @@
 .user-card-content {
   display: flex;
   flex-direction: row;
+  position: relative;
 
   height: 40%;
   width: 50%;
@@ -38,4 +39,12 @@
   border: 3px solid black;
   border-radius: 50%;
   margin: 10px 10px;
+}
+
+.delete-user-button {
+  height: 35px;
+  position: absolute;
+
+  right: 5px;
+  top: 5px;
 }

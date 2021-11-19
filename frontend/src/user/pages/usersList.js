@@ -38,7 +38,8 @@ const UsersList = () => {
             loadedUsers.map((user) => {
               return (
                 <UserCard
-                  key={user.id}
+                  key={user._id}
+                  id={user._id}
                   name={user.name}
                   surname={user.surname}
                 />
