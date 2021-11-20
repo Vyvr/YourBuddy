@@ -34,7 +34,7 @@ const getPetsByUserId = async (req, res, next) => {
   }
 
   if (!userPets || userPets.pets.length === 0) {
-    throw new HttpError("Could not find a pet for the provided user id.", 404);
+    return undefined;
   }
   res.json({
     pets: userPets.pets.map((pet) => pet.toObject({ getters: true })),

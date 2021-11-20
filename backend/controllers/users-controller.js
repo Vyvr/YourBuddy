@@ -60,11 +60,12 @@ const signup = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (err) {
-    const error = HttpError("Failed to create user.", 500);
+    console.log(err);
+    const error = new HttpError("Failed to create user: " + err, 500);
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
+  res.status(200).json({ user: createdUser.toObject({ getters: true }) });
 };
 
 const login = async (req, res, next) => {
@@ -82,9 +83,19 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
     const error = new HttpError(
-      "Invalid credentials specified. Could not log in",
+      "Invalid credentials specified. Could not log in...",
+      401
+    );
+    return next(error);
+  }
+
+  const matchPassword = await existingUser.comparePassword(password);
+
+  if (!matchPassword) {
+    const error = new HttpError(
+      "Invalid credentials specified. Could not log in(password)",
       401
     );
     return next(error);
@@ -112,7 +123,7 @@ const deleteUser = async (req, res, next) => {
     const error = new HttpError("Finding user pets error", 500);
     return next(error);
   }
-  console.log(userPets);
+
   try {
     await Pet.deleteMany({ id: { $in: userPets.pets.id } });
   } catch (err) {

@@ -27,7 +27,6 @@ const Login = () => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
 
       if (response.status === 200) {
         setLoggedIn(true);
@@ -46,7 +45,7 @@ const Login = () => {
 
   return (
     <AuthContent>
-      {loggedIn ? history.push("/user/user-list") : undefined}
+      {loggedIn ? history.push("/user/dashboard") : undefined}
       <form className="login-form" onSubmit={handleSubmit(authSubmitHandler)}>
         <div className="login-form-content">
           <div>
@@ -66,11 +65,7 @@ const Login = () => {
             />
           </div>
           <div className="button-div">
-            <button
-              className="login-button"
-              type="submit"
-              onClick={loggedIn ? history.push("/user/dashboard") : undefined}
-            >
+            <button className="login-button" type="submit">
               Login
             </button>
           </div>

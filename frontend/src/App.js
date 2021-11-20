@@ -15,6 +15,7 @@ import UsersList from "./user/pages/usersList";
 import Dashboard from "./user/pages/dashboard";
 import CreatePet from "./pet/pages/createPet";
 import EditPet from "./pet/pages/editPet";
+import Hello from "./user/pages/hello";
 
 const App = () => {
   return (
@@ -41,6 +42,9 @@ const App = () => {
           </Route>
           <Route path="/user/user-list" exact>
             <UsersList />
+          </Route>
+          <Route path="/user/hello" exact>
+            <Hello />
           </Route>
         </Switch>
       </main>

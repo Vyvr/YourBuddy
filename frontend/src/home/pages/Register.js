@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import AuthContent from "../../shared/components/content/AuthContent";
@@ -10,10 +10,11 @@ import "./Login.css";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
   const authSubmitHandler = async (data) => {
     try {
-      await fetch("http://localhost:5000/api/user/signup", {
+      const response = await fetch("http://localhost:5000/api/user/signup", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -26,6 +27,17 @@ const Login = () => {
           password: data.password,
         }),
       });
+
+      const responseData = await response.json();
+
+      if (response.status === 200) {
+        sessionStorage.setItem("loggedIn", true);
+        sessionStorage.setItem("userId", responseData.user.id);
+        sessionStorage.setItem("mail", responseData.user.mail);
+        sessionStorage.setItem("name", responseData.user.name);
+        sessionStorage.setItem("surname", responseData.user.surname);
+        history.push("/user/hello");
+      }
     } catch (err) {
       console.log(err);
     }

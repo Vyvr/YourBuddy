@@ -17,7 +17,9 @@ const Dashboard = () => {
   useEffect(() => {
     setName(sessionStorage.getItem("name"));
     setSurname(sessionStorage.getItem("surname"));
+  }, []);
 
+  useEffect(() => {
     const sendRequest = async () => {
       setIsLoading(true);
       try {
@@ -29,7 +31,9 @@ const Dashboard = () => {
           throw new Error(responseData.message);
         }
 
-        setLoadedPets(responseData.pets);
+        if (responseData.pets.length !== 0) {
+          setLoadedPets(responseData.pets);
+        }
       } catch (err) {
         throw new Error(err.message);
       }

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 import UserContent from "../../shared/components/content/UserContent";
 
@@ -33,7 +34,11 @@ const CreatePet = () => {
     } catch (err) {
       console.log(err);
     }
+    history.push("/user/dashboard");
+    window.location.reload();
   };
+
+  const history = useHistory();
 
   return (
     <UserContent>
