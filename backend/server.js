@@ -2,6 +2,7 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 const HttpError = require("./models/http-error");
 
@@ -14,6 +15,7 @@ const databaseURL =
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -27,6 +29,11 @@ app.use((req, res, next) => {
 
 app.use("/api/user", userRoutes);
 app.use("/api/pet", petRoutes);
+
+// app.get("api/user/login", (req, res) => {
+//   res.cookie("user", true);
+//   res.send();
+// });
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
@@ -49,5 +56,3 @@ mongoose
   .catch((error) => {
     console.error("Connecting to database failed. Error: " + error);
   });
-
-//app.listen(5000);

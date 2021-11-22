@@ -101,7 +101,9 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Logged in!", existingUser });
+  res.cookie("test", true, { maxAge: 900000, httpOnly: false, secure: false });
+
+  res.json({ existingUser }).send();
 };
 
 const deleteUser = async (req, res, next) => {

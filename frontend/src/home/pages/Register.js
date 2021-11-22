@@ -36,7 +36,7 @@ const Login = () => {
         sessionStorage.setItem("mail", responseData.user.mail);
         sessionStorage.setItem("name", responseData.user.name);
         sessionStorage.setItem("surname", responseData.user.surname);
-        history.push("/user/hello");
+        history.push("/login");
       }
     } catch (err) {
       console.log(err);

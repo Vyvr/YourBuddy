@@ -39,6 +39,7 @@ const Login = () => {
     } catch (err) {
       console.log(err);
     }
+    console.log("cookie: " + document.cookie);
   };
 
   const history = useHistory();
