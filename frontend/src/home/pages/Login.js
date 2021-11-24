@@ -4,18 +4,21 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+import getCookieValue from "./../../scripts/getCookieValue";
+
 import AuthContent from "../../shared/components/content/AuthContent";
 
 import "./Login.css";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState("");
 
   const authSubmitHandler = async (data) => {
     try {
-      const response = await fetch("http://localhost:5000/api/user/login", {
+      await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-type": "application/json",
         },
@@ -26,27 +29,18 @@ const Login = () => {
         }),
       });
 
-      const responseData = await response.json();
-
-      if (response.status === 200) {
-        setLoggedIn(true);
-        sessionStorage.setItem("loggedIn", true);
-        sessionStorage.setItem("userId", responseData.existingUser._id);
-        sessionStorage.setItem("mail", responseData.existingUser.mail);
-        sessionStorage.setItem("name", responseData.existingUser.name);
-        sessionStorage.setItem("surname", responseData.existingUser.surname);
-      }
+      setLoggedIn(getCookieValue("loggedIn"));
+      history.push("/user/dashboard");
     } catch (err) {
       console.log(err);
     }
-    console.log("cookie: " + document.cookie);
   };
 
   const history = useHistory();
 
   return (
     <AuthContent>
-      {loggedIn ? history.push("/user/dashboard") : undefined}
+      {loggedIn === true ? history.push("/user/dashboard") : undefined}
       <form className="login-form" onSubmit={handleSubmit(authSubmitHandler)}>
         <div className="login-form-content">
           <div>

@@ -24,10 +24,10 @@ const getPetsByUserId = async (req, res, next) => {
   let userPets;
 
   try {
-    userPets = await User.findById(userId).populate("pets");
+    userPets = await User.findOne({ id: userId }).populate("pets");
   } catch (err) {
     const error = new HttpError(
-      "Fetching pets failes, please try again later",
+      "Fetching pets failes, please try again later" + err,
       500
     );
     return next(error);
@@ -36,6 +36,7 @@ const getPetsByUserId = async (req, res, next) => {
   if (!userPets || userPets.pets.length === 0) {
     return undefined;
   }
+  console.log("s");
   res.json({
     pets: userPets.pets.map((pet) => pet.toObject({ getters: true })),
   });
@@ -59,11 +60,11 @@ const createPet = async (req, res, next) => {
     weight,
     owner,
   });
-
+  console.log(createdPet);
   let user;
 
   try {
-    user = await User.findById(owner);
+    user = await User.findOne({ id: owner });
   } catch (err) {
     const error = new HttpError(
       "Creating new pet failed. Please try again later.",
@@ -80,7 +81,9 @@ const createPet = async (req, res, next) => {
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
+    console.log(createdPet);
     await createdPet.save({ session: sess });
+
     user.pets.push(createdPet);
     await user.save({ session: sess });
     await sess.commitTransaction();

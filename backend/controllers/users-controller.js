@@ -101,7 +101,47 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.cookie("test", true, { maxAge: 900000, httpOnly: false, secure: false });
+  res.cookie("mail", existingUser.mail, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
+
+  res.cookie("password", existingUser.password, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
+
+  res.cookie("userId", existingUser.id, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
+
+  res.cookie("name", existingUser.name, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
+
+  res.cookie("surname", existingUser.surname, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
+
+  res.cookie("loggedIn", true, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
+
+  res.cookie("_id", existingUser._id, {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: false,
+  });
 
   res.json({ existingUser }).send();
 };
@@ -143,7 +183,49 @@ const deleteUser = async (req, res, next) => {
   res.json({ message: "Deleted!", id });
 };
 
+const findUserById = async (req, res, next) => {
+  const uid = req.params.uid;
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ id: uid });
+  } catch (err) {
+    const error = new HttpError(
+      "Logging in failed. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!existingUser) {
+    const error = new HttpError(
+      "Invalid credentials specified. Could not log in...",
+      401
+    );
+    return next(error);
+  }
+
+  res.json({ existingUser }).send();
+};
+
+const findUserPetsByUserId = async (req, res, next) => {
+  const uid = req.params.uid;
+  try {
+    userPets = await User.findOne({ id: uid }).populate("pets");
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching pets failes, please try again later" + err,
+      500
+    );
+    return next(error);
+  }
+  res.json({
+    pets: userPets.pets.map((pet) => pet.toObject({ getters: true })),
+  });
+};
+
 exports.getAllUsers = getAllUsers;
 exports.signup = signup;
 exports.login = login;
 exports.deleteUser = deleteUser;
+exports.findUserById = findUserById;
+exports.findUserPetsByUserId = findUserPetsByUserId;

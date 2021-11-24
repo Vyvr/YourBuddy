@@ -10,6 +10,8 @@ const router = express.Router();
 
 //router.get("/:uid", userController.getUserById);
 router.get("/", usersController.getAllUsers);
+router.get("/:uid", usersController.findUserById);
+router.get("/pets/:uid", usersController.findUserPetsByUserId);
 router.post(
   "/signup",
   [

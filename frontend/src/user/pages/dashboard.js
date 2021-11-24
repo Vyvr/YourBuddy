@@ -6,6 +6,8 @@ import UserContent from "../../shared/components/content/UserContent";
 import UserProfile from "./../components/userProfile";
 import PetCard from "../../pet/components/petCard";
 
+import getCookieValue from "./../../scripts/getCookieValue";
+
 import "./dashboard.css";
 
 const Dashboard = () => {
@@ -15,8 +17,8 @@ const Dashboard = () => {
   const [loadedPets, setLoadedPets] = useState();
 
   useEffect(() => {
-    setName(sessionStorage.getItem("name"));
-    setSurname(sessionStorage.getItem("surname"));
+    setName(getCookieValue("name"));
+    setSurname(getCookieValue("surname"));
   }, []);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const Dashboard = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "http://localhost:5000/api/pet/" + sessionStorage.getItem("userId")
+          "http://localhost:5000/api/pet/" + getCookieValue("userId")
         );
         const responseData = await response.json();
         if (!response.ok) {
@@ -41,6 +43,10 @@ const Dashboard = () => {
     };
     sendRequest();
   }, []);
+
+  if (getCookieValue("loggedIn") !== "true") {
+    return <div>Please log in</div>;
+  }
 
   return (
     <div>

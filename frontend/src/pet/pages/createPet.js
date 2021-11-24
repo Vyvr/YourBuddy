@@ -1,8 +1,10 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+
+import getCookieValue from "./../../scripts/getCookieValue";
 
 import UserContent from "../../shared/components/content/UserContent";
 
@@ -10,11 +12,6 @@ import "./createPet.css";
 
 const CreatePet = () => {
   const { register, handleSubmit } = useForm();
-  const [userId, setUserId] = useState("");
-
-  useEffect(() => {
-    setUserId(sessionStorage.getItem("userId").toString());
-  }, []);
 
   const addPetHandler = async (data) => {
     try {
@@ -28,7 +25,7 @@ const CreatePet = () => {
           name: data.name,
           age: data.age,
           weight: data.weight,
-          owner: userId,
+          owner: getCookieValue("userId"),
         }),
       });
     } catch (err) {
