@@ -12,7 +12,7 @@ import "./Login.css";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [loggedIn, setLoggedIn] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const authSubmitHandler = async (data) => {
     try {
@@ -40,7 +40,9 @@ const Login = () => {
 
   return (
     <AuthContent>
-      {loggedIn === true ? history.push("/user/dashboard") : undefined}
+      {getCookieValue("loggedIn") === "true"
+        ? history.push("/user/dashboard")
+        : undefined}
       <form className="login-form" onSubmit={handleSubmit(authSubmitHandler)}>
         <div className="login-form-content">
           <div>
