@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 const { v4: uuid } = require("uuid");
+const bcrypt = require("bcryptjs");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -68,7 +69,50 @@ const signup = async (req, res, next) => {
   res.status(200).json({ user: createdUser.toObject({ getters: true }) });
 };
 
+// const checkLoginData = (req, res) => {
+//   //console.log(req.cookies.loggedIn);
+//   res.json({ message: 'existingUser' }).send();
+// };
+
 const login = async (req, res, next) => {
+  // const loggedIn = req.cookies.loggedIn;
+
+  // if (loggedIn === "true") {
+  //   const loggedMail = req.cookies.mail;
+
+  //   let loggedInUser;
+
+  //   try {
+  //     loggedInUser = await User.findOne({ mail: loggedMail });
+  //   } catch (err) {
+  //     const error = new HttpError(
+  //       "Logging in failed. Please try again later.",
+  //       500
+  //     );
+  //     return next(error);
+  //   }
+
+  //   const loggedInPassword = req.cookies.password;
+  //   const loggedInmatchPassword = await loggedInUser.comparePassword(
+  //     loggedInPassword
+  //   );
+  //   console.log(typeof loggedInPassword);
+  //   console.log(typeof loggedInUser.password);
+
+  //   if (await loggedInUser.comparePassword(loggedInPassword)) {
+  //     console.log("banan");
+  //   }
+
+  //   if (!loggedInmatchPassword) {
+  //     const error = new HttpError(
+  //       "Invalid credentials specified. Could not log in(password)",
+  //       401
+  //     );
+  //     return next(error);
+  //   }
+  //   return;
+  // }
+
   const { mail, password } = req.body;
 
   let existingUser;
@@ -91,6 +135,8 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
+  console.log(password);
+
   const matchPassword = await existingUser.comparePassword(password);
 
   if (!matchPassword) {
@@ -103,44 +149,44 @@ const login = async (req, res, next) => {
 
   res.cookie("mail", existingUser.mail, {
     maxAge: 900000,
-    httpOnly: false,
-    secure: false,
+    httpOnly: true,
+    secure: true,
   });
 
   res.cookie("password", existingUser.password, {
     maxAge: 900000,
-    httpOnly: false,
-    secure: false,
+    httpOnly: true,
+    secure: true,
   });
 
   res.cookie("userId", existingUser.id, {
     maxAge: 900000,
-    httpOnly: false,
-    secure: false,
+    httpOnly: true,
+    secure: true,
   });
 
   res.cookie("name", existingUser.name, {
     maxAge: 900000,
     httpOnly: false,
-    secure: false,
+    secure: true,
   });
 
   res.cookie("surname", existingUser.surname, {
     maxAge: 900000,
     httpOnly: false,
-    secure: false,
+    secure: true,
   });
 
   res.cookie("loggedIn", true, {
     maxAge: 900000,
-    httpOnly: false,
-    secure: false,
+    httpOnly: true,
+    secure: true,
   });
 
   res.cookie("_id", existingUser._id, {
     maxAge: 900000,
-    httpOnly: false,
-    secure: false,
+    httpOnly: true,
+    secure: true,
   });
 
   res.json({ existingUser }).send();
@@ -229,3 +275,4 @@ exports.login = login;
 exports.deleteUser = deleteUser;
 exports.findUserById = findUserById;
 exports.findUserPetsByUserId = findUserPetsByUserId;
+//exports.checkLoginData = checkLoginData;

@@ -9,6 +9,8 @@ const usersController = require("../controllers/users-controller");
 const router = express.Router();
 
 //router.get("/:uid", userController.getUserById);
+//router.get("/cookies", usersController.checkLoginData);
+
 router.get("/", usersController.getAllUsers);
 router.get("/:uid", usersController.findUserById);
 router.get("/pets/:uid", usersController.findUserPetsByUserId);
