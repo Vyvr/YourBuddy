@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
+import NotLoggedIn from "../../shared/pages/notLoggedIn";
 import UserContent from "../../shared/components/content/UserContent";
 import UserProfile from "./../components/userProfile";
 import PetCard from "../../pet/components/petCard";
@@ -45,7 +46,7 @@ const Dashboard = () => {
   }, []);
 
   if (getCookieValue("loggedIn") !== "true") {
-    return <div>Please log in</div>;
+    return <NotLoggedIn />;
   }
 
   return (

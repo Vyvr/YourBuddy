@@ -3,7 +3,6 @@
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 const { v4: uuid } = require("uuid");
-const bcrypt = require("bcryptjs");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -96,12 +95,10 @@ const login = async (req, res, next) => {
   //   const loggedInmatchPassword = await loggedInUser.comparePassword(
   //     loggedInPassword
   //   );
-  //   console.log(typeof loggedInPassword);
-  //   console.log(typeof loggedInUser.password);
 
-  //   if (await loggedInUser.comparePassword(loggedInPassword)) {
-  //     console.log("banan");
-  //   }
+  //   const newPassword = cryptr.decrypt(loggedInPassword);
+  //   console.log(newPassword);
+  //   // console.log(loggedInUser.password);
 
   //   if (!loggedInmatchPassword) {
   //     const error = new HttpError(
@@ -112,7 +109,7 @@ const login = async (req, res, next) => {
   //   }
   //   return;
   // }
-
+  //---------------------------------------------------------------------
   const { mail, password } = req.body;
 
   let existingUser;
@@ -135,8 +132,6 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(password);
-
   const matchPassword = await existingUser.comparePassword(password);
 
   if (!matchPassword) {
@@ -149,19 +144,19 @@ const login = async (req, res, next) => {
 
   res.cookie("mail", existingUser.mail, {
     maxAge: 900000,
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
   });
 
   res.cookie("password", existingUser.password, {
     maxAge: 900000,
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
   });
 
   res.cookie("userId", existingUser.id, {
     maxAge: 900000,
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
   });
 
@@ -179,13 +174,13 @@ const login = async (req, res, next) => {
 
   res.cookie("loggedIn", true, {
     maxAge: 900000,
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
   });
 
   res.cookie("_id", existingUser._id, {
     maxAge: 900000,
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
   });
 
