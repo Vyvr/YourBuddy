@@ -13,8 +13,9 @@ import "./Login.css";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userLogin, setUserLogin] = useState(true);
 
-  const authSubmitHandler = async (data) => {
+  const authUserSubmitHandler = async (data) => {
     try {
       await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
@@ -36,6 +37,36 @@ const Login = () => {
     }
   };
 
+  const authVetSubmitHandler = async (data) => {
+    try {
+      await fetch("http://localhost:5000/api/vet/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
+
+        body: JSON.stringify({
+          mail: data.mail,
+          password: data.password,
+        }),
+      });
+
+      setLoggedIn(getCookieValue("loggedIn"));
+      history.push("/user/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const changeLoginForm = () => {
+    if (userLogin === true) {
+      setUserLogin(false);
+      return;
+    }
+    setUserLogin(true);
+  };
+
   const history = useHistory();
 
   return (
@@ -43,7 +74,14 @@ const Login = () => {
       {getCookieValue("loggedIn") === "true"
         ? history.push("/user/dashboard")
         : undefined}
-      <form className="login-form" onSubmit={handleSubmit(authSubmitHandler)}>
+      <form
+        className="login-form"
+        onSubmit={
+          userLogin
+            ? handleSubmit(authUserSubmitHandler)
+            : handleSubmit(authVetSubmitHandler)
+        }
+      >
         <div className="login-form-content">
           <div>
             <input
@@ -64,6 +102,13 @@ const Login = () => {
           <div className="button-div">
             <button className="login-button" type="submit">
               Login
+            </button>
+            <button
+              className="change-login-button"
+              type="button"
+              onClick={changeLoginForm}
+            >
+              {userLogin ? "Login as a vet" : "Login as a user"}
             </button>
           </div>
         </div>

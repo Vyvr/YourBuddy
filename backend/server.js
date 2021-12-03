@@ -4,10 +4,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
-const HttpError = require("./models/http-error");
-
 const userRoutes = require("./routes/users-routes");
+const vetRoutes = require("./routes/vet-routes");
 const petRoutes = require("./routes/pets-routes");
+
+const HttpError = require("./models/http-error");
 
 const databaseURL =
   "mongodb+srv://lutek:qwer44xD@yourbuddy.d2bzh.mongodb.net/YourBuddy?retryWrites=true&w=majority";
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/user", userRoutes);
+app.use("/api/vet", vetRoutes);
 app.use("/api/pet", petRoutes);
 
 app.use((req, res, next) => {
