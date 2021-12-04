@@ -7,6 +7,9 @@ const vetsController = require("../controllers/vets-controller");
 
 const router = express.Router();
 
+router.get("/", vetsController.getAllVets);
+router.post("/delete", vetsController.deleteVetOnly);
+
 router.post(
   "/signup",
   [
@@ -17,6 +20,7 @@ router.post(
   ],
   vetsController.signup
 );
+
 router.post(
   "/login",
   [

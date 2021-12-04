@@ -12,6 +12,7 @@ import Home from "./home/pages/Home";
 import Login from "./home/pages/Login";
 import Register from "./home/pages/Register";
 import UsersList from "./user/pages/usersList";
+import VetsList from "./vet/pages/vetsList";
 import UserDashboard from "./user/pages/dashboard";
 import VetDashboard from "./vet/pages/dashboard";
 import CreatePet from "./pet/pages/createPet";
@@ -46,6 +47,9 @@ const App = () => {
           </Route>
           <Route path="/user/user-list" exact>
             <UsersList />
+          </Route>
+          <Route path="/vet/vet-list" exact>
+            <VetsList />
           </Route>
           <Route path="/user/hello" exact>
             <Hello />

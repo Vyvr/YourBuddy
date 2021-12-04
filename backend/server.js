@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./routes/users-routes");
 const vetRoutes = require("./routes/vet-routes");
 const petRoutes = require("./routes/pets-routes");
+const clinicRoutes = require("./routes/clinic-routes");
+const visitRoutes = require("./routes/visits-routes");
 
 const HttpError = require("./models/http-error");
 
@@ -30,8 +32,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/user", userRoutes);
-app.use("/api/vet", vetRoutes);
 app.use("/api/pet", petRoutes);
+app.use("/api/vet", vetRoutes);
+// app.use("/api/clinic", clinicRoutes);
+// app.use("/api/visit", visitRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);

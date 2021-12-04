@@ -53,7 +53,7 @@ const Login = () => {
       });
 
       setLoggedIn(getCookieValue("loggedIn"));
-      history.push("/user/dashboard");
+      history.push("/vet/dashboard");
     } catch (err) {
       console.log(err);
     }

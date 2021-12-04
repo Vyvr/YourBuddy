@@ -64,10 +64,10 @@ const Register = () => {
 
       if (response.status === 200) {
         sessionStorage.setItem("loggedIn", true);
-        sessionStorage.setItem("userId", responseData.user.id);
-        sessionStorage.setItem("mail", responseData.user.mail);
-        sessionStorage.setItem("name", responseData.user.name);
-        sessionStorage.setItem("surname", responseData.user.surname);
+        sessionStorage.setItem("userId", responseData.vet.id);
+        sessionStorage.setItem("mail", responseData.vet.mail);
+        sessionStorage.setItem("name", responseData.vet.name);
+        sessionStorage.setItem("surname", responseData.vet.surname);
         history.push("/login");
       }
     } catch (err) {

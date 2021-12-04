@@ -1,0 +1,50 @@
+/** @format */
+
+.user-card-content {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  height: 40%;
+  width: 50%;
+
+  margin: 5px;
+
+  background-color: green;
+  border-radius: 10px;
+  border: 2px solid rgb(124, 124, 124);
+}
+
+.name-surname {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 10px;
+  text-align: left;
+}
+
+.name-label {
+  font-size: 32px;
+  /**background-color: blue;**/
+}
+
+.surname-label {
+  font-size: 24px;
+  /**background-color: cadetblue;*/
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border: 3px solid black;
+  border-radius: 50%;
+  margin: 10px 10px;
+}
+
+.delete-user-button {
+  height: 35px;
+  position: absolute;
+
+  right: 5px;
+  top: 5px;
+}

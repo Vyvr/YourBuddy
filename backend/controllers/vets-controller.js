@@ -7,6 +7,32 @@ const { v4: uuid } = require("uuid");
 const HttpError = require("../models/http-error");
 const Vet = require("../models/vet");
 
+const getAllVets = async (req, res, next) => {
+  let vets;
+  try {
+    vets = await Vet.find();
+  } catch (err) {
+    const error = new HttpError("Failed to get all vets. Try again later", 500);
+    return next(error);
+  }
+  res.json({ vets: vets.map((vet) => vet.toObject({ getters: true })) });
+};
+
+const deleteVetOnly = async (req, res, next) => {
+  const { id } = req.body;
+
+  let vet;
+
+  try {
+    await Vet.findByIdAndDelete({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Failed to delete vet", 500);
+    return next(error);
+  }
+
+  res.json({ message: "Vet deleted!", id });
+};
+
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -130,5 +156,7 @@ const login = async (req, res, next) => {
   res.json({ existingVet }).send();
 };
 
+exports.deleteVetOnly = deleteVetOnly;
+exports.getAllVets = getAllVets;
 exports.signup = signup;
 exports.login = login;
