@@ -36,7 +36,6 @@ const getPetsByUserId = async (req, res, next) => {
   if (!userPets || userPets.pets.length === 0) {
     return undefined;
   }
-  console.log("s");
   res.json({
     pets: userPets.pets.map((pet) => pet.toObject({ getters: true })),
   });
