@@ -9,16 +9,19 @@ import "./vetCard.css";
 const VetCard = (props) => {
   const deleteVetHandler = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/vet/delete", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
+      const response = await fetch(
+        "http://localhost:5000/api/vet/delete-vet-with-clinics",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
 
-        body: JSON.stringify({
-          id: props.id,
-        }),
-      });
+          body: JSON.stringify({
+            id: props.id,
+          }),
+        }
+      );
       const responseData = await response.json();
       console.log(responseData);
     } catch (err) {

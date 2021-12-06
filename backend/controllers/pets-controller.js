@@ -141,8 +141,17 @@ const editPet = async (req, res, next) => {
   res.status(200).json({ pet: updatedPet.toObject({ getters: true }) });
 };
 
-const deletePet = (req, res, next) => {
-  const petId = req.params.pid;
+const deletePet = async (req, res, next) => {
+  const { id } = req.body;
+
+  try {
+    await Pet.findByIdAndDelete({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Failed to delete pet", 500);
+    return next(error);
+  }
+
+  res.json({ message: "Pet deleted!", id });
 };
 
 exports.getPetById = getPetById;

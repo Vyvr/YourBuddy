@@ -6,6 +6,7 @@ const { v4: uuid } = require("uuid");
 
 const HttpError = require("../models/http-error");
 const Vet = require("../models/vet");
+const Clinic = require("../models/clinic");
 
 const getVet = async (req, res, next) => {};
 
@@ -37,7 +38,42 @@ const deleteVetOnly = async (req, res, next) => {
   res.json({ message: "Vet deleted!", id });
 };
 
-const deleteVetWithClinics = async (req, res, next) => {};
+const deleteVetWithClinics = async (req, res, next) => {
+  const { id } = req.body;
+
+  let vet;
+  let vetClinics;
+
+  try {
+    vet = Vet.findOne({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Finding vet error", 500);
+    return next(error);
+  }
+  console.log(vet.name);
+  try {
+    vetClinics = await Vet.findById(id).populate("clinics");
+  } catch (err) {
+    const error = new HttpError("Finding vet clinics error", 500);
+    return next(error);
+  }
+
+  try {
+    await Clinic.deleteMany({ id: { $in: vetClinics.clinics.id } });
+  } catch (err) {
+    const error = new HttpError("Deleting clinics error", 500);
+    return next(error);
+  }
+
+  try {
+    await Vet.findByIdAndDelete({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Failed to delete vet", 500);
+    return next(error);
+  }
+
+  res.json({ message: "Vet deleted!", id });
+};
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);

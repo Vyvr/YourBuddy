@@ -60,7 +60,7 @@ const createClinic = async (req, res, next) => {
   let vet;
 
   try {
-    vet = await Vet.findOne({ id: owner });
+    vet = await Vet.findOne({ _id: owner });
   } catch (err) {
     const error = new HttpError(
       "Creating new clinic failed. Please try again later.",
@@ -124,7 +124,18 @@ const createClinic = async (req, res, next) => {
   res.status(201).json({ clinic: createdClinic });
 };
 
-const deleteClinic = async (req, res, next) => {};
+const deleteClinic = async (req, res, next) => {
+  const { id } = req.body;
+
+  try {
+    await Clinic.findByIdAndDelete({ _id: id });
+  } catch (err) {
+    const error = new HttpError("Failed to delete clinic", 500);
+    return next(error);
+  }
+
+  res.json({ message: "Clinic deleted!", id });
+};
 
 const getClinic = async (req, res, next) => {};
 
