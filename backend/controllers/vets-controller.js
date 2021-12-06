@@ -111,43 +111,49 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.cookie("mail", existingVet.mail, {
+  res.cookie("vetMail", existingVet.mail, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("password", existingVet.password, {
+  res.cookie("vetPassword", existingVet.password, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("userId", existingVet.id, {
+  res.cookie("vetId", existingVet.id, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("name", existingVet.name, {
+  res.cookie("vetName", existingVet.name, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("surname", existingVet.surname, {
+  res.cookie("vetSurname", existingVet.surname, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("loggedIn", true, {
+  res.cookie("vetLoggedIn", true, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("_id", existingVet._id, {
+  res.cookie("loggedInAs", "vet", {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: true,
+  });
+
+  res.cookie("vet_id", existingVet._id, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,

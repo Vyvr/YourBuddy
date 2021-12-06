@@ -4,22 +4,22 @@ import React, { useEffect, useState } from "react";
 
 import NotLoggedIn from "../../shared/pages/notLoggedIn";
 import UserContent from "../../shared/components/content/UserContent";
-import UserProfile from "./../components/userProfile";
+import UserProfile from "../components/userProfile";
 import PetCard from "../../pet/components/petCard";
 
-import getCookieValue from "./../../scripts/getCookieValue";
+import getCookieValue from "../../scripts/getCookieValue";
 
-import "./dashboard.css";
+import "./userDashboard.css";
 
-const Dashboard = () => {
+const UserDashboard = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadedPets, setLoadedPets] = useState();
 
   useEffect(() => {
-    setName(getCookieValue("name"));
-    setSurname(getCookieValue("surname"));
+    setName(getCookieValue("userName"));
+    setSurname(getCookieValue("userSurname"));
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,10 @@ const Dashboard = () => {
     sendRequest();
   }, []);
 
-  if (getCookieValue("loggedIn") !== "true") {
+  if (
+    getCookieValue("userLoggedIn") !== "true" ||
+    getCookieValue("loggedInAs") === "vet"
+  ) {
     return <NotLoggedIn />;
   }
 
@@ -75,4 +78,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

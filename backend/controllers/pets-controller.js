@@ -59,7 +59,7 @@ const createPet = async (req, res, next) => {
     weight,
     owner,
   });
-  console.log(createdPet);
+
   let user;
 
   try {
@@ -80,7 +80,7 @@ const createPet = async (req, res, next) => {
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
-    console.log(createdPet);
+
     await createdPet.save({ session: sess });
 
     user.pets.push(createdPet);

@@ -30,7 +30,7 @@ const Login = () => {
         }),
       });
 
-      setLoggedIn(getCookieValue("loggedIn"));
+      setLoggedIn(getCookieValue("userLoggedIn"));
       history.push("/user/dashboard");
     } catch (err) {
       console.log(err);
@@ -52,7 +52,7 @@ const Login = () => {
         }),
       });
 
-      setLoggedIn(getCookieValue("loggedIn"));
+      setLoggedIn(getCookieValue("vetLoggedIn"));
       history.push("/vet/dashboard");
     } catch (err) {
       console.log(err);
@@ -71,9 +71,9 @@ const Login = () => {
 
   return (
     <AuthContent>
-      {getCookieValue("loggedIn") === "true"
+      {/* {getCookieValue("userLoggedIn") === "true"
         ? history.push("/user/dashboard")
-        : undefined}
+        : undefined} */}
       <form
         className="login-form"
         onSubmit={

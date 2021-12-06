@@ -4,22 +4,25 @@ import React, { useEffect, useState } from "react";
 
 import NotLoggedIn from "../../shared/pages/notLoggedIn";
 import VetContent from "../../shared/components/content/VetContent";
-import VetProfile from "./../components/vetProfile";
+import VetProfile from "../components/vetProfile";
 
-import getCookieValue from "./../../scripts/getCookieValue";
+import getCookieValue from "../../scripts/getCookieValue";
 
-import "./dashboard.css";
+import "./vetDashboard.css";
 
-const Dashboard = () => {
+const VetDashboard = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
 
   useEffect(() => {
-    setName(getCookieValue("name"));
-    setSurname(getCookieValue("surname"));
+    setName(getCookieValue("vetName"));
+    setSurname(getCookieValue("vetSurname"));
   }, []);
 
-  if (getCookieValue("loggedIn") !== "true") {
+  if (
+    getCookieValue("vetLoggedIn") !== "true" ||
+    getCookieValue("loggedInAs") === "user"
+  ) {
     return <NotLoggedIn />;
   }
 
@@ -34,4 +37,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default VetDashboard;

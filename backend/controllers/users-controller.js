@@ -142,13 +142,13 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.cookie("mail", existingUser.mail, {
+  res.cookie("userMail", existingUser.mail, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("password", existingUser.password, {
+  res.cookie("userPassword", existingUser.password, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
@@ -160,25 +160,31 @@ const login = async (req, res, next) => {
     secure: true,
   });
 
-  res.cookie("name", existingUser.name, {
+  res.cookie("userName", existingUser.name, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("surname", existingUser.surname, {
+  res.cookie("userSurname", existingUser.surname, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("loggedIn", true, {
+  res.cookie("userLoggedIn", true, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
   });
 
-  res.cookie("_id", existingUser._id, {
+  res.cookie("loggedInAs", "user", {
+    maxAge: 900000,
+    httpOnly: false,
+    secure: true,
+  });
+
+  res.cookie("user_id", existingUser._id, {
     maxAge: 900000,
     httpOnly: false,
     secure: true,
