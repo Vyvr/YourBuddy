@@ -13,6 +13,7 @@ const vetSchema = new Schema({
   surname: { type: String, required: true },
   mail: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
+  clinics: [{ type: mongoose.Types.ObjectId, required: true, ref: "Clinic" }],
 });
 
 vetSchema.pre("save", function (next) {

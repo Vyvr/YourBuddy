@@ -7,6 +7,8 @@ const { v4: uuid } = require("uuid");
 const HttpError = require("../models/http-error");
 const Vet = require("../models/vet");
 
+const getVet = async (req, res, next) => {};
+
 const getAllVets = async (req, res, next) => {
   let vets;
   try {
@@ -17,6 +19,8 @@ const getAllVets = async (req, res, next) => {
   }
   res.json({ vets: vets.map((vet) => vet.toObject({ getters: true })) });
 };
+
+const getVetClinics = async (req, res, next) => {};
 
 const deleteVetOnly = async (req, res, next) => {
   const { id } = req.body;
@@ -32,6 +36,8 @@ const deleteVetOnly = async (req, res, next) => {
 
   res.json({ message: "Vet deleted!", id });
 };
+
+const deleteVetWithClinics = async (req, res, next) => {};
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -162,7 +168,10 @@ const login = async (req, res, next) => {
   res.json({ existingVet }).send();
 };
 
-exports.deleteVetOnly = deleteVetOnly;
+exports.getVet = getVet;
 exports.getAllVets = getAllVets;
+exports.getVetClinics = getVetClinics;
+exports.deleteVetOnly = deleteVetOnly;
+exports.deleteVetWithClinics = deleteVetWithClinics;
 exports.signup = signup;
 exports.login = login;

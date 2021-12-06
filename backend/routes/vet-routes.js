@@ -2,13 +2,18 @@
 
 const express = require("express");
 const { check } = require("express-validator");
+const { get } = require("mongoose");
 
 const vetsController = require("../controllers/vets-controller");
 
 const router = express.Router();
 
+router.get("/get-vet", vetsController.getVet);
 router.get("/", vetsController.getAllVets);
+router.get("/get-vet-clinics", vetsController.getVetClinics);
+
 router.post("/delete", vetsController.deleteVetOnly);
+router.post("/delete-vet-with-clinics", vetsController.deleteVetWithClinics);
 
 router.post(
   "/signup",

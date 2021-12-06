@@ -21,6 +21,7 @@
     "mongodb": "^4.1.4",
     "mongoose": "^6.0.12",
     "mongoose-unique-validator": "^3.0.0",
+    "node-geocoder": "^3.28.0",
     "uuid": "^8.3.2",
     "uuid-v4": "^0.1.0"
   },
