@@ -8,17 +8,6 @@ const HttpError = require("../models/http-error");
 const Pet = require("../models/pet");
 const User = require("../models/user");
 
-const getPetById = async (req, res, next) => {
-  const petId = req.params.uid;
-  const pet = DOMMY_PETS.find((p) => {
-    return p.uid === petId;
-  });
-  if (!pet) {
-    throw new HttpError("Could not find a pet for the provided user id.", 404);
-  }
-  res.json({ pet });
-};
-
 const getPetsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
   let userPets;
@@ -154,7 +143,6 @@ const deletePet = async (req, res, next) => {
   res.json({ message: "Pet deleted!", id });
 };
 
-exports.getPetById = getPetById;
 exports.getPetsByUserId = getPetsByUserId;
 exports.createPet = createPet;
 exports.editPet = editPet;

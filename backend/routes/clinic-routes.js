@@ -20,8 +20,24 @@ router.post(
   clinicController.createClinic
 );
 
+router.post(
+  "/edit-clinic",
+  [
+    check("country").not().isEmpty(),
+    check("city").not().isEmpty(),
+    check("street").not().isEmpty(),
+    check("block").not().isEmpty().bail().isInt(),
+    check("zipCode").not().isEmpty(),
+  ],
+  clinicController.editClinic
+);
+
 router.post("/delete-clinic", clinicController.deleteClinic);
 router.get("/get-clinic", clinicController.getClinic);
+router.get(
+  "/get-all-vet-clinics/:uid",
+  clinicController.getAllVetClinicsByVetId
+);
 router.get("/get-all-clinics", clinicController.getAllClinics);
 
 module.exports = router;

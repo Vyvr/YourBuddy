@@ -68,11 +68,6 @@ const signup = async (req, res, next) => {
   res.status(200).json({ user: createdUser.toObject({ getters: true }) });
 };
 
-// const checkLoginData = (req, res) => {
-//   //console.log(req.cookies.loggedIn);
-//   res.json({ message: 'existingUser' }).send();
-// };
-
 const login = async (req, res, next) => {
   // const loggedIn = req.cookies.loggedIn;
 
@@ -276,4 +271,3 @@ exports.login = login;
 exports.deleteUser = deleteUser;
 exports.findUserById = findUserById;
 exports.findUserPetsByUserId = findUserPetsByUserId;
-//exports.checkLoginData = checkLoginData;
