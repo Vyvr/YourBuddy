@@ -7,10 +7,11 @@ import Header from "./Header";
 
 const UserHeader = () => {
   const logout = () => {
-    var c = document.cookie.split("; ");
-    for (let i in c)
-      document.cookie =
-        /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie.split(";").forEach(function (c) {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
   };
   return (
     <Header>

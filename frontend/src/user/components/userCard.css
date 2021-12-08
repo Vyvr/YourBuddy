@@ -41,10 +41,19 @@
   margin: 10px 10px;
 }
 
-.delete-user-button {
+button.delete-user-button {
   height: 35px;
+  width: 100px;
   position: absolute;
-
   right: 5px;
   top: 5px;
+
+  background-color: #be0000f1;
+  box-shadow: 0 0 0 2px #7e0202;
+}
+
+button.delete-user-button:hover {
+  background-color: #ff0000f1;
+  color: white;
+  box-shadow: 0 0 0 2px #bd0000;
 }

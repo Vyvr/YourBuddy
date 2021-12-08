@@ -99,7 +99,7 @@ const Login = () => {
               {...register("password")}
             />
           </div>
-          <div className="button-div">
+          <div className="login-button-div">
             <button className="login-button" type="submit">
               Login
             </button>

@@ -1,23 +1,34 @@
 /** @format */
 
-.login-form {
-  width: 300px;
+form {
   position: absolute;
+  display: flex;
   width: 100%;
   height: 100%;
   text-align: center;
+  justify-content: center;
+}
+.form-content {
+  margin-top: 5%;
+  width: 400px;
 }
 
-.login-form-content {
-  margin-top: 15%;
+.form-content div {
+  display: flex;
+  justify-content: right;
+  margin-left: 5px;
 }
-
-.login-form div,
+form div,
 input {
   padding: 5px 0px;
 }
 
-.login-form input {
+.form-content div div label {
+  display: flex;
+  justify-content: right;
+}
+
+form input {
   height: 20px;
   width: 280px;
   padding-left: 20px;
@@ -29,24 +40,23 @@ input {
   transition-duration: 0.4s;
 }
 
-.login-form input::placeholder {
+form input::placeholder {
   color: rgba(255, 255, 255, 0.774);
 }
 
-.login-form input:focus {
+form input:focus {
   background-color: #e93e00cc;
   color: white;
   outline: 3px solid #c95226;
 }
 
-.register-button-div {
+div.button-div {
   height: 20px;
   width: 150px;
   margin: auto;
   align-items: center;
 }
-.register-button,
-.change-register-button {
+button {
   width: 100%;
   padding: 10px;
 
@@ -57,15 +67,8 @@ input {
   border-radius: 20px;
   transition-duration: 0.4s;
 }
-
-.register-button:hover,
-.change-register-button:hover {
+button:hover {
   background-color: #e93e009f;
   color: white;
   box-shadow: 0 0 0 2px #c95226;
-}
-
-.change-register-button {
-  width: auto;
-  margin-top: 10px;
 }

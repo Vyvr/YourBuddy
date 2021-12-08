@@ -60,7 +60,7 @@ const createClinic = async (req, res, next) => {
   let vet;
 
   try {
-    vet = await Vet.findOne({ _id: owner });
+    vet = await Vet.findOne({ id: owner });
   } catch (err) {
     const error = new HttpError(
       "Creating new clinic failed. Please try again later.",
@@ -68,7 +68,6 @@ const createClinic = async (req, res, next) => {
     );
     return next(error);
   }
-
   if (!vet) {
     const error = new HttpError("No vet found with provided id.", 404);
     return next(error);

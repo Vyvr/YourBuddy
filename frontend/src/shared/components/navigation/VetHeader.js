@@ -7,10 +7,11 @@ import Header from "./Header";
 
 const VetHeader = () => {
   const logout = () => {
-    var c = document.cookie.split("; ");
-    for (let i in c)
-      document.cookie =
-        /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie.split(";").forEach(function (c) {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
   };
   return (
     <Header>
@@ -24,7 +25,7 @@ const VetHeader = () => {
         <NavLink to="/vet/visits">VISITS</NavLink>
       </li>
       <li>
-        <NavLink to="/vet/clinic">CLINIC</NavLink>
+        <NavLink to="/vet/clinic-dashboard">CLINIC</NavLink>
       </li>
       <li>
         <NavLink to="/" onClick={logout}>

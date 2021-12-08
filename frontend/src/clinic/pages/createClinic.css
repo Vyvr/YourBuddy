@@ -1,0 +1,36 @@
+/** @format */
+
+.create-clinic-form {
+  display: flex;
+  flex-direction: column;
+}
+.from-hours-div div,
+.to-hours-div div {
+  display: flex;
+  flex-direction: column;
+}
+.from-hours-div div div,
+.to-hours-div div div {
+  display: flex;
+  flex-direction: row;
+}
+
+.from-hours-div {
+  justify-content: left;
+}
+
+div.hours-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.to-hour-input,
+.to-minutes-input,
+.from-hour-input,
+.from-minutes-input {
+  width: 50px;
+}
+
+div.button-div {
+  width: 400px;
+}
