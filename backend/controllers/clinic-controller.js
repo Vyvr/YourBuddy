@@ -265,7 +265,7 @@ const getClinic = async (req, res, next) => {
 const getAllVetClinicsByVetId = async (req, res, next) => {
   const uid = req.params.uid;
   try {
-    vetClinics = await Vet.findById(uid).populate("clinics");
+    vetClinics = await Vet.findOne({ id: uid }).populate("clinics");
   } catch (err) {
     const error = new HttpError(
       "Fetching clinics failed, please try again later" + err,

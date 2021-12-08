@@ -1,0 +1,12 @@
+/** @format */
+
+button.vet-dashboard-create-clinic-button {
+  width: 200px;
+  height: 100px;
+  margin-top: 5px;
+}
+
+div.clinics-list {
+  display: flex;
+  flex-wrap: wrap;
+}

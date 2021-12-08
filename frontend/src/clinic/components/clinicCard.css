@@ -1,0 +1,12 @@
+/** @format */
+
+div.clinic-card-content {
+  width: 200px;
+  height: 100px;
+  background-color: rgb(35, 153, 31);
+  text-align: center;
+  border-radius: 20px;
+  border: 2px solid rgb(15, 46, 146);
+  margin-top: 5px;
+  margin-right: 5px;
+}
