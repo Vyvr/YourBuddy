@@ -296,9 +296,106 @@ const getAllClinics = async (req, res, next) => {
   });
 };
 
+const addWorker = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed. Please check your data",
+      422
+    );
+
+    return next(error);
+  }
+
+  const { uid, cid } = req.body;
+  const workerId = uid;
+  const clinicId = cid;
+
+  let worker;
+  let clinic;
+
+  try {
+    worker = await Vet.findById(workerId);
+  } catch (err) {
+    const error = new HttpError("Finding worker error", 500);
+    return next(error);
+  }
+
+  if (!worker === undefined) {
+    const error = new HttpError("No worker found with proided id", 401);
+    return next(error);
+  }
+
+  try {
+    clinic = await Clinic.findById(clinicId);
+  } catch (err) {
+    const error = new HttpError("Finding clinic error", 500);
+    return next(error);
+  }
+
+  if (!clinic) {
+    const error = new HttpError("No clinic found with proided id", 401);
+    return next(error);
+  }
+
+  clinic.workers.push(worker._id);
+
+  try {
+    await clinic.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong with saving updated clinic type to database",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(201).json({ message: "Added worker to clinic successfully." });
+};
+
+const getAllClinicVets = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed. Please check your data",
+      422
+    );
+
+    return next(error);
+  }
+
+  const { cid } = req.body;
+  const clinicId = cid;
+
+  let clinic;
+
+  try {
+    clinic = await Clinic.findById(clinicId);
+  } catch (err) {
+    const error = new HttpError("Finding clinic error", 500);
+    return next(error);
+  }
+
+  if (!clinic) {
+    const error = new HttpError("No clinic found with proided id", 401);
+    return next(error);
+  }
+
+  if (!clinic.workers || clinic.workers.length === 0) {
+    return undefined;
+  }
+  res.json({
+    workers: clinic.workers,
+  });
+};
+
 exports.createClinic = createClinic;
 exports.editClinic = editClinic;
 exports.deleteClinic = deleteClinic;
 exports.getClinic = getClinic;
 exports.getAllVetClinicsByVetId = getAllVetClinicsByVetId;
 exports.getAllClinics = getAllClinics;
+exports.addWorker = addWorker;
+exports.getAllClinicVets = getAllClinicVets;

@@ -33,11 +33,13 @@ router.post(
 );
 
 router.post("/delete-clinic", clinicController.deleteClinic);
+router.post("/add-worker", clinicController.addWorker);
 router.get("/get-clinic", clinicController.getClinic);
 router.get(
   "/get-all-vet-clinics/:uid",
   clinicController.getAllVetClinicsByVetId
 );
 router.get("/get-all-clinics", clinicController.getAllClinics);
+router.get("/get-all-clinic-vets", clinicController.getAllClinicVets);
 
 module.exports = router;
