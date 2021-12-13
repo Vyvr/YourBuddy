@@ -5,7 +5,7 @@ const Geocoder = require("node-geocoder");
 const { validationResult } = require("express-validator");
 
 const HttpError = require("../models/http-error");
-const Vet = require("../models/vet");
+const Vet = require("../models/user");
 const Clinic = require("../models/clinic");
 
 const createClinic = async (req, res, next) => {
@@ -60,7 +60,7 @@ const createClinic = async (req, res, next) => {
   let vet;
 
   try {
-    vet = await Vet.findOne({ id: owner });
+    vet = await Vet.findById(owner);
   } catch (err) {
     const error = new HttpError(
       "Creating new clinic failed. Please try again later.",
@@ -265,7 +265,7 @@ const getClinic = async (req, res, next) => {
 const getAllVetClinicsByVetId = async (req, res, next) => {
   const uid = req.params.uid;
   try {
-    vetClinics = await Vet.findOne({ id: uid }).populate("clinics");
+    vetClinics = await Vet.findById(uid).populate("clinics");
   } catch (err) {
     const error = new HttpError(
       "Fetching clinics failed, please try again later" + err,

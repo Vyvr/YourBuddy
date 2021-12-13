@@ -14,6 +14,8 @@ const userSchema = new Schema({
   mail: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
   pets: [{ type: mongoose.Types.ObjectId, required: true, ref: "Pet" }],
+  clinics: [{ type: mongoose.Types.ObjectId, required: true, ref: "Clinic" }],
+  type: [{ type: String, enum: ["user", "vet"], required: true }],
 });
 
 userSchema.pre("save", function (next) {

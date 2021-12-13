@@ -55,6 +55,8 @@ const signup = async (req, res, next) => {
     mail,
     password,
     pets: [],
+    clinics: [],
+    type: ["user"],
   });
 
   try {
@@ -240,13 +242,34 @@ const findUserById = async (req, res, next) => {
 
   if (!existingUser) {
     const error = new HttpError(
-      "Invalid credentials specified. Could not log in...",
+      "Invalid credentials specified. Could not find user.",
       401
     );
     return next(error);
   }
 
   res.json({ existingUser }).send();
+};
+
+const getUserTypes = async (req, res, next) => {
+  const uid = req.params.uid;
+  let existingUser;
+  try {
+    existingUser = await User.findById(uid);
+  } catch (err) {
+    const error = new HttpError(
+      "Can't find user. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!existingUser) {
+    const error = new HttpError("Invalid uid specified.", 401);
+    return next(error);
+  }
+
+  res.json(existingUser.type).send();
 };
 
 const findUserPetsByUserId = async (req, res, next) => {
@@ -265,9 +288,101 @@ const findUserPetsByUserId = async (req, res, next) => {
   });
 };
 
+const editUserCredentials = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed in editing user. Please check your data",
+      422
+    );
+
+    return next(error);
+  }
+
+  const { id, name, surname, mail, password } = req.body;
+
+  const userId = id;
+
+  let updatedUser;
+
+  try {
+    updatedUser = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Finding user to edit failed. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  updatedUser.name = name;
+  updatedUser.surname = surname;
+  updatedUser.mail = mail;
+  updatedUser.password = password;
+
+  try {
+    await updatedUser.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong with saving updated user to database",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ user: updatedUser.toObject({ getters: true }) });
+};
+
+const addUserVetType = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed in editing user's type. Please check your data",
+      422
+    );
+
+    return next(error);
+  }
+
+  const { id } = req.body;
+
+  const userId = id;
+
+  let updatedUser;
+
+  try {
+    updatedUser = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Finding user to edit type failed. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  if (updatedUser.type.length !== 2) updatedUser.type.push("vet");
+
+  try {
+    await updatedUser.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong with saving updated user type to database",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ user: updatedUser.toObject({ getters: true }) });
+};
+
 exports.getAllUsers = getAllUsers;
 exports.signup = signup;
 exports.login = login;
 exports.deleteUser = deleteUser;
 exports.findUserById = findUserById;
 exports.findUserPetsByUserId = findUserPetsByUserId;
+exports.editUserCredentials = editUserCredentials;
+exports.addUserVetType = addUserVetType;
+exports.getUserTypes = getUserTypes;

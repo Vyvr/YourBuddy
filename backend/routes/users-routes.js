@@ -14,6 +14,7 @@ const router = express.Router();
 router.get("/", usersController.getAllUsers);
 router.get("/:uid", usersController.findUserById);
 router.get("/pets/:uid", usersController.findUserPetsByUserId);
+router.get("/get-user-types/:uid", usersController.getUserTypes);
 
 router.post(
   "/signup",
@@ -35,5 +36,18 @@ router.post(
 );
 
 router.post("/delete", usersController.deleteUser);
+
+router.post(
+  "/edit-user-credentials",
+  [
+    check("name").not().isEmpty(),
+    check("surname").not().isEmpty(),
+    check("mail").not().isEmpty().bail().isEmail(),
+    check("password").isLength({ min: 6 }),
+  ],
+  usersController.editUserCredentials
+);
+
+router.post("/add-user-vet-type", usersController.addUserVetType);
 
 module.exports = router;
