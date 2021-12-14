@@ -35,7 +35,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/pet", petRoutes);
 app.use("/api/vet", vetRoutes);
 app.use("/api/clinic", clinicRoutes);
-// app.use("/api/visit", visitRoutes);
+app.use("/api/visit", visitRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);

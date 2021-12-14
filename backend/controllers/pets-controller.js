@@ -52,7 +52,7 @@ const createPet = async (req, res, next) => {
   let user;
 
   try {
-    user = await User.findOne({ id: owner });
+    user = await User.findById(owner);
   } catch (err) {
     const error = new HttpError(
       "Creating new pet failed. Please try again later.",
