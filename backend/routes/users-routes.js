@@ -12,9 +12,11 @@ const router = express.Router();
 //router.get("/cookies", usersController.checkLoginData);
 
 router.get("/", usersController.getAllUsers);
-router.get("/:uid", usersController.findUserById);
+
 router.get("/pets/:uid", usersController.findUserPetsByUserId);
 router.get("/get-user-types/:uid", usersController.getUserTypes);
+router.get("/get-vets", usersController.getVets);
+router.get("/:uid", usersController.findUserById);
 
 router.post(
   "/signup",

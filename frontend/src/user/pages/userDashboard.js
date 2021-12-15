@@ -60,6 +60,7 @@ const UserDashboard = () => {
                     name={pet.name}
                     age={pet.age}
                     weight={pet.weight}
+                    owner={pet.owner}
                   />
                 );
               })}

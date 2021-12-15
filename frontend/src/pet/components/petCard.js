@@ -33,6 +33,23 @@ const PetCard = (props) => {
       >
         EDIT
       </NavLink>
+      <br />
+      <NavLink
+        className="sign-in-to-vet-button"
+        to={{
+          pathname: "/visit/create",
+          state: {
+            id: props.id,
+            name: props.name,
+            age: props.age,
+            weight: props.weight,
+            owner: props.owner,
+          },
+        }}
+        exact
+      >
+        Sign in to vet
+      </NavLink>
     </div>
   );
 };

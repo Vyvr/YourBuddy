@@ -17,6 +17,7 @@ import VetsList from "./vet/pages/vetsList";
 import VetDashboard from "./vet/pages/vetDashboard";
 import VisitList from "./visit/pages/visitList";
 import VisitDetails from "./visit/pages/visitDetails";
+import CreateVisit from "./visit/pages/createVisit";
 import ClinicDashboard from "./clinic/pages/clinicDashboard";
 import CreateClinic from "./clinic/pages/createClinic";
 import CreatePet from "./pet/pages/createPet";
@@ -54,6 +55,9 @@ const App = () => {
           </Route>
           <Route path="/vet/visit-details/:id" exact>
             <VisitDetails />
+          </Route>
+          <Route path="/visit/create" exact>
+            <CreateVisit />
           </Route>
           <Route path="/vet/clinic-dashboard" exact>
             <ClinicDashboard />

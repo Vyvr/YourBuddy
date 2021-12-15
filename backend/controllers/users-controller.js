@@ -377,6 +377,28 @@ const addUserVetType = async (req, res, next) => {
   res.status(200).json({ user: updatedUser.toObject({ getters: true }) });
 };
 
+const getVets = async (req, res, next) => {
+  let existingVets;
+  try {
+    existingVets = await User.find({ type: "vet" });
+  } catch (err) {
+    const error = new HttpError(
+      "Can't find vets. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!existingVets) {
+    const error = new HttpError("Something went wrong.", 401);
+    return next(error);
+  }
+
+  res.json({
+    existingVets: existingVets.map((vet) => vet.toObject({ getters: true })),
+  });
+};
+
 exports.getAllUsers = getAllUsers;
 exports.signup = signup;
 exports.login = login;
@@ -386,3 +408,4 @@ exports.findUserPetsByUserId = findUserPetsByUserId;
 exports.editUserCredentials = editUserCredentials;
 exports.addUserVetType = addUserVetType;
 exports.getUserTypes = getUserTypes;
+exports.getVets = getVets;
