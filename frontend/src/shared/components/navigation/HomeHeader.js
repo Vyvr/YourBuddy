@@ -20,9 +20,6 @@ const HomeHeader = () => {
       <li>
         <NavLink to="/user/user-list">USERS LIST</NavLink>
       </li>
-      <li>
-        <NavLink to="/vet/vet-list">VETS LIST</NavLink>
-      </li>
     </Header>
   );
 };

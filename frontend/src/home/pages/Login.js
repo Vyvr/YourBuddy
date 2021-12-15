@@ -1,10 +1,8 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-import getCookieValue from "./../../scripts/getCookieValue";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 
@@ -12,12 +10,10 @@ import "./Login.css";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userLogin, setUserLogin] = useState(true);
 
   const authUserSubmitHandler = async (data) => {
     try {
-      await fetch("http://localhost:5000/api/user/login", {
+      const response = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -29,58 +25,24 @@ const Login = () => {
           password: data.password,
         }),
       });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
 
-      setLoggedIn(getCookieValue("userLoggedIn"));
       history.push("/user/dashboard");
     } catch (err) {
       console.log(err);
     }
   };
 
-  const authVetSubmitHandler = async (data) => {
-    try {
-      await fetch("http://localhost:5000/api/vet/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-type": "application/json",
-        },
-
-        body: JSON.stringify({
-          mail: data.mail,
-          password: data.password,
-        }),
-      });
-
-      setLoggedIn(getCookieValue("vetLoggedIn"));
-      history.push("/vet/dashboard");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const changeLoginForm = () => {
-    if (userLogin === true) {
-      setUserLogin(false);
-      return;
-    }
-    setUserLogin(true);
-  };
-
   const history = useHistory();
 
   return (
     <AuthContent>
-      {/* {getCookieValue("userLoggedIn") === "true"
-        ? history.push("/user/dashboard")
-        : undefined} */}
       <form
         className="login-form"
-        onSubmit={
-          userLogin
-            ? handleSubmit(authUserSubmitHandler)
-            : handleSubmit(authVetSubmitHandler)
-        }
+        onSubmit={handleSubmit(authUserSubmitHandler)}
       >
         <div className="login-form-content">
           <div>
@@ -102,13 +64,6 @@ const Login = () => {
           <div className="login-button-div">
             <button className="login-button" type="submit">
               Login
-            </button>
-            <button
-              className="change-login-button"
-              type="button"
-              onClick={changeLoginForm}
-            >
-              {userLogin ? "Login as a vet" : "Login as a user"}
             </button>
           </div>
         </div>

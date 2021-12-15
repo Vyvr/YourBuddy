@@ -2,10 +2,13 @@
 
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Switch from "@mui/material/Switch";
 
 import Header from "./Header";
 
 const UserHeader = () => {
+  const history = useHistory();
   const logout = () => {
     document.cookie.split(";").forEach(function (c) {
       document.cookie = c
@@ -13,6 +16,11 @@ const UserHeader = () => {
         .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
     });
   };
+
+  const onChangeGoVetPage = () => {
+    history.push("/vet/dashboard");
+  };
+
   return (
     <Header>
       <li>
@@ -25,6 +33,9 @@ const UserHeader = () => {
         <NavLink to="/" onClick={logout}>
           LOGOUT
         </NavLink>
+      </li>
+      <li>
+        <Switch onChange={onChangeGoVetPage} />
       </li>
     </Header>
   );

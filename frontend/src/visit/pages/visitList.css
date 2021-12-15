@@ -1,0 +1,31 @@
+/** @format */
+
+.visit-list-table {
+  width: 100%;
+  /* border: 1px solid black; */
+  border-collapse: collapse;
+}
+
+/* tr {
+  border: 1px solid black;
+  text-align: center;
+}
+
+td {
+  border: 1px solid black;
+} */
+
+tr {
+  cursor: pointer;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

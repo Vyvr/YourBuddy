@@ -15,29 +15,35 @@ const ClinicDashboard = () => {
   const { register, handleSubmit } = useForm();
 
   const createClinicSubmitHandler = async (data) => {
-    let response;
     try {
-      response = await fetch("http://localhost:5000/api/clinic/create-clinic", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          owner: getCookieValue("vetId"),
-          country: data.country,
-          city: data.city,
-          street: data.street,
-          block: data.block,
-          apartment: data.apartment,
-          zipCode: data.zipCode,
-          fromHour: data.fromHour,
-          fromMinutes: data.fromMinutes,
-          toHour: data.toHour,
-          toMinutes: data.toMinutes,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/clinic/create-clinic",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name: data.name,
+            owner: getCookieValue("vetId"),
+            country: data.country,
+            city: data.city,
+            street: data.street,
+            block: data.block,
+            apartment: data.apartment,
+            zipCode: data.zipCode,
+            fromHour: data.fromHour,
+            fromMinutes: data.fromMinutes,
+            toHour: data.toHour,
+            toMinutes: data.toMinutes,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
       history.push("/vet/clinic-dashboard");
     } catch (err) {
       console.log(err);

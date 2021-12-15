@@ -100,7 +100,7 @@ const createVisit = async (req, res, next) => {
 };
 
 const getVisitDetails = async (req, res, next) => {
-  const { visitId } = req.body;
+  const visitId = req.params.id;
 
   try {
     existingVisit = await Visit.findById(visitId);
@@ -152,6 +152,42 @@ const getPatientVisits = async (req, res, next) => {
   res.status(200).json(visits);
 };
 
+const getVetVisits = async (req, res, next) => {
+  const vetId = req.params.vetId;
+
+  let existingVet;
+
+  try {
+    existingVet = await User.findById(vetId);
+  } catch (err) {
+    const error = new HttpError(
+      "Searching vet failed. Please try again later",
+      500
+    );
+    return next(error);
+  }
+  if (!existingVet) {
+    const error = new HttpError("No vet found with provided id.", 404);
+    return next(error);
+  }
+
+  let vetVisits;
+  try {
+    vetVisits = await Visit.find({ vet: vetId });
+  } catch (err) {
+    const error = new HttpError(
+      "Searching vet's visits failed. Please try again later",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({
+    visits: vetVisits.map((visit) => visit.toObject({ getters: true })),
+  });
+};
+
 exports.createVisit = createVisit;
 exports.getVisitDetails = getVisitDetails;
 exports.getPatientVisits = getPatientVisits;
+exports.getVetVisits = getVetVisits;

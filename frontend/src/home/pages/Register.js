@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -11,7 +11,6 @@ import "./Register.css";
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const history = useHistory();
-  const [userRegister, setUserRegister] = useState(true);
 
   const authUserSubmitHandler = async (data) => {
     try {
@@ -28,70 +27,24 @@ const Register = () => {
           password: data.password,
         }),
       });
-
       const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
 
       if (response.status === 200) {
-        sessionStorage.setItem("loggedIn", true);
-        sessionStorage.setItem("userId", responseData.user.id);
-        sessionStorage.setItem("mail", responseData.user.mail);
-        sessionStorage.setItem("name", responseData.user.name);
-        sessionStorage.setItem("surname", responseData.user.surname);
         history.push("/login");
       }
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const authVetSubmitHandler = async (data) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/vet/signup", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-
-        body: JSON.stringify({
-          name: data.name,
-          surname: data.surname,
-          mail: data.mail,
-          password: data.password,
-        }),
-      });
-
-      const responseData = await response.json();
-
-      if (response.status === 200) {
-        sessionStorage.setItem("loggedIn", true);
-        sessionStorage.setItem("userId", responseData.vet.id);
-        sessionStorage.setItem("mail", responseData.vet.mail);
-        sessionStorage.setItem("name", responseData.vet.name);
-        sessionStorage.setItem("surname", responseData.vet.surname);
-        history.push("/login");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const changeRegisterForm = () => {
-    if (userRegister === true) {
-      setUserRegister(false);
-      return;
-    }
-    setUserRegister(true);
   };
 
   return (
     <AuthContent>
       <form
         className="login-form"
-        onSubmit={
-          userRegister
-            ? handleSubmit(authUserSubmitHandler)
-            : handleSubmit(authVetSubmitHandler)
-        }
+        onSubmit={handleSubmit(authUserSubmitHandler)}
       >
         <div className="login-form-content">
           <div>
@@ -129,13 +82,6 @@ const Register = () => {
           <div className="register-button-div">
             <button className="register-button" type="submit">
               Register
-            </button>
-            <button
-              className="change-register-button"
-              type="button"
-              onClick={changeRegisterForm}
-            >
-              {userRegister ? "Register as a vet" : "Register as a user"}
             </button>
           </div>
         </div>

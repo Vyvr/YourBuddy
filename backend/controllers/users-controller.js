@@ -181,7 +181,7 @@ const login = async (req, res, next) => {
     secure: true,
   });
 
-  res.cookie("user_id", existingUser._id, {
+  res.cookie("user_id", existingUser._id.toString(), {
     maxAge: 900000,
     httpOnly: false,
     secure: true,

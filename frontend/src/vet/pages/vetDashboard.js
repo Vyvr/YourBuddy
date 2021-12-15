@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 
-import NotLoggedIn from "../../shared/pages/notLoggedIn";
 import VetContent from "../../shared/components/content/VetContent";
 import VetProfile from "../components/vetProfile";
 
@@ -15,16 +14,9 @@ const VetDashboard = () => {
   const [surname, setSurname] = useState("");
 
   useEffect(() => {
-    setName(getCookieValue("vetName"));
-    setSurname(getCookieValue("vetSurname"));
+    setName(getCookieValue("userName"));
+    setSurname(getCookieValue("userSurname"));
   }, []);
-
-  if (
-    getCookieValue("vetLoggedIn") !== "true" ||
-    getCookieValue("loggedInAs") === "user"
-  ) {
-    return <NotLoggedIn />;
-  }
 
   return (
     <div>
