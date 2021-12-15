@@ -25,7 +25,7 @@ const CreatePet = () => {
           name: data.name,
           age: data.age,
           weight: data.weight,
-          owner: getCookieValue("userId"),
+          owner: getCookieValue("user_id"),
         }),
       });
     } catch (err) {
