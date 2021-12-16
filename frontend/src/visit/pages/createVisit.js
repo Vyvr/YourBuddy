@@ -12,7 +12,6 @@ const CreateVisit = () => {
   let location = useLocation();
 
   useEffect(() => {
-    console.log("banana");
     const sendRequest = async () => {
       setIsLoading(true);
       try {
@@ -37,9 +36,11 @@ const CreateVisit = () => {
         <div>
           <label>Vet:</label>
           <select>
-            {loadedVets.map((vet) => {
-              <option value={vet._id}>{vet.name + " " + vet.surname}</option>;
-            })}
+            {!isLoading &&
+              loadedVets &&
+              loadedVets.map((vet) => {
+                <option value={vet._id}>{vet.name + " " + vet.surname}</option>;
+              })}
           </select>
         </div>
       </CreateForm>
