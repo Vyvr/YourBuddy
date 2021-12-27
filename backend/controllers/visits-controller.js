@@ -17,8 +17,16 @@ const createVisit = async (req, res, next) => {
     );
   }
 
-  const { term, vetId, patientId, patientOwnerId, description, hour, minutes } =
-    req.body;
+  const {
+    term,
+    vetId,
+    patientId,
+    patientOwnerId,
+    description,
+    hour,
+    minutes,
+    clinicId,
+  } = req.body;
 
   let existingUser;
   let existingVet;

@@ -26,8 +26,10 @@ const visitSchema = new mongoose.Schema({
   patient_owner: { type: String, required: true },
   description: { type: String, required: false },
   vetName: { type: String, required: true },
+  clinic: { type: String, required: true },
   patientName: { type: String, required: true },
   ownerName: { type: String, required: true },
+  submitted: { type: Boolean, default: false, required: true },
 });
 
 module.exports = mongoose.model("Visit", visitSchema);

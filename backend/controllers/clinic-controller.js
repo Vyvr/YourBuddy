@@ -60,7 +60,7 @@ const createClinic = async (req, res, next) => {
   let vet;
 
   try {
-    vet = await Vet.findById(owner);
+    vet = await Vet.findOne({ _id: owner });
   } catch (err) {
     const error = new HttpError(
       "Creating new clinic failed. Please try again later.",

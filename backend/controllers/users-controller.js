@@ -269,7 +269,7 @@ const getUserTypes = async (req, res, next) => {
     return next(error);
   }
 
-  res.json(existingUser.type).send();
+  res.json(existingUser.type);
 };
 
 const findUserPetsByUserId = async (req, res, next) => {

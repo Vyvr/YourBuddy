@@ -30,7 +30,7 @@ const VetHeader = () => {
         <NavLink to="/vet/patients">PATIENTS</NavLink>
       </li>
       <li>
-        <NavLink to="/vet/visit-list">VISITS</NavLink>
+        <NavLink to="/vet/visit-list"> ALL VISITS</NavLink>
       </li>
       <li>
         <NavLink to="/vet/clinic-dashboard">CLINIC</NavLink>

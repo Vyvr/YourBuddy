@@ -20,7 +20,7 @@ const ClinicDashboard = () => {
       try {
         const response = await fetch(
           "http://localhost:5000/api/clinic/get-all-vet-clinics/" +
-            getCookieValue("vetId")
+            getCookieValue("user_id")
         );
         const responseData = await response.json();
         if (!response.ok) {

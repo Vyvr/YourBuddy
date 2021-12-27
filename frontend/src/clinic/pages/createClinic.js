@@ -26,7 +26,7 @@ const ClinicDashboard = () => {
           },
           body: JSON.stringify({
             name: data.name,
-            owner: getCookieValue("vetId"),
+            owner: getCookieValue("user_id"),
             country: data.country,
             city: data.city,
             street: data.street,
