@@ -40,6 +40,6 @@ router.get(
   clinicController.getAllVetClinicsByVetId
 );
 router.get("/get-all-clinics", clinicController.getAllClinics);
-router.get("/get-all-clinic-vets", clinicController.getAllClinicVets);
+router.get("/get-all-clinic-vets/:cid", clinicController.getAllClinicVets);
 
 module.exports = router;

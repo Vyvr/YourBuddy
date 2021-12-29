@@ -366,8 +366,7 @@ const getAllClinicVets = async (req, res, next) => {
     return next(error);
   }
 
-  const { cid } = req.body;
-  const clinicId = cid;
+  const clinicId = req.params.cid;
 
   let clinic;
 
@@ -383,11 +382,21 @@ const getAllClinicVets = async (req, res, next) => {
     return next(error);
   }
 
-  if (!clinic.workers || clinic.workers.length === 0) {
-    return undefined;
+  let workersList = [];
+  for (const worker of clinic.workers) {
+    let vet;
+    try {
+      vet = await Vet.findById(worker);
+      console.log(vet);
+      workersList.push(vet);
+    } catch (err) {
+      const error = new HttpError("Finding worker error", 500);
+      next(error);
+    }
   }
-  res.json({
-    workers: clinic.workers,
+
+  console.log(workersList);
+  res.json({ workers: workersList.map((worker) => worker.toObject({ getters: true }))
   });
 };
 

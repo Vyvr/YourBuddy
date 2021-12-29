@@ -44,7 +44,6 @@ const ClinicDashboard = () => {
         {!isLoading &&
           loadedClinics &&
           loadedClinics.map((clinic) => {
-            console.log(clinic);
             return (
               <ClinicCard
                 id={clinic.id}

@@ -17,6 +17,10 @@ router.get("/pets/:uid", usersController.findUserPetsByUserId);
 router.get("/get-user-types/:uid", usersController.getUserTypes);
 router.get("/get-vets", usersController.getVets);
 router.get("/:uid", usersController.findUserById);
+router.get(
+  "/get-users-by-name-and-surname/:data",
+  usersController.getUsersByNameAndSurname
+);
 
 router.post(
   "/signup",

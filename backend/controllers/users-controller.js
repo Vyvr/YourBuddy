@@ -399,6 +399,43 @@ const getVets = async (req, res, next) => {
   });
 };
 
+const getUsersByNameAndSurname = async (req, res, next) => {
+  const data = req.params.data;
+
+  const dataArray = data.split("-");
+  const name = dataArray[0];
+  const surname = dataArray[1];
+
+  const reName = new RegExp(name, "i");
+  const reSurname = new RegExp(surname, "i");
+
+  let existingUsers;
+  try {
+    existingUsers = await User.find().or([
+      {
+        name: { $regex: reName },
+        surname: { $regex: reSurname },
+        type: "vet",
+      },
+      {
+        surname: { $regex: reName },
+        name: { $regex: reSurname },
+      },
+    ]);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong with finding new worker.",
+      401
+    );
+  }
+
+  res.json({
+    existingUsers: existingUsers.map((user) =>
+      user.toObject({ getters: true })
+    ),
+  });
+};
+
 exports.getAllUsers = getAllUsers;
 exports.signup = signup;
 exports.login = login;
@@ -409,3 +446,4 @@ exports.editUserCredentials = editUserCredentials;
 exports.addUserVetType = addUserVetType;
 exports.getUserTypes = getUserTypes;
 exports.getVets = getVets;
+exports.getUsersByNameAndSurname = getUsersByNameAndSurname;

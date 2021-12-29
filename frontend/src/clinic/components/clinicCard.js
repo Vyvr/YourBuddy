@@ -10,7 +10,9 @@ const clinicCard = (props) => {
     <div className="clinic-card-content">
       <div className="clinic-name-div">{props.name}</div>
       <div className="clinic-address-div">
-        {props.city}, {props.street}, {props.block}/{props.apartment}
+        {props.city}, {props.street} {props.block}
+        {props.apartment ? "/" : ""}
+        {props.apartment}
       </div>
       <NavLink
         className="edit-clinic-button"
@@ -34,6 +36,19 @@ const clinicCard = (props) => {
         exact
       >
         EDIT
+      </NavLink>
+      <br />
+      <NavLink
+        className="add-worker-button"
+        to={{
+          pathname: "/vet/add-worker",
+          state: {
+            id: props.id,
+          },
+        }}
+        exact
+      >
+        Add worker
       </NavLink>
     </div>
   );
