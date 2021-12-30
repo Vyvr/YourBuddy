@@ -166,7 +166,7 @@ const getPatientVisits = async (req, res, next) => {
 
     let visitsList;
     try {
-        visitsList = await Visit.find({patient: petId});
+        visitsList = await Visit.find({patient: petId}).lean();
     } catch (err) {
         const error = new HttpError(
             "Searching patient's visits failed. Please try again later",
@@ -180,8 +180,9 @@ const getPatientVisits = async (req, res, next) => {
         const momentDate = moment(date.toISOString()).format("DD/MM/YYYY", true)
         visit.term = momentDate;
     }
-
-    res.status(200).json({visits: visitsList.map((visit) => visit.toObject({getters: true}))});
+    res.status(200).json({
+        visits: visitsList,
+    });
 };
 
 const getVetVisits = async (req, res, next) => {
@@ -205,7 +206,7 @@ const getVetVisits = async (req, res, next) => {
 
     let vetVisits;
     try {
-        vetVisits = await Visit.find({vet: vetId});
+        vetVisits = await Visit.find({vet: vetId}).lean();
     } catch (err) {
         const error = new HttpError(
             "Searching vet's visits failed. Please try again later",
@@ -216,12 +217,12 @@ const getVetVisits = async (req, res, next) => {
 
     for (let visit of vetVisits) {
         const date = new Date(visit.term);
+        //date.toString();
         const momentDate = moment(date.toISOString()).format("DD/MM/YYYY", true)
         visit.term = momentDate;
     }
-
     res.status(200).json({
-        visits: vetVisits.map((visit) => visit.toObject({getters: true})),
+        visits: vetVisits,
     });
 };
 
