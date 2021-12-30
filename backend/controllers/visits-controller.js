@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 const {validationResult} = require("express-validator");
 const {v4: uuid} = require("uuid");
+const moment = require('moment')
 
 const HttpError = require("../models/http-error");
 const Visit = require("../models/visit");
@@ -33,8 +34,6 @@ const createVisit = async (req, res, next) => {
     let existingVet;
     let existingPet;
     let existingClinic;
-
-    console.log(clinicId);
 
     try {
         existingClinic = await Clinic.findById(clinicId);
@@ -176,6 +175,12 @@ const getPatientVisits = async (req, res, next) => {
         return next(error);
     }
 
+    for (let visit of visitsList) {
+        const date = new Date(visit.term);
+        const momentDate = moment(date.toISOString()).format("DD/MM/YYYY", true)
+        visit.term = momentDate;
+    }
+
     res.status(200).json({visits: visitsList.map((visit) => visit.toObject({getters: true}))});
 };
 
@@ -207,6 +212,12 @@ const getVetVisits = async (req, res, next) => {
             500
         );
         return next(error);
+    }
+
+    for (let visit of vetVisits) {
+        const date = new Date(visit.term);
+        const momentDate = moment(date.toISOString()).format("DD/MM/YYYY", true)
+        visit.term = momentDate;
     }
 
     res.status(200).json({

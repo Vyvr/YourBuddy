@@ -86,7 +86,7 @@ const VisitList = () => {
                   <td>{v.term}</td>
                 </tr>
               );
-            })}
+            }).reverse()}
         </tbody>
       </table>
     </VetContent>

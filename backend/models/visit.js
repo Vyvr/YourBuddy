@@ -5,7 +5,7 @@ const { stringify } = require("uuid");
 
 const visitSchema = new mongoose.Schema({
   term: {
-    type: Date,
+    type: String,
     min: Date.now() - 1 * 24 * 60 * 60 * 1000,
     required: true,
   },

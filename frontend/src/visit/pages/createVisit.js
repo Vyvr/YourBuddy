@@ -120,9 +120,6 @@ const CreateVisit = () => {
             setCorrectData(false)
             return;
         }
-
-        console.log("date: " + date + "\nvet: " + vet + "\npatient: " + patient + "\nowner: " + owner + "\nclinicId: " + clinicId)
-
         setIsLoading(true)
         try {
             const response = await fetch(
