@@ -387,7 +387,6 @@ const getAllClinicVets = async (req, res, next) => {
     let vet;
     try {
       vet = await Vet.findById(worker);
-      console.log(vet);
       workersList.push(vet);
     } catch (err) {
       const error = new HttpError("Finding worker error", 500);
@@ -395,7 +394,6 @@ const getAllClinicVets = async (req, res, next) => {
     }
   }
 
-  console.log(workersList);
   res.json({ workers: workersList.map((worker) => worker.toObject({ getters: true }))
   });
 };

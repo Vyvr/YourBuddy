@@ -11,13 +11,13 @@ const visitSchema = new mongoose.Schema({
   },
   hour: {
     type: Number,
-    required: true,
+    required: false,
     min: 0,
     max: 23,
   },
   minutes: {
     type: Number,
-    required: true,
+    required: false,
     min: 0,
     max: 59,
   },

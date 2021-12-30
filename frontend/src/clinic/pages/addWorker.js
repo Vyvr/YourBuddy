@@ -91,7 +91,7 @@ const AddWorker = (props) => {
       setIsLoading(false);
     };
     getClinicWorkers();
-  }, []);
+  });
 
   const findWorker = async (data) => {
     setIsLoading(true);
