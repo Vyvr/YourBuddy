@@ -43,7 +43,8 @@ const VisitList = () => {
     _ownerName,
     _patientName,
     _term,
-    _description
+    _description,
+    _patient
   ) => {
     history.push("/vet/visit-details/" + _id, {
       id: _id,
@@ -51,6 +52,7 @@ const VisitList = () => {
       patientName: _patientName,
       term: _term,
       description: _description,
+      patient: _patient,
     });
   };
 
@@ -66,27 +68,30 @@ const VisitList = () => {
         </thead>
         <tbody>
           {!isLoading &&
-            loadedVisits?.map((v) => {
-              return (
-                <tr
-                  key={v.id}
-                  id={v.id}
-                  onClick={() => {
-                    handleRowClick(
-                      v.id,
-                      v.ownerName,
-                      v.patientName,
-                      v.term,
-                      v.description
-                    );
-                  }}
-                >
-                  <td>{v.ownerName}</td>
-                  <td>{v.patientName}</td>
-                  <td>{v.term}</td>
-                </tr>
-              );
-            }).reverse()}
+            loadedVisits
+              ?.map((v) => {
+                return (
+                  <tr
+                    key={v.id}
+                    id={v.id}
+                    onClick={() => {
+                      handleRowClick(
+                        v.id,
+                        v.ownerName,
+                        v.patientName,
+                        v.term,
+                        v.description,
+                        v.patient
+                      );
+                    }}
+                  >
+                    <td>{v.ownerName}</td>
+                    <td>{v.patientName}</td>
+                    <td>{v.term}</td>
+                  </tr>
+                );
+              })
+              .reverse()}
         </tbody>
       </table>
     </VetContent>

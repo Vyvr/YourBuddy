@@ -26,5 +26,6 @@ router.post(
   petsController.editPet
 );
 router.get("/:uid", petsController.getPetsByUserId);
+router.get("/get-pet-data/:petId", petsController.getPetData);
 
 module.exports = router;
