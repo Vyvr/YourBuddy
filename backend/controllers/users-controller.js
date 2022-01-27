@@ -160,7 +160,6 @@ const login = async (req, res, next) => {
   });
 
   res.cookie("userSurname", existingUser.surname, {
-
     httpOnly: false,
     secure: true,
   });
@@ -224,7 +223,7 @@ const findUserById = async (req, res, next) => {
   const uid = req.params.uid;
   let existingUser;
   try {
-    existingUser = await User.findOne({ id: uid });
+    existingUser = await User.findById(uid);
   } catch (err) {
     const error = new HttpError(
       "Logging in failed. Please try again later.",

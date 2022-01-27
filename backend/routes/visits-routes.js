@@ -13,5 +13,6 @@ router.get("/get-visit-details/:id", visitsController.getVisitDetails);
 router.get("/get-vet-visits/:vetId", visitsController.getVetVisits);
 
 router.post("/create-visit", visitsController.createVisit);
+router.post("/edit-visit", visitsController.editVisit);
 
 module.exports = router;

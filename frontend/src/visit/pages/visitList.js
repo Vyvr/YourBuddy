@@ -76,7 +76,7 @@ const VisitList = () => {
                     id={v.id}
                     onClick={() => {
                       handleRowClick(
-                        v.id,
+                        v._id,
                         v.ownerName,
                         v.patientName,
                         v.term,

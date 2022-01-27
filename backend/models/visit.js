@@ -29,6 +29,7 @@ const visitSchema = new mongoose.Schema({
   clinic: { type: String, required: true },
   patientName: { type: String, required: true },
   ownerName: { type: String, required: true },
+  drugs: [{ type: String, required: false }],
   submitted: { type: Boolean, default: false, required: true },
 });
 
