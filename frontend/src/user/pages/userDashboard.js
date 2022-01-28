@@ -13,12 +13,14 @@ import "./userDashboard.css";
 const UserDashboard = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [uid, setUid] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadedPets, setLoadedPets] = useState();
 
   useEffect(() => {
     setName(getCookieValue("userName"));
     setSurname(getCookieValue("userSurname"));
+    setUid(getCookieValue("user_id"));
   }, []);
 
   useEffect(() => {
@@ -45,29 +47,32 @@ const UserDashboard = () => {
   }, []);
 
   return (
-    <div>
-      <UserContent>
-        <div className="dashboard-content">
-          <UserProfile className="user-profile" name={name} surname={surname} />
-          <div className="pet-list">
-            {!isLoading &&
-              loadedPets &&
-              loadedPets.map((pet) => {
-                return (
-                  <PetCard
-                    id={pet.id}
-                    key={pet.id}
-                    name={pet.name}
-                    age={pet.age}
-                    weight={pet.weight}
-                    owner={pet.owner}
-                  />
-                );
-              })}
-          </div>
+    <UserContent>
+      <div className="dashboard-content">
+        <UserProfile
+          className="user-profile"
+          name={name}
+          surname={surname}
+          userId={uid}
+        />
+        <div className="pet-list">
+          {!isLoading &&
+            loadedPets &&
+            loadedPets.map((pet) => {
+              return (
+                <PetCard
+                  id={pet.id}
+                  key={pet.id}
+                  name={pet.name}
+                  age={pet.age}
+                  weight={pet.weight}
+                  owner={pet.owner}
+                />
+              );
+            })}
         </div>
-      </UserContent>
-    </div>
+      </div>
+    </UserContent>
   );
 };
 

@@ -292,7 +292,7 @@ const editUserCredentials = async (req, res, next) => {
     return next(error);
   }
 
-  const { id, name, surname, mail, password } = req.body;
+  const { id, name, surname, mail, password, isVet } = req.body;
 
   const userId = id;
 
