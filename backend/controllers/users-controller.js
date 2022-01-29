@@ -292,6 +292,25 @@ const editUserCredentials = async (req, res, next) => {
     return next(error);
   }
 
+  res.cookie("userMail", updatedUser.mail, {
+    httpOnly: false,
+    secure: true,
+  });
+
+  res.cookie("userPassword", updatedUser.password, {
+    httpOnly: false,
+    secure: true,
+  });
+  res.cookie("userName", updatedUser.name, {
+    httpOnly: false,
+    secure: true,
+  });
+
+  res.cookie("userSurname", updatedUser.surname, {
+    httpOnly: false,
+    secure: true,
+  });
+
   res.status(200).json({ user: updatedUser.toObject({ getters: true }) });
 };
 
