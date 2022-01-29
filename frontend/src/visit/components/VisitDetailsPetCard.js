@@ -44,6 +44,10 @@ const VisitDetailsPetCard = (props) => {
       <Wrapper>
         <InfoHeader>Weight</InfoHeader>
         <InfoData key="weight">{props.patientDetails.weight} kg</InfoData>
+      </Wrapper>{" "}
+      <Wrapper>
+        <InfoHeader>Sex</InfoHeader>
+        <InfoData key="weight">{props.patientDetails.sex}</InfoData>
       </Wrapper>
       <Wrapper>
         <InfoHeader>Vaccines</InfoHeader>

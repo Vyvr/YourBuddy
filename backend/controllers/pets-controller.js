@@ -40,13 +40,15 @@ const createPet = async (req, res, next) => {
     );
     return next(error);
   }
-  const { name, age, weight, owner } = req.body;
+  const { name, age, weight, owner, breed, sex } = req.body;
 
   const createdPet = new Pet({
     name,
     age,
     weight,
     owner,
+    breed,
+    sex,
   });
 
   let user;
