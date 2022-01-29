@@ -71,42 +71,6 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  // const loggedIn = req.cookies.loggedIn;
-
-  // if (loggedIn === "true") {
-  //   const loggedMail = req.cookies.mail;
-
-  //   let loggedInUser;
-
-  //   try {
-  //     loggedInUser = await User.findOne({ mail: loggedMail });
-  //   } catch (err) {
-  //     const error = new HttpError(
-  //       "Logging in failed. Please try again later.",
-  //       500
-  //     );
-  //     return next(error);
-  //   }
-
-  //   const loggedInPassword = req.cookies.password;
-  //   const loggedInmatchPassword = await loggedInUser.comparePassword(
-  //     loggedInPassword
-  //   );
-
-  //   const newPassword = cryptr.decrypt(loggedInPassword);
-  //   console.log(newPassword);
-  //   // console.log(loggedInUser.password);
-
-  //   if (!loggedInmatchPassword) {
-  //     const error = new HttpError(
-  //       "Invalid credentials specified. Could not log in(password)",
-  //       401
-  //     );
-  //     return next(error);
-  //   }
-  //   return;
-  // }
-  //---------------------------------------------------------------------
   const { mail, password } = req.body;
 
   let existingUser;
@@ -240,7 +204,7 @@ const findUserById = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ existingUser }).send();
+  res.json({ existingUser });
 };
 
 const getUserTypes = async (req, res, next) => {
@@ -294,12 +258,10 @@ const editUserCredentials = async (req, res, next) => {
 
   const { id, name, surname, mail, password, isVet } = req.body;
 
-  const userId = id;
-
   let updatedUser;
 
   try {
-    updatedUser = await User.findById(userId);
+    updatedUser = await User.findById(id);
   } catch (err) {
     const error = new HttpError(
       "Finding user to edit failed. Please try again later.",
@@ -312,6 +274,13 @@ const editUserCredentials = async (req, res, next) => {
   updatedUser.surname = surname;
   updatedUser.mail = mail;
   updatedUser.password = password;
+
+  if (isVet && !updatedUser.type.includes("vet")) {
+    updatedUser.type.push("vet");
+  } else if (!isVet && updatedUser.type.includes("vet")) {
+    const index = updatedUser.type.indexOf("vet");
+    updatedUser.type.splice(index, 1);
+  }
 
   try {
     await updatedUser.save();

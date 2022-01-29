@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import validator from "validator";
 
@@ -71,7 +71,7 @@ const EditUser = (props) => {
   const [isSurnameEmpty, setIsSurnameEmpty] = useState(false);
   const [isMailEmpty, setIsMailEmpty] = useState(false);
   const [isMail, setIsMail] = useState(true);
-
+  const history = useHistory();
   let location = useLocation();
 
   useEffect(() => {
@@ -99,6 +99,30 @@ const EditUser = (props) => {
     };
     getUserData();
   }, [location.state.userId]);
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSurnameChange = (e) => {
+    setSurname(e.target.value);
+  };
+
+  const handleMailChange = (e) => {
+    setMail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSecondPasswordChange = (e) => {
+    setSecondPassword(e.target.value);
+  };
+
+  const handleVetTypeChange = (e) => {
+    setVetType(e.target.checked);
+  };
 
   const sendData = async () => {
     if (!name || name.length === 0) {
@@ -162,38 +186,36 @@ const EditUser = (props) => {
     setIsPasswordsMatch(true);
     setIsSurnameEmpty(false);
     setIsNameEmpty(false);
-    console.log(
-      "name: " + name,
-      "surname: " + surname,
-      "mail: " + mail,
-      "vet: " + vetType,
-      "password: " + password,
-      "secondPassword: " + secondPassword
-    );
-  };
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/user/edit-user-credentials",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+          },
 
-  const handleSurnameChange = (e) => {
-    setSurname(e.target.value);
-  };
+          body: JSON.stringify({
+            id: location.state.userId,
+            name: name,
+            surname: surname,
+            mail: mail,
+            password: password,
+            isVet: vetType,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
 
-  const handleMailChange = (e) => {
-    setMail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSecondPasswordChange = (e) => {
-    setSecondPassword(e.target.value);
-  };
-
-  const handleVetTypeChange = (e) => {
-    setVetType(e.target.checked);
+      history.push("/user/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -220,7 +242,7 @@ const EditUser = (props) => {
             <Input type="password" onChange={handlePasswordChange} />
           </Wrapper>
           <Wrapper>
-            <Label>Type password again:</Label>
+            <Label>Re-enter password:</Label>
             <Input type="password" onChange={handleSecondPasswordChange} />
           </Wrapper>
           <Wrapper>
