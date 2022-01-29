@@ -103,6 +103,10 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
+  let vet = false;
+
+  if (existingUser.type.includes("vet")) vet = true;
+
   res.cookie("userMail", existingUser.mail, {
     httpOnly: false,
     secure: true,
@@ -133,7 +137,7 @@ const login = async (req, res, next) => {
     secure: true,
   });
 
-  res.cookie("loggedInAs", "user", {
+  res.cookie("isVet", vet, {
     httpOnly: false,
     secure: true,
   });
@@ -307,6 +311,11 @@ const editUserCredentials = async (req, res, next) => {
   });
 
   res.cookie("userSurname", updatedUser.surname, {
+    httpOnly: false,
+    secure: true,
+  });
+
+  res.cookie("isVet", isVet, {
     httpOnly: false,
     secure: true,
   });
