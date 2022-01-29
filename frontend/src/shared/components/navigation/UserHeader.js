@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 
 import Header from "./Header";
+import getCookieValue from "../../../scripts/getCookieValue";
 
 const UserHeader = () => {
   const history = useHistory();
@@ -34,9 +35,11 @@ const UserHeader = () => {
           LOGOUT
         </NavLink>
       </li>
-      <li>
-        <Switch onChange={onChangeGoVetPage} />
-      </li>
+      {getCookieValue("isVet") === "true" && (
+        <li>
+          <Switch onChange={onChangeGoVetPage} />
+        </li>
+      )}
     </Header>
   );
 };
