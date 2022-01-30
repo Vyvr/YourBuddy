@@ -1,16 +1,27 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import validator from "validator";
+import styled from "styled-components";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 
 import "./Register.css";
 
+const ErrorLabel = styled.label`
+  height: 60px;
+  width: 100%;
+  text-align: center;
+  align-self: center;
+  color: red;
+`;
+
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const history = useHistory();
+  const [failedRegistration, setFailedRegistration] = useState(false);
 
   const authUserSubmitHandler = async (data) => {
     try {
@@ -27,6 +38,7 @@ const Register = () => {
           password: data.password,
         }),
       });
+      if (response.status === 422) setFailedRegistration(true);
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
@@ -79,6 +91,7 @@ const Register = () => {
               {...register("password")}
             />
           </div>
+          {failedRegistration && <ErrorLabel>Incorrect data passed</ErrorLabel>}
           <div className="register-button-div">
             <button className="register-button" type="submit">
               Register

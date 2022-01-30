@@ -1,15 +1,25 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 
 import "./Login.css";
 
+const ErrorLabel = styled.label`
+  height: 60px;
+  width: 100%;
+  text-align: center;
+  align-self: center;
+  color: red;
+`;
+
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const [failedLogin, setFailedLogin] = useState(false);
 
   const authUserSubmitHandler = async (data) => {
     try {
@@ -25,6 +35,7 @@ const Login = () => {
           password: data.password,
         }),
       });
+      if (response.status === 401) setFailedLogin(true);
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
@@ -61,6 +72,7 @@ const Login = () => {
               {...register("password")}
             />
           </div>
+          {failedLogin && <ErrorLabel>Passed data is incorrect</ErrorLabel>}
           <div className="login-button-div">
             <button className="login-button" type="submit">
               Login
