@@ -8,8 +8,6 @@ import styled from "styled-components";
 import getCookieValue from "./../../scripts/getCookieValue";
 
 import UserContent from "../../shared/components/content/UserContent";
-import { StyledEngineProvider } from "@mui/material";
-import { grid } from "@mui/system";
 
 // import "./createPet.css";
 
