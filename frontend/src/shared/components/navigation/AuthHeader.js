@@ -8,9 +8,9 @@ import Header from "./Header";
 const AuthHeader = () => {
   return (
     <Header>
-      <li>
-        <NavLink to="/">GO BACK</NavLink>
-      </li>
+      <NavLink to="/">
+        <button>GO BACK</button>
+      </NavLink>
     </Header>
   );
 };

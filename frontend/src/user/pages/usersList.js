@@ -1,9 +1,19 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 import UserCard from "../components/userCard";
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
 
 const UsersList = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,22 +39,20 @@ const UsersList = () => {
 
   return (
     <AuthContent>
-      <div className="center">
-        <ul>
-          {!isLoading &&
-            loadedUsers &&
-            loadedUsers.map((user) => {
-              return (
-                <UserCard
-                  key={user._id}
-                  id={user._id}
-                  name={user.name}
-                  surname={user.surname}
-                />
-              );
-            })}
-        </ul>
-      </div>
+      <Content>
+        {!isLoading &&
+          loadedUsers &&
+          loadedUsers.map((user) => {
+            return (
+              <UserCard
+                key={user._id}
+                id={user._id}
+                name={user.name}
+                surname={user.surname}
+              />
+            );
+          })}
+      </Content>
     </AuthContent>
   );
 };
