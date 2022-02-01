@@ -8,8 +8,6 @@ import VetProfile from "../components/vetProfile";
 
 import getCookieValue from "../../scripts/getCookieValue";
 
-import "./vetDashboard.css";
-
 const VetDashboard = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");

@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 import AuthContent from "../../shared/components/content/AuthContent";
 import VetCard from "./../components/vetCard";
 
-import "./vetsList.css";
-
 const VetsList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedVets, setLoadedVets] = useState();

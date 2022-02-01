@@ -8,8 +8,6 @@ import PetCard from "../../pet/components/petCard";
 
 import getCookieValue from "../../scripts/getCookieValue";
 
-import "./userDashboard.css";
-
 const UserDashboard = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");

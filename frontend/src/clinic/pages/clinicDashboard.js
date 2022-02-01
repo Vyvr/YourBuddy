@@ -8,8 +8,6 @@ import ClinicCard from "./../components/clinicCard";
 
 import getCookieValue from "../../scripts/getCookieValue";
 
-import "./clinicDashboard.css";
-
 const ClinicDashboard = () => {
   const [loadedClinics, setLoadedClinics] = useState();
   const [isLoading, setIsLoading] = useState(false);

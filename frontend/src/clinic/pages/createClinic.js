@@ -9,8 +9,6 @@ import CreateForm from "../../shared/components/forms/createForm";
 
 import getCookieValue from "../../scripts/getCookieValue";
 
-import "./createClinic.css";
-
 const ClinicDashboard = () => {
   const { register, handleSubmit } = useForm();
 

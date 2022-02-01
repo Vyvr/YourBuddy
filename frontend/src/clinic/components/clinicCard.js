@@ -3,8 +3,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import "./clinicCard.css";
-
 const clinicCard = (props) => {
   return (
     <div className="clinic-card-content">

@@ -5,8 +5,6 @@ import { NavLink } from "react-router-dom";
 
 import profilePic from "../../resources/user/profile_pic.jpg";
 
-import "./userProfile.css";
-
 const UserProfile = (props) => {
   return (
     <div className="user-profile-content">

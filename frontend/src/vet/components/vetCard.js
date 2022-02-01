@@ -4,8 +4,6 @@ import React from "react";
 
 import profilePic from "../../resources/user/profile_pic.jpg";
 
-import "./vetCard.css";
-
 const VetCard = (props) => {
   const deleteVetHandler = async () => {
     try {

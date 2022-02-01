@@ -1,7 +1,7 @@
+/** @format */
+
 import React from "react";
 import { useHistory } from "react-router-dom";
-
-import "./notLoggedIn.css";
 
 const NotLoggedIn = () => {
   const history = useHistory();

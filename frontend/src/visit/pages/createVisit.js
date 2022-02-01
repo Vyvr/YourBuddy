@@ -8,8 +8,6 @@ import { useForm } from "react-hook-form";
 import UserContent from "../../shared/components/content/UserContent";
 import CreateForm from "../../shared/components/forms/createForm";
 
-import "./createVisit.css";
-
 const StyledTable = styled.table`
   width: 100%;
   margin-top: 20px;

@@ -7,8 +7,6 @@ import styled from "styled-components";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 
-import "./Login.css";
-
 const ErrorLabel = styled.label`
   height: 60px;
   width: 100%;

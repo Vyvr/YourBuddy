@@ -6,8 +6,6 @@ import { useForm } from "react-hook-form";
 
 import UserContent from "../../shared/components/content/UserContent";
 
-import "./editPet.css";
-
 const EditPet = (props) => {
   const { register, handleSubmit } = useForm();
   let location = useLocation();

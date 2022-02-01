@@ -7,8 +7,6 @@ import { useLocation } from "react-router-dom";
 import VetContent from "../../shared/components/content/VetContent";
 import VisitDetailsPetCard from "../components/VisitDetailsPetCard";
 
-import "./visitList.css";
-
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;

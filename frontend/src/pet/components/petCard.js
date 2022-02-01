@@ -5,8 +5,6 @@ import { NavLink } from "react-router-dom";
 
 import petProfilePic from "../../resources/pet/pet_profile_pic.jpg";
 
-import "./petCard.css";
-
 const PetCard = (props) => {
   return (
     <div className="pet-card-content">

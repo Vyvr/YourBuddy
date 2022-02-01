@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import "./Header.css";
-
 const Home = (props) => {
   return (
     <div className="home-header-content">

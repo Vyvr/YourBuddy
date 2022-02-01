@@ -7,8 +7,6 @@ import VetContent from "../../shared/components/content/VetContent";
 
 import getCookieValue from "../../scripts/getCookieValue";
 
-import "./visitList.css";
-
 const VisitList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedVisits, setLoadedVisits] = useState();

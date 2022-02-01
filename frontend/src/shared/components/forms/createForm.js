@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import "./createForm.css";
 const Form = (props) => {
   return (
     <form>

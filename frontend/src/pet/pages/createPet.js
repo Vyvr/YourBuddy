@@ -9,8 +9,6 @@ import getCookieValue from "./../../scripts/getCookieValue";
 
 import UserContent from "../../shared/components/content/UserContent";
 
-// import "./createPet.css";
-
 const StyledForm = styled.form`
   width: 100%;
   height: 100%;

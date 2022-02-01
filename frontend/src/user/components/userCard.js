@@ -4,8 +4,6 @@ import React from "react";
 
 import profilePic from "../../resources/user/profile_pic.jpg";
 
-import "./userCard.css";
-
 const UserCard = (props) => {
   const deleteUserHandler = async () => {
     try {
