@@ -1,12 +1,25 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 import UserContent from "../../shared/components/content/UserContent";
 import UserProfile from "../components/userProfile";
 import PetCard from "../../pet/components/petCard";
 
 import getCookieValue from "../../scripts/getCookieValue";
+import Content from "../../shared/components/content/Content";
+
+const PetList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  row-gap: 10px;
+  margin-left: auto;
+  margin-top: 10px;
+
+  width: calc(100% - 340px);
+  height: 100%;
+`;
 
 const UserDashboard = () => {
   const [name, setName] = useState("");
@@ -46,30 +59,28 @@ const UserDashboard = () => {
 
   return (
     <UserContent>
-      <div className="dashboard-content">
-        <UserProfile
-          className="user-profile"
-          name={name}
-          surname={surname}
-          userId={uid}
-        />
-        <div className="pet-list">
-          {!isLoading &&
-            loadedPets &&
-            loadedPets.map((pet) => {
-              return (
-                <PetCard
-                  id={pet.id}
-                  key={pet.id}
-                  name={pet.name}
-                  age={pet.age}
-                  weight={pet.weight}
-                  owner={pet.owner}
-                />
-              );
-            })}
-        </div>
-      </div>
+      <UserProfile
+        className="user-profile"
+        name={name}
+        surname={surname}
+        userId={uid}
+      />
+      <PetList className="pet-list">
+        {!isLoading &&
+          loadedPets &&
+          loadedPets.map((pet) => {
+            return (
+              <PetCard
+                id={pet.id}
+                key={pet.id}
+                name={pet.name}
+                age={pet.age}
+                weight={pet.weight}
+                owner={pet.owner}
+              />
+            );
+          })}
+      </PetList>
     </UserContent>
   );
 };

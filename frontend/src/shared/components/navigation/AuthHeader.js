@@ -8,7 +8,7 @@ import Header from "./Header";
 const AuthHeader = () => {
   return (
     <Header>
-      <NavLink to="/">
+      <NavLink to="/" style={{ marginLeft: "auto", marginRight: "auto" }}>
         <button>GO BACK</button>
       </NavLink>
     </Header>

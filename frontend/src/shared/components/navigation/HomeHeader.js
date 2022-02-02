@@ -5,14 +5,16 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./Header";
+import { COLORS } from "../../../shared/colors";
 
 const RegisterButton = styled.button`
   && {
-    background-color: #badfe7;
+    background-color: ${COLORS.special_button};
+    border-radius: 0px;
     border-top-left-radius: 30px;
 
     :hover {
-      background-color: #6fb3b8;
+      background-color: ${COLORS.special_button_hover};
       color: white;
     }
   }
@@ -31,14 +33,12 @@ const HomeHeader = () => {
       <NavLink to="/user/user-list">
         <button>USERS LIST</button>
       </NavLink>
-      <div>
-        <NavLink to="/login">
-          <LoginButton>LOGIN</LoginButton>
-        </NavLink>
-        <NavLink to="/register">
-          <RegisterButton>REGISTER</RegisterButton>
-        </NavLink>
-      </div>
+      <NavLink to="/login" style={{ marginLeft: "auto" }}>
+        <LoginButton>LOGIN</LoginButton>
+      </NavLink>
+      <NavLink to="/register">
+        <RegisterButton>REGISTER</RegisterButton>
+      </NavLink>
     </Header>
   );
 };

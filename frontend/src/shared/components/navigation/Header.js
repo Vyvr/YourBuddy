@@ -3,6 +3,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { COLORS } from "../../../shared/colors";
+
 const Wrapper = styled.div`
   width: 100%;
   height: 60px;
@@ -11,14 +13,13 @@ const Wrapper = styled.div`
 
   & div {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    flex-grow: 1;
+    column-gap: 10px;
   }
 
   & a {
-    margin-left: 10px;
     width: 150px;
     height: 100%;
   }
@@ -29,21 +30,25 @@ const Wrapper = styled.div`
     border: none;
     cursor: pointer;
     text-align: center;
-    background-color: white;
-    color: #388087;
+    background-color: ${COLORS.menu_button};
+    color: ${COLORS.font};
+    font-size: 16px;
+    letter-spacing: 1px;
     font-weight: 700;
     transition: 0.5s;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
   }
 
   & button:hover {
-    background-color: #e3e3de;
+    background-color: ${COLORS.menu_button_hover};
   }
 `;
 
 const Header = (props) => {
   return (
     <Wrapper>
-      <div>{props.children}</div>
+      <div className="children_wrapper">{props.children}</div>
     </Wrapper>
   );
 };

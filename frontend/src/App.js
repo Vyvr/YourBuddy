@@ -29,7 +29,7 @@ import Hello from "./user/pages/hello";
 const App = () => {
   return (
     <Router>
-      <main>
+      <main style={{ height: "100%", margin: "0" }}>
         <Switch>
           <Route path="/" exact>
             <Home />
