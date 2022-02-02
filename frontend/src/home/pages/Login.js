@@ -90,30 +90,6 @@ const Login = () => {
             <LoginButton type="submit">Login</LoginButton>
           </ButtonWrapper>
         </FormGroup>
-        {/* <div className="login-form-content">
-          <div>
-            <input
-              className="mail-input"
-              type="text"
-              placeholder="enter your e-mail"
-              {...register("mail")}
-            />
-          </div>
-          <div>
-            <input
-              className="password-input"
-              type="password"
-              placeholder="enter your password"
-              {...register("password")}
-            />
-          </div>
-          {failedLogin && <ErrorLabel>Passed data is incorrect</ErrorLabel>}
-          <div className="login-button-div">
-            <button className="login-button" type="submit">
-              Login
-            </button>
-          </div>
-        </div> */}
       </Form>
     </AuthContent>
   );

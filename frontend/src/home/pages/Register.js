@@ -6,14 +6,16 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 import AuthContent from "../../shared/components/content/AuthContent";
-
-const ErrorLabel = styled.label`
-  height: 60px;
-  width: 100%;
-  text-align: center;
-  align-self: center;
-  color: red;
-`;
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  ButtonWrapper,
+  LoginButton,
+  ErrorLabelWrapper,
+  ErrorLabel,
+} from "../../shared/components/forms/formTemplate";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
@@ -51,7 +53,75 @@ const Register = () => {
 
   return (
     <AuthContent>
-      <form
+      <Form
+        className="register-form"
+        onSubmit={handleSubmit(authUserSubmitHandler)}
+      >
+        <FormGroup class="form__group">
+          <FormInput
+            type="input"
+            class="form__field"
+            placeholder="name"
+            name="name"
+            id="name"
+            {...register("name")}
+          />
+          <FormLabel for="name" class="form__label">
+            Name
+          </FormLabel>
+        </FormGroup>
+        <FormGroup class="form__group">
+          <FormInput
+            type="input"
+            class="form__field"
+            placeholder="surname"
+            name="surname"
+            id="surname"
+            {...register("surname")}
+          />
+          <FormLabel for="surname" class="form__label">
+            Surname
+          </FormLabel>
+        </FormGroup>
+        <FormGroup class="form__group">
+          <FormInput
+            type="input"
+            class="form__field"
+            placeholder="E-mail"
+            name="mail"
+            id="mail"
+            {...register("mail")}
+          />
+          <FormLabel for="mail" class="form__label">
+            E-mail
+          </FormLabel>
+        </FormGroup>
+        <FormGroup class="form__group">
+          <FormInput
+            type="password"
+            class="form__field"
+            placeholder="Password"
+            name="password"
+            id="password"
+            {...register("password")}
+          />
+          <FormLabel for="password" class="form__label">
+            Password
+          </FormLabel>
+        </FormGroup>
+        {failedRegistration && (
+          <ErrorLabelWrapper>
+            <ErrorLabel>Passed data is incorrect. Try again.</ErrorLabel>
+          </ErrorLabelWrapper>
+        )}
+        <FormGroup>
+          <ButtonWrapper>
+            <LoginButton type="submit">Register</LoginButton>
+          </ButtonWrapper>
+        </FormGroup>
+      </Form>
+
+      {/* <form
         className="login-form"
         onSubmit={handleSubmit(authUserSubmitHandler)}
       >
@@ -95,7 +165,7 @@ const Register = () => {
             </button>
           </div>
         </div>
-      </form>
+      </form> */}
     </AuthContent>
   );
 };
