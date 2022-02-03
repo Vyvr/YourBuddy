@@ -1,6 +1,7 @@
 /** @format */
 
 import styled from "styled-components";
+import { COLORS } from "../../colors";
 
 const ErrorLabel = styled.label`
   width: 100%;
@@ -25,11 +26,12 @@ const Form = styled.form`
 `;
 
 const FormGroup = styled.div`
-  desplay: flex;
+  display: flex;
   position: relative;
   padding: 15px 0 0;
   margin-top: 10px;
   width: 30%;
+  align-items: center;
 `;
 
 const FormInput = styled.input`
@@ -100,6 +102,16 @@ const FormLabel = styled.label`
   }
 `;
 
+const Label = styled.label`
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: gray;
+  margin-right: 10px;
+  font-size: 1.3rem;
+  cursor: text;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -129,6 +141,87 @@ const LoginButton = styled.button`
   }
 `;
 
+const Switch = styled.input`
+  --active: ${COLORS.special_button_hover};
+  --active-inner: #fff;
+  --focus: 1px ${COLORS.special_button_hover};
+  --border: ${COLORS.special_button_hover};
+  --border-hover: ${COLORS.special_button_hover};
+  --background: #fff;
+  --disabled: #f6f8ff;
+  --disabled-inner: #e1e6f9;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 21px;
+  width: 38px;
+  border-radius: 11px;
+  outline: none;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  border: 1px solid var(--bc, var(--border));
+  background: var(--b, var(--background));
+  transition: 0.3s, border-color 0.3s, box-shadow 0.2s;
+
+  &:after {
+    content: "";
+    display: block;
+    left: 0;
+    top: 0;
+    position: absolute;
+    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
+      opacity var(--d-o, 0.2s);
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background: var(--ab, var(--border));
+    transform: translateX(var(--x, 0));
+  }
+
+  &:checked {
+    --b: var(--active);
+    --bc: var(--active);
+    --d-o: 0.3s;
+    --d-t: 0.6s;
+    --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+    --ab: var(--active-inner);
+    --x: 17px;
+  }
+
+  &:disabled {
+    --b: var(--disabled);
+    cursor: not-allowed;
+    opacity: 0.9;
+    &:checked {
+      --b: var(--disabled-inner);
+      --bc: var(--border);
+    }
+    &:not(:checked) {
+      &:after {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  &:hover {
+    &:not(:checked) {
+      &:not(:disabled) {
+        --bc: var(--border-hover);
+      }
+    }
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 var(--focus);
+  }
+`;
+
+const Checkbox = styled.input``;
+
 export {
   Form,
   FormGroup,
@@ -138,4 +231,7 @@ export {
   LoginButton,
   ErrorLabelWrapper,
   ErrorLabel,
+  Checkbox,
+  Switch,
+  Label,
 };

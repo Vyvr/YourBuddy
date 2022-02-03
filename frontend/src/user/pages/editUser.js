@@ -1,69 +1,31 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import validator from "validator";
 
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  ButtonWrapper,
+  LoginButton,
+  ErrorLabelWrapper,
+  ErrorLabel,
+  Switch,
+  Label,
+} from "../../shared/components/forms/formTemplate";
+
 import UserContent from "../../shared/components/content/UserContent";
 import PasswordEye from "../../resources/user/password_eye.png";
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  margin-top: 80px;
-`;
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 40% 60%;
-  width: 100%;
-  height: 100px;
-`;
-
-const Label = styled.label`
-  font-size: 20px;
-  font-weight: bold;
-  justify-self: right;
-`;
-const Input = styled.input`
-  font-family: inherit;
-  margin-left: 10px;
-  height: 20px;
-  width: 30%;
-  align-self: start;
-`;
-
-const Checkbox = styled.input`
-  width: 30px;
-  height: 30px;
-  margin-left: 10px;
-`;
-
-const SubmitButton = styled.button`
-  height: 60px;
-  width: 160px;
-  align-self: center;
-`;
-
-const ErrorLabel = styled.label`
-  height: 60px;
-  width: 100%;
-  text-align: center;
-  align-self: center;
-  color: red;
-`;
 
 const EditUser = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState();
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
-  const [secondPassword, setSecondPassword] = useState("");
+
   const [vetType, setVetType] = useState("false");
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(true);
   const [passwordTooShort, setPasswordTooShort] = useState(false);
@@ -73,6 +35,7 @@ const EditUser = (props) => {
   const [isMail, setIsMail] = useState(true);
   const history = useHistory();
   let location = useLocation();
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     const getUserData = async () => {
@@ -86,9 +49,6 @@ const EditUser = (props) => {
           throw new Error(responseData.message);
         }
         setUserData(responseData.existingUser);
-        setName(responseData.existingUser.name);
-        setSurname(responseData.existingUser.surname);
-        setMail(responseData.existingUser.mail);
         responseData.existingUser.type.includes("vet")
           ? setVetType(true)
           : setVetType(false);
@@ -100,32 +60,12 @@ const EditUser = (props) => {
     getUserData();
   }, [location.state.userId]);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSurnameChange = (e) => {
-    setSurname(e.target.value);
-  };
-
-  const handleMailChange = (e) => {
-    setMail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSecondPasswordChange = (e) => {
-    setSecondPassword(e.target.value);
-  };
-
   const handleVetTypeChange = (e) => {
     setVetType(e.target.checked);
   };
 
-  const sendData = async () => {
-    if (!name || name.length === 0) {
+  const sendData = async (data) => {
+    if (!data.name || data.name.length === 0) {
       setIsNameEmpty(true);
       setIsMail(true);
       setIsMailEmpty(false);
@@ -134,7 +74,7 @@ const EditUser = (props) => {
       setIsSurnameEmpty(false);
       return;
     }
-    if (!surname || surname.length === 0) {
+    if (!data.surname || data.surname.length === 0) {
       setIsSurnameEmpty(true);
       setIsMail(true);
       setIsMailEmpty(false);
@@ -143,7 +83,7 @@ const EditUser = (props) => {
       setIsNameEmpty(false);
       return;
     }
-    if (mail.length === 0) {
+    if (data.mail.length === 0) {
       setIsMailEmpty(true);
       setIsMail(true);
       setPasswordTooShort(false);
@@ -152,7 +92,7 @@ const EditUser = (props) => {
       setIsNameEmpty(false);
       return;
     }
-    if (!validator.isEmail(mail)) {
+    if (!validator.isEmail(data.mail)) {
       setIsMail(false);
       setIsMailEmpty(false);
       setPasswordTooShort(false);
@@ -161,7 +101,11 @@ const EditUser = (props) => {
       setIsNameEmpty(false);
       return;
     }
-    if (!password || !secondPassword || password !== secondPassword) {
+    if (
+      !data.password ||
+      !data.rePassword ||
+      data.password !== data.rePassword
+    ) {
       setIsPasswordsMatch(false);
       setIsMail(true);
       setIsMailEmpty(false);
@@ -170,7 +114,7 @@ const EditUser = (props) => {
       setIsNameEmpty(false);
       return;
     }
-    if (password.length < 6) {
+    if (data.password.length < 6) {
       setPasswordTooShort(true);
       setIsMail(true);
       setIsMailEmpty(false);
@@ -199,11 +143,11 @@ const EditUser = (props) => {
 
           body: JSON.stringify({
             id: location.state.userId,
-            name: name,
-            surname: surname,
-            mail: mail,
-            password: password,
-            isVet: vetType,
+            name: data.name,
+            surname: data.surname,
+            mail: data.mail,
+            password: data.password,
+            isVet: data.vetType,
           }),
         }
       );
@@ -221,6 +165,132 @@ const EditUser = (props) => {
   return (
     <UserContent>
       {!isLoading && userData && (
+        <Form className="edit-user-form" onSubmit={handleSubmit(sendData)}>
+          <FormGroup className="form__group">
+            <FormInput
+              defaultValue={userData.name}
+              type="input"
+              className="form__field"
+              placeholder="name"
+              name="name"
+              id="name"
+              {...register("name")}
+            />
+            <FormLabel for="name" className="form__label">
+              Name
+            </FormLabel>
+          </FormGroup>
+
+          <FormGroup className="form__group">
+            <FormInput
+              type="input"
+              className="form__field"
+              placeholder="surname"
+              defaultValue={userData.surname}
+              name="surname"
+              id="surname"
+              {...register("surname")}
+            />
+            <FormLabel for="surname" className="form__label">
+              Surname
+            </FormLabel>
+          </FormGroup>
+
+          <FormGroup className="form__group">
+            <FormInput
+              type="input"
+              className="form__field"
+              placeholder="mail"
+              defaultValue={userData.mail}
+              name="mail"
+              id="mail"
+              {...register("mail")}
+            />
+            <FormLabel for="mail" className="form__label">
+              E-mail
+            </FormLabel>
+          </FormGroup>
+
+          <FormGroup className="form__group">
+            <FormInput
+              type="password"
+              className="form__field"
+              placeholder="password"
+              name="password"
+              id="password"
+              {...register("password")}
+            />
+            <FormLabel for="password" className="form__label">
+              New password
+            </FormLabel>
+          </FormGroup>
+
+          <FormGroup className="form__group">
+            <FormInput
+              type="password"
+              className="form__field"
+              placeholder="rePassword"
+              name="rePassword"
+              id="rePassword"
+              {...register("rePassword")}
+            />
+            <FormLabel for="rePassword" className="form__label">
+              Re-enter new password
+            </FormLabel>
+          </FormGroup>
+
+          <FormGroup className="form__group">
+            <Label>Are you vet?</Label>
+            <Switch
+              type="checkbox"
+              className="switch"
+              name="vetSwitch"
+              id="vetSwitch"
+              defaultChecked={userData.type.includes("vet") ? true : false}
+              onChange={handleVetTypeChange}
+              {...register("vetType")}
+            />
+          </FormGroup>
+
+          {!isPasswordsMatch && (
+            <ErrorLabelWrapper>
+              <ErrorLabel>Your passwords doesn't match</ErrorLabel>
+            </ErrorLabelWrapper>
+          )}
+          {passwordTooShort && (
+            <ErrorLabelWrapper>
+              <ErrorLabel>Password minimum length is 6 characters</ErrorLabel>
+            </ErrorLabelWrapper>
+          )}
+          {isNameEmpty && (
+            <ErrorLabelWrapper>
+              <ErrorLabel>Name can't be empty</ErrorLabel>
+            </ErrorLabelWrapper>
+          )}
+          {isSurnameEmpty && (
+            <ErrorLabelWrapper>
+              <ErrorLabel>Surname can't be empty</ErrorLabel>
+            </ErrorLabelWrapper>
+          )}
+          {!isMail && (
+            <ErrorLabelWrapper>
+              <ErrorLabel>E-mail address is not valid</ErrorLabel>
+            </ErrorLabelWrapper>
+          )}
+          {isMailEmpty && (
+            <ErrorLabelWrapper>
+              <ErrorLabel>E-mail address can't be empty</ErrorLabel>
+            </ErrorLabelWrapper>
+          )}
+
+          <FormGroup>
+            <ButtonWrapper>
+              <LoginButton type="submit">Submit</LoginButton>
+            </ButtonWrapper>
+          </FormGroup>
+        </Form>
+      )}
+      {/* {!isLoading && userData && (
         <ContentWrapper>
           <Wrapper>
             <Label>Name:</Label>
@@ -267,7 +337,7 @@ const EditUser = (props) => {
           )}
           <SubmitButton onClick={sendData}>Submit</SubmitButton>
         </ContentWrapper>
-      )}
+      )} */}
     </UserContent>
   );
 };
