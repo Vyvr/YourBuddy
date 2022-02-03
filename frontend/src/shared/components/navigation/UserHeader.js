@@ -1,9 +1,7 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import Switch from "@mui/material/Switch";
 import styled from "styled-components";
 
 import Header from "./Header";
@@ -33,7 +31,15 @@ const LogoutButton = styled.button`
 `;
 
 const UserHeader = () => {
-  const history = useHistory();
+  const [isVet, setIsVet] = useState(false);
+
+  useEffect(() => {
+    const isVetHandler = () => {
+      if (getCookieValue("isVet") === "true") setIsVet(true);
+    };
+    isVetHandler();
+  }, []);
+
   const logout = () => {
     document.cookie.split(";").forEach(function (c) {
       document.cookie = c
@@ -42,46 +48,27 @@ const UserHeader = () => {
     });
   };
 
-  const onChangeGoVetPage = () => {
-    history.push("/vet/dashboard");
-  };
-
   return (
     <Header>
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         <NavLink to="/user/dashboard" style={{ marginLeft: "auto" }}>
           <MenuButton>YOUR PROFILE</MenuButton>
         </NavLink>
-        <NavLink to="/user/create-pet" style={{ marginRight: "auto" }}>
+        <NavLink
+          to="/user/create-pet"
+          style={{ marginRight: isVet ? "0px" : "auto" }}
+        >
           <MenuButton>NEW PET</MenuButton>
         </NavLink>
+        {isVet === true && (
+          <NavLink to="/vet/dashboard" style={{ marginRight: "auto" }}>
+            <MenuButton>VET PANEL</MenuButton>
+          </NavLink>
+        )}
       </div>
       <NavLink to="/" onClick={logout} style={{ marginLeft: "auto" }}>
         <LogoutButton>LOGOUT</LogoutButton>
       </NavLink>
-
-      {/* {getCookieValue("isVet") === "true" && (
-        <li>
-          <Switch onChange={onChangeGoVetPage} />
-        </li>
-      )} */}
-
-      {/* <li>
-        <NavLink to="/user/dashboard">YOUR PROFILE</NavLink>
-      </li>
-      <li>
-        <NavLink to="/user/create-pet">ADD NEW PET</NavLink>
-      </li>
-      <li>
-        <NavLink to="/" onClick={logout}>
-          LOGOUT
-        </NavLink>
-      </li>
-      {getCookieValue("isVet") === "true" && (
-        <li>
-          <Switch onChange={onChangeGoVetPage} />
-        </li>
-      )} */}
     </Header>
   );
 };
