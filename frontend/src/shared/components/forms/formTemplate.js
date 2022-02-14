@@ -79,7 +79,6 @@ const FormLabel = styled.label`
   top: 0;
   display: block;
   transition: 0.2s;
-  font-size: 1rem;
   color: gray;
 
   font-size: 1.3rem;
@@ -220,7 +219,44 @@ const Switch = styled.input`
   }
 `;
 
-const Checkbox = styled.input``;
+const CheckboxWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const CheckboxInsideWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100%;
+`;
+
+const CheckboxLabel = styled.label`
+  display: block;
+  transition: 0.2s;
+  color: gray;
+
+  font-size: 1.3rem;
+  cursor: text;
+`;
+
+const Checkbox = styled.input`
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+
+  opacity: 0.5;
+
+  --active: ${COLORS.special_button_hover};
+  --focus: 1px ${COLORS.special_button_hover};
+  --border: ${COLORS.special_button_hover};
+  --border-hover: ${COLORS.special_button_hover};
+  }
+`;
 
 export {
   Form,
@@ -232,6 +268,9 @@ export {
   ErrorLabelWrapper,
   ErrorLabel,
   Checkbox,
+  CheckboxWrapper,
+  CheckboxInsideWrapper,
+  CheckboxLabel,
   Switch,
   Label,
 };

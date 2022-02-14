@@ -55,7 +55,7 @@ const createPet = async (req, res, next) => {
   }
   const { name, born, weight, owner, breed, sex } = req.body;
 
-  console.log("born");
+  console.log(req.body);
 
   const createdPet = new Pet({
     name,
