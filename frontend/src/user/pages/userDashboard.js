@@ -76,6 +76,7 @@ const UserDashboard = () => {
                 key={pet.id}
                 name={pet.name}
                 age={pet.age}
+                breed={pet.breed}
                 weight={pet.weight}
                 owner={pet.owner}
               />

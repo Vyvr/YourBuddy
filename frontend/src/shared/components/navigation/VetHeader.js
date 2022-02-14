@@ -3,7 +3,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import Switch from "@mui/material/Switch";
 
 import Header from "./Header";
 
@@ -39,9 +38,6 @@ const VetHeader = () => {
         <NavLink to="/" onClick={logout}>
           LOGOUT
         </NavLink>
-      </li>
-      <li>
-        <Switch onChange={onChangeGoUserPage} defaultChecked={true} />
       </li>
     </Header>
   );

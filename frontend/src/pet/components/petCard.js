@@ -84,6 +84,9 @@ const PetCard = (props) => {
           <b>Age:</b> {props.age} yo
         </Label>
         <Label className="pet-weight">
+          <b>Breed:</b> {props.breed}
+        </Label>
+        <Label className="pet-weight">
           <b>Weight:</b> {props.weight}kg
         </Label>
       </LabelWrapper>
