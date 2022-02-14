@@ -11,7 +11,6 @@ router.post(
   "/create",
   [
     check("name").not().isEmpty(),
-    check("age").not().isEmpty().bail().isInt({ min: 0 }),
     check("weight").not().isEmpty().bail().isInt({ min: 0 }),
   ],
   petsController.createPet

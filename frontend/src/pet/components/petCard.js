@@ -81,13 +81,16 @@ const PetCard = (props) => {
           <b>{props.name}</b>
         </Label>
         <Label className="pet-age">
-          <b>Age:</b> {props.age} yo
+          <b>Age:</b> {props.year} yo and {props.month} months
         </Label>
         <Label className="pet-weight">
           <b>Breed:</b> {props.breed}
         </Label>
         <Label className="pet-weight">
           <b>Weight:</b> {props.weight}kg
+        </Label>
+        <Label className="pet-weight">
+          <b>Sex:</b> {props.sex}
         </Label>
       </LabelWrapper>
       <PetPanel>

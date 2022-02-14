@@ -51,7 +51,7 @@ const UserDashboard = () => {
           setLoadedPets(responseData.pets);
         }
       } catch (err) {
-        throw new Error(err.message);
+        console.log(err.message);
       }
       setIsLoading(false);
     };
@@ -75,9 +75,11 @@ const UserDashboard = () => {
                 id={pet.id}
                 key={pet.id}
                 name={pet.name}
-                age={pet.age}
+                month={pet.age.month}
+                year={pet.age.year}
                 breed={pet.breed}
                 weight={pet.weight}
+                sex={pet.sex}
                 owner={pet.owner}
               />
             );

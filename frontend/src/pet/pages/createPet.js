@@ -96,7 +96,7 @@ const CreatePet = () => {
 
         body: JSON.stringify({
           name: data.name,
-          age: data.age,
+          born: data.born,
           weight: data.weight,
           breed: data.breed,
           sex: sex,
@@ -136,8 +136,8 @@ const CreatePet = () => {
           <Input type="text" {...register("name")} />
           <Label>Breed:</Label>
           <Input type="text" {...register("breed")} />
-          <Label>Age:</Label>
-          <Input type="text" {...register("age")} />
+          <Label>Born:</Label>
+          <Input type="date" {...register("born")} />
           <Label>Weight:</Label>
           <Input type="text" {...register("weight")} />
           <Label>Sex:</Label>

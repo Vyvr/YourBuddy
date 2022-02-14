@@ -25,6 +25,19 @@ const getPetsByUserId = async (req, res, next) => {
   if (!userPets || userPets.pets.length === 0) {
     return undefined;
   }
+
+  userPets.pets.forEach((pet) => {
+    const today = new Date();
+
+    if (today.getMonth() < pet.born.getMonth()) {
+      pet.age.month = pet.born.getMonth() - today.getMonth();
+    } else {
+      pet.age.month = today.getMonth() - pet.born.getMonth();
+    }
+
+    pet.age.year = today.getFullYear() - pet.born.getFullYear();
+  });
+
   res.json({
     pets: userPets.pets.map((pet) => pet.toObject({ getters: true })),
   });
@@ -40,11 +53,13 @@ const createPet = async (req, res, next) => {
     );
     return next(error);
   }
-  const { name, age, weight, owner, breed, sex } = req.body;
+  const { name, born, weight, owner, breed, sex } = req.body;
+
+  console.log("born");
 
   const createdPet = new Pet({
     name,
-    age,
+    born,
     weight,
     owner,
     breed,
