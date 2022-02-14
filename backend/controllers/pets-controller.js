@@ -115,7 +115,7 @@ const editPet = async (req, res, next) => {
     return next(error);
   }
 
-  const { id, name, age, weight } = req.body;
+  const { id, name, born, weight, breed } = req.body;
   const petId = id;
 
   let updatedPet;
@@ -131,8 +131,9 @@ const editPet = async (req, res, next) => {
   }
 
   updatedPet.name = name;
-  updatedPet.age = age;
+  updatedPet.born = born;
   updatedPet.weight = weight;
+  updatedPet.breed = breed;
 
   try {
     await updatedPet.save();

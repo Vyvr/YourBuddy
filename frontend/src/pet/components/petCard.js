@@ -121,8 +121,9 @@ const PetCard = (props) => {
             state: {
               id: props.id,
               name: props.name,
-              age: props.age,
+              born: props.born,
               weight: props.weight,
+              breed: props.breed,
             },
           }}
           exact

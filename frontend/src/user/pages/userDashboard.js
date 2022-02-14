@@ -74,6 +74,7 @@ const UserDashboard = () => {
               <PetCard
                 id={pet.id}
                 key={pet.id}
+                born={pet.born}
                 name={pet.name}
                 month={pet.age.month}
                 year={pet.age.year}

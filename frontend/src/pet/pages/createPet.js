@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 
 import getCookieValue from "./../../scripts/getCookieValue";
 
@@ -170,27 +169,6 @@ const CreatePet = () => {
           </CheckboxWrapper>
         </FormGroup>
 
-        {/* <Label>Name:</Label>
-          <Input type="text" {...register("name")} /> */}
-        {/* <Label>Breed:</Label>
-          <Input type="text" {...register("breed")} /> */}
-        {/* <Label>Born:</Label>
-          <Input type="date" {...register("born")} /> */}
-        {/* <Label>Weight:</Label>
-          <Input type="text" {...register("weight")} /> */}
-        {/* <Label>Sex:</Label>
-        <Wrapper>
-          <SexLabel>Male</SexLabel>
-          <Checkbox onChange={handleMaleChange} type="checkbox" ref={male} />
-          <SexLabel>Female</SexLabel>
-          <Checkbox
-            onChange={handleFemaleChange}
-            type="checkbox"
-            ref={female}
-          />
-          <SexLabel>Other</SexLabel>
-          <Checkbox onChange={handleOtherChange} type="checkbox" ref={other} />
-        </Wrapper> */}
         <FormGroup>
           <ButtonWrapper>
             <LoginButton type="submit">Add new pet</LoginButton>
