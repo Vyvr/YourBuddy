@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useHistory } from "react-router-dom";
-import styled from "styled-components";
 import validator from "validator";
 
 import {
@@ -20,7 +19,6 @@ import {
 } from "../../shared/components/forms/formTemplate";
 
 import UserContent from "../../shared/components/content/UserContent";
-import PasswordEye from "../../resources/user/password_eye.png";
 
 const EditUser = (props) => {
   const [isLoading, setIsLoading] = useState(false);

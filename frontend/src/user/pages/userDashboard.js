@@ -6,10 +6,8 @@ import styled from "styled-components";
 import UserContent from "../../shared/components/content/UserContent";
 import UserProfile from "../components/userProfile";
 import PetCard from "../../pet/components/petCard";
-import { COLORS } from "../../shared/colors";
 
 import getCookieValue from "../../scripts/getCookieValue";
-import Content from "../../shared/components/content/Content";
 
 const PetList = styled.div`
   display: grid;

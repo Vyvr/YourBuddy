@@ -10,15 +10,9 @@ import {
   FormGroup,
   FormLabel,
   FormInput,
-  Checkbox,
-  CheckboxWrapper,
-  CheckboxInsideWrapper,
-  CheckboxLabel,
   ButtonWrapper,
   LoginButton,
   DeleteButton,
-  ErrorLabelWrapper,
-  ErrorLabel,
 } from "../../shared/components/forms/formTemplate";
 
 const EditPet = (props) => {

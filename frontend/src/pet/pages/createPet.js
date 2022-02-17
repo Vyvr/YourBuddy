@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
@@ -18,8 +18,6 @@ import {
   CheckboxLabel,
   ButtonWrapper,
   LoginButton,
-  ErrorLabelWrapper,
-  ErrorLabel,
 } from "../../shared/components/forms/formTemplate";
 
 const CreatePet = () => {

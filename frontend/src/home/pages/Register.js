@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 import {
