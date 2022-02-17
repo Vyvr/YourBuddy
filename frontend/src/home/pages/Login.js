@@ -57,26 +57,26 @@ const Login = () => {
         <FormGroup class="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="E-mail"
             name="mail"
             id="mail"
             {...register("mail")}
           />
-          <FormLabel for="mail" class="form__label">
+          <FormLabel for="mail" className="form__label">
             E-mail
           </FormLabel>
         </FormGroup>
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="password"
-            class="form__field"
+            className="form__field"
             placeholder="password"
             name="password"
             id="password"
             {...register("password")}
           />
-          <FormLabel for="password" class="form__label">
+          <FormLabel for="password" className="form__label">
             Password
           </FormLabel>
           {failedLogin && (

@@ -150,11 +150,33 @@ const editPet = async (req, res, next) => {
 
 const deletePet = async (req, res, next) => {
   const { id } = req.body;
+  const petId = id;
+  let existingPet;
 
   try {
-    await Pet.findByIdAndDelete({ _id: id });
+    existingPet = await Pet.findById(petId);
   } catch (err) {
-    const error = new HttpError("Failed to delete pet", 500);
+    const error = new HttpError(
+      "Searching pet failed. Please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  try {
+    await User.updateOne(
+      { _id: existingPet.owner.toString() },
+      { $pull: { pets: petId } }
+    );
+  } catch (err) {
+    const error = new HttpError("Finding user error " + err, 500);
+    return next(error);
+  }
+
+  try {
+    await Pet.deleteOne({ _id: petId });
+  } catch (err) {
+    const error = new HttpError("Deleting pets error", 500);
     return next(error);
   }
 
@@ -162,17 +184,6 @@ const deletePet = async (req, res, next) => {
 };
 
 const getPetData = async (req, res, next) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    const error = new HttpError(
-      "Invalid data passed. Please check your data",
-      422
-    );
-
-    return next(error);
-  }
-
   const petId = req.params.petId;
   let existingPet;
 
@@ -180,7 +191,7 @@ const getPetData = async (req, res, next) => {
     existingPet = await Pet.findById(petId);
   } catch (err) {
     const error = new HttpError(
-      "Edit pet failed. Please try again later.",
+      "Searching pet failed. Please try again later.",
       500
     );
     return next(error);

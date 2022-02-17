@@ -31,7 +31,7 @@ const CreatePet = () => {
 
   const addPetHandler = async (data) => {
     let sex;
-    console.log(data);
+
     if (male.current.checked) {
       sex = "male";
     } else if (female.current.checked) {
@@ -39,6 +39,10 @@ const CreatePet = () => {
     } else {
       sex = "other";
     }
+
+    console.log(data);
+    console.log(sex);
+
     try {
       await fetch("http://localhost:5000/api/pet/create", {
         method: "POST",
@@ -83,58 +87,58 @@ const CreatePet = () => {
   return (
     <UserContent>
       <Form onSubmit={handleSubmit(addPetHandler)}>
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="Name"
             name="name"
             id="name"
             {...register("name")}
           />
-          <FormLabel for="name" class="form__label">
+          <FormLabel for="name" className="form__label">
             Name
           </FormLabel>
         </FormGroup>
 
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="Breed"
             name="breed"
             id="breed"
             {...register("breed")}
           />
-          <FormLabel for="breed" class="form__label">
+          <FormLabel for="breed" className="form__label">
             Breed
           </FormLabel>
         </FormGroup>
 
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="date"
-            class="form__field"
+            className="form__field"
             placeholder="Date"
             name="born"
             id="born"
             {...register("born")}
           />
-          <FormLabel for="born" class="form__label">
+          <FormLabel for="born" className="form__label">
             Born
           </FormLabel>
         </FormGroup>
 
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="number"
-            class="form__field"
+            className="form__field"
             placeholder="Weight"
             name="weight"
             id="weight"
             {...register("weight")}
           />
-          <FormLabel for="weight" class="form__label">
+          <FormLabel for="weight" className="form__label">
             Weight
           </FormLabel>
         </FormGroup>

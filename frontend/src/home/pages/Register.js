@@ -57,55 +57,55 @@ const Register = () => {
         className="register-form"
         onSubmit={handleSubmit(authUserSubmitHandler)}
       >
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="name"
             name="name"
             id="name"
             {...register("name")}
           />
-          <FormLabel for="name" class="form__label">
+          <FormLabel for="name" className="form__label">
             Name
           </FormLabel>
         </FormGroup>
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="surname"
             name="surname"
             id="surname"
             {...register("surname")}
           />
-          <FormLabel for="surname" class="form__label">
+          <FormLabel for="surname" className="form__label">
             Surname
           </FormLabel>
         </FormGroup>
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="E-mail"
             name="mail"
             id="mail"
             {...register("mail")}
           />
-          <FormLabel for="mail" class="form__label">
+          <FormLabel for="mail" className="form__label">
             E-mail
           </FormLabel>
         </FormGroup>
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="password"
-            class="form__field"
+            className="form__field"
             placeholder="Password"
             name="password"
             id="password"
             {...register("password")}
           />
-          <FormLabel for="password" class="form__label">
+          <FormLabel for="password" className="form__label">
             Password
           </FormLabel>
         </FormGroup>
@@ -120,52 +120,6 @@ const Register = () => {
           </ButtonWrapper>
         </FormGroup>
       </Form>
-
-      {/* <form
-        className="login-form"
-        onSubmit={handleSubmit(authUserSubmitHandler)}
-      >
-        <div className="login-form-content">
-          <div>
-            <input
-              className="nick-input"
-              type="text"
-              placeholder="name"
-              {...register("name")}
-            />
-          </div>
-          <div>
-            <input
-              className="password-input"
-              type="text"
-              placeholder="surname"
-              {...register("surname")}
-            />
-          </div>
-          <div>
-            <input
-              className="password-input"
-              type="text"
-              placeholder="mail"
-              {...register("mail")}
-            />
-          </div>
-          <div>
-            <input
-              className="password-input"
-              type="password"
-              placeholder="password"
-              {...register("password")}
-            />
-          </div>
-          {failedRegistration && <ErrorLabel>Incorrect data passed</ErrorLabel>}
-          <div className="register-button-div">
-            <button className="register-button" type="submit">
-              Register
-            </button>
-          </div>
-        </div>
-      </form> */}
     </AuthContent>
   );
 };

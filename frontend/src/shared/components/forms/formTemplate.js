@@ -140,6 +140,28 @@ const LoginButton = styled.button`
   }
 `;
 
+const DeleteButton = styled.button`
+  height: 40px;
+  width: 120px;
+  align-self: center;
+  justify-self: center;
+  border: none;
+  text-decoration: none;
+  border-radius: 20px;
+
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  background-color: ${COLORS.delete_button};
+  color: white;
+  font-weight: 700;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: ${COLORS.delete_button_hover};
+  }
+`;
+
 const Switch = styled.input`
   --active: ${COLORS.special_button_hover};
   --active-inner: #fff;
@@ -255,7 +277,6 @@ const Checkbox = styled.input`
   --focus: 1px ${COLORS.special_button_hover};
   --border: ${COLORS.special_button_hover};
   --border-hover: ${COLORS.special_button_hover};
-  }
 `;
 
 export {
@@ -265,6 +286,7 @@ export {
   FormInput,
   ButtonWrapper,
   LoginButton,
+  DeleteButton,
   ErrorLabelWrapper,
   ErrorLabel,
   Checkbox,

@@ -16,6 +16,7 @@ import {
   CheckboxLabel,
   ButtonWrapper,
   LoginButton,
+  DeleteButton,
   ErrorLabelWrapper,
   ErrorLabel,
 } from "../../shared/components/forms/formTemplate";
@@ -50,67 +51,83 @@ const EditPet = (props) => {
     window.location.reload();
   };
 
+  const deletePetHandler = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/pet/delete", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id: location.state.id,
+        }),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <UserContent>
       <Form className="edit-pet-form" onSubmit={handleSubmit(editPetHandler)}>
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="Name"
             defaultValue={location.state.name}
             name="name"
             id="name"
             {...register("name")}
           />
-          <FormLabel for="name" class="form__label">
+          <FormLabel for="name" className="form__label">
             Name
           </FormLabel>
         </FormGroup>
 
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder="Breed"
             defaultValue={location.state.breed}
             name="breed"
             id="breed"
             {...register("breed")}
           />
-          <FormLabel for="breed" class="form__label">
+          <FormLabel for="breed" className="form__label">
             Breed
           </FormLabel>
         </FormGroup>
 
-        {console.log(birthDate)}
-
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="date"
-            class="form__field"
+            className="form__field"
             placeholder="Date"
             defaultValue={birthDate}
             name="born"
             id="born"
             {...register("born")}
           />
-          <FormLabel for="born" class="form__label">
+          <FormLabel for="born" className="form__label">
             Born
           </FormLabel>
         </FormGroup>
 
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="number"
-            class="form__field"
+            className="form__field"
             placeholder="Weight"
             defaultValue={location.state.weight}
             name="weight"
             id="weight"
             {...register("weight")}
           />
-          <FormLabel for="weight" class="form__label">
+          <FormLabel for="weight" className="form__label">
             Weight
           </FormLabel>
         </FormGroup>
@@ -118,6 +135,12 @@ const EditPet = (props) => {
         <FormGroup>
           <ButtonWrapper>
             <LoginButton type="submit">Edit pet</LoginButton>
+          </ButtonWrapper>
+        </FormGroup>
+
+        <FormGroup>
+          <ButtonWrapper>
+            <DeleteButton onClick={deletePetHandler}>Delete pet</DeleteButton>
           </ButtonWrapper>
         </FormGroup>
       </Form>

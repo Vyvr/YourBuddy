@@ -24,6 +24,8 @@ router.post(
   petsController.editPet
 );
 
+router.post("/delete", petsController.deletePet);
+
 router.post("/add-vaccinations", petsController.updatePetVaccinations);
 router.get("/:uid", petsController.getPetsByUserId);
 router.get("/get-pet-data/:petId", petsController.getPetData);
