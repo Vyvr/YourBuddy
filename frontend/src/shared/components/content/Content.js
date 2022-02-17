@@ -6,6 +6,8 @@ const Content = (props) => {
   return (
     <div
       style={{
+        display: "flex",
+        flexDirection: "column",
         height: "auto",
         width: "100%",
       }}

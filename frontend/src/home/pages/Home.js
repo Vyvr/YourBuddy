@@ -10,27 +10,31 @@ import "./slides.css";
 
 const imagesPath = [
   "https://images.pexels.com/photos/1139793/pexels-photo-1139793.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/5483456/pexels-photo-5483456.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  "https://images.pexels.com/photos/5745219/pexels-photo-5745219.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  "https://images.pexels.com/photos/9632115/pexels-photo-9632115.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  "https://media.istockphoto.com/photos/young-man-interacts-with-his-pets-in-the-garden-under-a-mosquito-net-picture-id1249415002",
 ];
 
 const ImgContent = styled.div`
+  position: absolute;
+  bottom: 0;
+  top: 360px;
   display: flex;
   width: 100%;
+  //height: 100vh;
+  flex-grow: 1;
   justify-content: space-between;
 `;
 
 const ImgWrapper = styled.div`
   position: relative;
   overflow: hidden;
-  width: 800px;
-  height: 530px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Img = styled.img`
   position: absolute;
-  width: 500px;
+  width: 100%;
+  height: 100%;
 `;
 
 const TextWrapper = styled.div`
@@ -38,7 +42,7 @@ const TextWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 300px;
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 const TopText = styled.div`
@@ -76,47 +80,45 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home-content">
-      <HomeContent>
-        <TextWrapper>
-          <TopText>
-            <label>Take care of your pets</label>
-          </TopText>
-          <TopText>
-            <label>with</label>
-          </TopText>
-          <LogoText>
-            <label>Your Buddy</label>
-          </LogoText>
-        </TextWrapper>
+    <HomeContent>
+      <TextWrapper>
+        <TopText>
+          <label>Take care of your pets</label>
+        </TopText>
+        <TopText>
+          <label>with</label>
+        </TopText>
+        <LogoText>
+          <label>Your Buddy</label>
+        </LogoText>
+      </TextWrapper>
 
-        <ImgContent>
-          <ImgWrapper>
-            <TransitionGroup>
-              <CSSTransition
-                key={imagesPath[frame]}
-                timeout={1000}
-                classNames="slide-right"
-              >
-                <Img src={imagesPath[frame]} />
-              </CSSTransition>
-            </TransitionGroup>
-          </ImgWrapper>
+      <ImgContent>
+        <ImgWrapper>
+          <TransitionGroup>
+            <CSSTransition
+              key={imagesPath[frame]}
+              timeout={1000}
+              classNames="slide-right"
+            >
+              <Img src={imagesPath[frame]} />
+            </CSSTransition>
+          </TransitionGroup>
+        </ImgWrapper>
 
-          <ImgWrapper>
-            <TransitionGroup>
-              <CSSTransition
-                key={imagesPath[frame]}
-                timeout={1000}
-                classNames="slide-left"
-              >
-                <Img src={imagesPath[frame]} />
-              </CSSTransition>
-            </TransitionGroup>
-          </ImgWrapper>
-        </ImgContent>
-      </HomeContent>
-    </div>
+        <ImgWrapper>
+          <TransitionGroup>
+            <CSSTransition
+              key={imagesPath[frame]}
+              timeout={1000}
+              classNames="slide-left"
+            >
+              <Img src={imagesPath[frame]} />
+            </CSSTransition>
+          </TransitionGroup>
+        </ImgWrapper>
+      </ImgContent>
+    </HomeContent>
   );
 };
 
