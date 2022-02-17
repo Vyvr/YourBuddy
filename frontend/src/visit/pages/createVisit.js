@@ -15,7 +15,6 @@ import {
   FormInput,
   ButtonWrapper,
   LoginButton,
-  DeleteButton,
   ErrorLabel,
   Select,
 } from "../../shared/components/forms/formTemplate";
@@ -263,73 +262,8 @@ const CreateVisit = () => {
             <ErrorLabel>Uncorrect data passed</ErrorLabel>
           </FormGroup>
         ) : null}
-
-        {/*Old sign in form*/}
-
-        {/* <div className="components-div">
-          <label>Clinic:</label>
-          <select
-            value={selectedOption}
-            onChange={(event) => getAllClinicVets(event.target.value)}
-          >
-            {!isLoading &&
-              loadedClinics &&
-              loadedClinics.map((clinic) => {
-                return (
-                  <option
-                    key={clinic._id}
-                    value={clinic._id}
-                    onSubmit={setValue("clinic", clinic._id)}
-                  >
-                    {clinic.name +
-                      " " +
-                      clinic.address.city +
-                      " " +
-                      clinic.address.street +
-                      " " +
-                      clinic.address.block}{" "}
-                    {clinic.address.apartment ? "/" : ""}{" "}
-                    {clinic.address.apartment}
-                  </option>
-                );
-              })}
-          </select>
-        </div>
-        <div className="components-div">
-          <label>Vet:</label>
-          <select onChange={(event) => handleVetChange(event.target.value)}>
-            {!isLoading &&
-              loadedVets &&
-              loadedVets.map((vet) => {
-                return (
-                  <option
-                    key={vet._id}
-                    value={vet._id}
-                    onSubmit={setValue("vet", vet._id)}
-                  >
-                    {vet.name + " " + vet.surname}
-                  </option>
-                );
-              })}
-          </select>
-        </div>
-        <div className="components-div">
-          <label>Date: </label>
-          <input type="date" {...register("date")} />
-        </div>
-
-        <div className="button-div">
-          <button
-            type="submit"
-            onClick={handleSubmit(createVisitSubmitHandler)}
-          >
-            Create visit
-          </button>
-          {!correctData ? <label>Uncorrect data passed</label> : null}
-        </div> */}
       </Form>
 
-      {/*Old table*/}
       <Form>
         <NameWrapper>
           <StyledNameLabel>Your visits</StyledNameLabel>
