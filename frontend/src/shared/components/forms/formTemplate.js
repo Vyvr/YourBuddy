@@ -279,6 +279,21 @@ const Checkbox = styled.input`
   --border-hover: ${COLORS.special_button_hover};
 `;
 
+const Select = styled.select`
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: $white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.5s;
+  margin-top: 20px;
+  text-align: center;
+`;
+
 export {
   Form,
   FormGroup,
@@ -294,5 +309,6 @@ export {
   CheckboxInsideWrapper,
   CheckboxLabel,
   Switch,
+  Select,
   Label,
 };

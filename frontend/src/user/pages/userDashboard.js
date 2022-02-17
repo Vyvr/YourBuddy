@@ -14,7 +14,7 @@ const PetList = styled.div`
   grid-template-columns: repeat(auto-fill, 300px);
   row-gap: 10px;
   margin-left: auto;
-  margin-top: 10px;
+  margin-top: auto;
 
   width: calc(100% - 340px);
   height: 100%;

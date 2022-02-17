@@ -4,15 +4,41 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { COLORS } from "../../shared/colors";
 
 import UserContent from "../../shared/components/content/UserContent";
-import CreateForm from "../../shared/components/forms/createForm";
 
-const StyledTable = styled.table`
-  width: 100%;
-  margin-top: 20px;
-  border: 1px solid black;
-  border-collapse: collapse;
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  ButtonWrapper,
+  LoginButton,
+  DeleteButton,
+  ErrorLabel,
+  Select,
+} from "../../shared/components/forms/formTemplate";
+
+import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
+
+const StyledNameLabel = styled.label`
+  color: ${COLORS.special_button_font};
+  font-weight: bold;
+  align-self: center;
+  font-size: 1.3rem;
+  cursor: text;
+  margin-bottom: 16px;
+`;
+
+const NameWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 30%;
+  align-items: center;
 `;
 
 const CreateVisit = () => {
@@ -151,105 +177,195 @@ const CreateVisit = () => {
 
   return (
     <UserContent>
-      <div>
-        <CreateForm>
-          <label className="create-visit-patient-name">
-            {location.state.name}
-          </label>
-          <div className="components-div">
-            <label>Clinic:</label>
-            <select
-              value={selectedOption}
-              onChange={(event) => getAllClinicVets(event.target.value)}
-            >
-              {!isLoading &&
-                loadedClinics &&
-                loadedClinics.map((clinic) => {
-                  return (
-                    <option
-                      key={clinic._id}
-                      value={clinic._id}
-                      onSubmit={setValue("clinic", clinic._id)}
-                    >
-                      {clinic.name +
-                        " " +
-                        clinic.address.city +
-                        " " +
-                        clinic.address.street +
-                        " " +
-                        clinic.address.block}{" "}
-                      {clinic.address.apartment ? "/" : ""}{" "}
-                      {clinic.address.apartment}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-          <div className="components-div">
-            <label>Vet:</label>
-            <select onChange={(event) => handleVetChange(event.target.value)}>
-              {!isLoading &&
-                loadedVets &&
-                loadedVets.map((vet) => {
-                  return (
-                    <option
-                      key={vet._id}
-                      value={vet._id}
-                      onSubmit={setValue("vet", vet._id)}
-                    >
-                      {vet.name + " " + vet.surname}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-          <div className="components-div">
-            <label>Date: </label>
-            <input type="date" {...register("date")} />
-          </div>
+      <Form>
+        <NameWrapper className="form__group">
+          <StyledNameLabel className="form__label">
+            Create visit for {location.state.name}
+          </StyledNameLabel>
+        </NameWrapper>
 
-          <div className="button-div">
-            <button
+        <FormGroup>
+          <Select
+            value={selectedOption}
+            onChange={(event) => getAllClinicVets(event.target.value)}
+          >
+            {!isLoading &&
+              loadedClinics &&
+              loadedClinics.map((clinic) => {
+                return (
+                  <option
+                    key={clinic._id}
+                    value={clinic._id}
+                    onSubmit={setValue("clinic", clinic._id)}
+                  >
+                    {clinic.name +
+                      " " +
+                      clinic.address.city +
+                      " " +
+                      clinic.address.street +
+                      " " +
+                      clinic.address.block}{" "}
+                    {clinic.address.apartment ? "/" : ""}{" "}
+                    {clinic.address.apartment}
+                  </option>
+                );
+              })}
+          </Select>
+          <FormLabel>Clinic:</FormLabel>
+        </FormGroup>
+
+        <FormGroup>
+          <Select onChange={(event) => handleVetChange(event.target.value)}>
+            {!isLoading &&
+              loadedVets &&
+              loadedVets.map((vet) => {
+                return (
+                  <option
+                    key={vet._id}
+                    value={vet._id}
+                    onSubmit={setValue("vet", vet._id)}
+                  >
+                    {vet.name + " " + vet.surname}
+                  </option>
+                );
+              })}
+          </Select>
+          <FormLabel>Doctor:</FormLabel>
+        </FormGroup>
+
+        <FormGroup>
+          <FormInput
+            type="date"
+            className="form__field"
+            placeholder="Date"
+            name="date"
+            id="date"
+            {...register("date")}
+          />
+          <FormLabel for="date" className="form__label">
+            Date:
+          </FormLabel>
+        </FormGroup>
+
+        <FormGroup>
+          <ButtonWrapper>
+            <LoginButton
               type="submit"
               onClick={handleSubmit(createVisitSubmitHandler)}
             >
               Create visit
-            </button>
-            {!correctData ? <label>Uncorrect data passed</label> : null}
-          </div>
-        </CreateForm>
-      </div>
-      <div>
-        <StyledTable>
-          <thead>
-            <tr>
-              <th>Vet</th>
-              <th>Description</th>
-              <th>Drugs</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
+            </LoginButton>
+          </ButtonWrapper>
+        </FormGroup>
+
+        {!correctData ? (
+          <FormGroup>
+            <ErrorLabel>Uncorrect data passed</ErrorLabel>
+          </FormGroup>
+        ) : null}
+
+        {/*Old sign in form*/}
+
+        {/* <div className="components-div">
+          <label>Clinic:</label>
+          <select
+            value={selectedOption}
+            onChange={(event) => getAllClinicVets(event.target.value)}
+          >
             {!isLoading &&
-              loadedVisits
-                ?.map((v) => {
-                  return (
-                    <tr key={v.id} id={v.id}>
-                      <td>{v.vetName}</td>
-                      <td style={{ maxWidth: "280px" }}>{v.description}</td>
-                      <td>
-                        {v.drugs.map((d) => {
-                          return <label>{d}, </label>;
-                        })}
-                      </td>
-                      <td>{v.term}</td>
-                    </tr>
-                  );
-                })
-                .reverse()}
-          </tbody>
-        </StyledTable>
-      </div>
+              loadedClinics &&
+              loadedClinics.map((clinic) => {
+                return (
+                  <option
+                    key={clinic._id}
+                    value={clinic._id}
+                    onSubmit={setValue("clinic", clinic._id)}
+                  >
+                    {clinic.name +
+                      " " +
+                      clinic.address.city +
+                      " " +
+                      clinic.address.street +
+                      " " +
+                      clinic.address.block}{" "}
+                    {clinic.address.apartment ? "/" : ""}{" "}
+                    {clinic.address.apartment}
+                  </option>
+                );
+              })}
+          </select>
+        </div>
+        <div className="components-div">
+          <label>Vet:</label>
+          <select onChange={(event) => handleVetChange(event.target.value)}>
+            {!isLoading &&
+              loadedVets &&
+              loadedVets.map((vet) => {
+                return (
+                  <option
+                    key={vet._id}
+                    value={vet._id}
+                    onSubmit={setValue("vet", vet._id)}
+                  >
+                    {vet.name + " " + vet.surname}
+                  </option>
+                );
+              })}
+          </select>
+        </div>
+        <div className="components-div">
+          <label>Date: </label>
+          <input type="date" {...register("date")} />
+        </div>
+
+        <div className="button-div">
+          <button
+            type="submit"
+            onClick={handleSubmit(createVisitSubmitHandler)}
+          >
+            Create visit
+          </button>
+          {!correctData ? <label>Uncorrect data passed</label> : null}
+        </div> */}
+      </Form>
+
+      {/*Old table*/}
+      <Form>
+        <NameWrapper>
+          <StyledNameLabel>Your visits</StyledNameLabel>
+        </NameWrapper>
+      </Form>
+
+      <Table>
+        <Thead>
+          <tr>
+            <th>Vet</th>
+            <th>Description</th>
+            <th>Drugs</th>
+            <th>Date</th>
+          </tr>
+        </Thead>
+
+        <tbody>
+          {!isLoading &&
+            loadedVisits
+              ?.map((v) => {
+                return (
+                  <Tr key={v.id} id={v.id}>
+                    <td>{v.vetName}</td>
+                    <td style={{ maxWidth: "280px" }}>{v.description}</td>
+                    <td>
+                      {v.drugs.map((d) => {
+                        return <label>{d}, </label>;
+                      })}
+                    </td>
+                    <td>{v.term}</td>
+                  </Tr>
+                );
+              })
+              .reverse()}
+        </tbody>
+      </Table>
     </UserContent>
   );
 };
