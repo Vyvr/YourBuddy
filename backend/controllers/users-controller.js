@@ -31,6 +31,9 @@ const signup = async (req, res, next) => {
   }
   const { name, surname, mail, password } = req.body;
 
+  let lowerCaseMail = mail;
+  lowerCaseMail = lowerCaseMail.toLowerCase();
+
   let existingUser;
 
   try {
@@ -52,7 +55,7 @@ const signup = async (req, res, next) => {
     id: uuid(),
     name,
     surname,
-    mail,
+    mail: lowerCaseMail,
     password,
     pets: [],
     clinics: [],
@@ -73,10 +76,13 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { mail, password } = req.body;
 
+  let lowerCaseMail = mail;
+  lowerCaseMail = lowerCaseMail.toLowerCase();
+
   let existingUser;
 
   try {
-    existingUser = await User.findOne({ mail: mail });
+    existingUser = await User.findOne({ mail: lowerCaseMail });
   } catch (err) {
     const error = new HttpError(
       "Logging in failed. Please try again later.",

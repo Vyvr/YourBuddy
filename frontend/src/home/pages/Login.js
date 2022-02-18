@@ -79,12 +79,14 @@ const Login = () => {
           <FormLabel htmlFor="password" className="form__label">
             Password
           </FormLabel>
-          {failedLogin && (
+        </FormGroup>
+        {failedLogin && (
+          <FormGroup>
             <ErrorLabelWrapper>
               <ErrorLabel>Passed data is incorrect</ErrorLabel>
             </ErrorLabelWrapper>
-          )}
-        </FormGroup>
+          </FormGroup>
+        )}
         <FormGroup>
           <ButtonWrapper>
             <LoginButton type="submit">Login</LoginButton>
