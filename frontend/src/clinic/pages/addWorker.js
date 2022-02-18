@@ -91,7 +91,7 @@ const AddWorker = (props) => {
       setIsLoading(false);
     };
     getClinicWorkers();
-  }, []);
+  }, [location.state.id]);
 
   const findWorker = async (data) => {
     setIsLoading(true);
@@ -147,8 +147,7 @@ const AddWorker = (props) => {
           </tr>
         </thead>
         <tbody>
-          {
-            !isLoading &&
+          {!isLoading &&
             potentialWorkers &&
             potentialWorkers.map((worker) => {
               return (
@@ -157,7 +156,8 @@ const AddWorker = (props) => {
                   <td>{worker.surname}</td>
                   <td>{worker.mail}</td>
                   <td>
-                    {loadedWorkers.filter(e => e._id === worker._id).length > 0 ? (
+                    {loadedWorkers.filter((e) => e._id === worker._id).length >
+                    0 ? (
                       <DisabledButton disabled={true}>Hired</DisabledButton>
                     ) : (
                       <HireButton

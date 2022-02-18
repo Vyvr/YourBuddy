@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import VetContent from "../../shared/components/content/VetContent";
 import UserContent from "../../shared/components/content/UserContent";
 import VetProfile from "../components/vetProfile";
+import NewVisits from "../components/newVisits";
 
 import getCookieValue from "../../scripts/getCookieValue";
 
@@ -13,6 +14,7 @@ const VetDashboard = () => {
   const [surname, setSurname] = useState("");
   const [userTypes, setUserTypes] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadedVisits, setLoadedVisits] = useState();
 
   useEffect(() => {
     setName(getCookieValue("userName"));
@@ -35,6 +37,28 @@ const VetDashboard = () => {
       }
       setIsLoading(false);
     };
+
+    const getVisits = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/visit/get-unsumbitted-vet-visits/" +
+            getCookieValue("user_id")
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        if (responseData.visits.length !== 0) {
+          setLoadedVisits(responseData.pets);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+      setIsLoading(false);
+    };
+    getVisits();
     getUserTypes();
   }, []);
 
@@ -80,9 +104,10 @@ const VetDashboard = () => {
   return (
     <div>
       <VetContent>
-        <div className="vet-dashboard-content">
-          <VetProfile className="vet-profile" name={name} surname={surname} />
-        </div>
+        <VetProfile className="vet-profile" name={name} surname={surname} />
+        {!isLoading && loadedVisits ? undefined : (
+          <NewVisits loadedPets={loadedVisits} />
+        )}
       </VetContent>
     </div>
   );

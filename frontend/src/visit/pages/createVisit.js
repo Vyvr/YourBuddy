@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { COLORS } from "../../shared/colors";
+import { nanoid } from "nanoid";
 
 import UserContent from "../../shared/components/content/UserContent";
 
@@ -53,6 +54,26 @@ const CreateVisit = () => {
   let location = useLocation();
 
   useEffect(() => {
+    const getPetVisits = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/visit/get-patient-visits/" +
+            location.state.id
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        if (responseData.visits.length !== 0) {
+          setLoadedVisits(responseData.visits);
+        }
+      } catch (err) {
+        throw new Error(err.message);
+      }
+      setIsLoading(false);
+    };
     const getAllClinics = async () => {
       setIsLoading(true);
       try {
@@ -80,28 +101,7 @@ const CreateVisit = () => {
       setIsLoading(false);
     };
     getAllClinics();
-  }, []);
-
-  const getPetVisits = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/visit/get-patient-visits/" +
-          location.state.id
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-
-      if (responseData.visits.length !== 0) {
-        setLoadedVisits(responseData.visits);
-      }
-    } catch (err) {
-      throw new Error(err.message);
-    }
-    setIsLoading(false);
-  };
+  }, [location.state.id]);
 
   const getAllClinicVets = async (clinicId) => {
     setIsLoading(true);
@@ -220,7 +220,7 @@ const CreateVisit = () => {
               loadedVets.map((vet) => {
                 return (
                   <option
-                    key={vet._id}
+                    key={nanoid()}
                     value={vet._id}
                     onSubmit={setValue("vet", vet._id)}
                   >
@@ -241,9 +241,7 @@ const CreateVisit = () => {
             id="date"
             {...register("date")}
           />
-          <FormLabel for="date" className="form__label">
-            Date:
-          </FormLabel>
+          <FormLabel className="form__label">Date:</FormLabel>
         </FormGroup>
 
         <FormGroup>
@@ -285,15 +283,17 @@ const CreateVisit = () => {
             loadedVisits
               ?.map((v) => {
                 return (
-                  <Tr key={v.id} id={v.id}>
-                    <td>{v.vetName}</td>
-                    <td style={{ maxWidth: "280px" }}>{v.description}</td>
-                    <td>
+                  <Tr key={v._id} id={v.id}>
+                    <td key={nanoid()}>{v.vetName}</td>
+                    <td key={nanoid()} style={{ maxWidth: "280px" }}>
+                      {v.description}
+                    </td>
+                    <td key={nanoid()}>
                       {v.drugs.map((d) => {
-                        return <label>{d}, </label>;
+                        return <label key={nanoid()}>{d}, </label>;
                       })}
                     </td>
-                    <td>{v.term}</td>
+                    <td key={nanoid()}>{v.term}</td>
                   </Tr>
                 );
               })

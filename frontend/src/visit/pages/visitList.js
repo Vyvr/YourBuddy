@@ -65,31 +65,32 @@ const VisitList = () => {
           </tr>
         </thead>
         <tbody>
-          {!isLoading &&
-            loadedVisits
-              ?.map((v) => {
-                return (
-                  <tr
-                    key={v.id}
-                    id={v.id}
-                    onClick={() => {
-                      handleRowClick(
-                        v._id,
-                        v.ownerName,
-                        v.patientName,
-                        v.term,
-                        v.description,
-                        v.patient
-                      );
-                    }}
-                  >
-                    <td>{v.ownerName}</td>
-                    <td>{v.patientName}</td>
-                    <td>{v.term}</td>
-                  </tr>
-                );
-              })
-              .reverse()}
+          {!isLoading && loadedVisits
+            ? loadedVisits
+                .map((v) => {
+                  return (
+                    <tr
+                      key={v._id}
+                      id={v.id}
+                      onClick={() => {
+                        handleRowClick(
+                          v._id,
+                          v.ownerName,
+                          v.patientName,
+                          v.term,
+                          v.description,
+                          v.patient
+                        );
+                      }}
+                    >
+                      <td>{v.ownerName}</td>
+                      <td>{v.patientName}</td>
+                      <td>{v.term}</td>
+                    </tr>
+                  );
+                })
+                .reverse()
+            : undefined}
         </tbody>
       </table>
     </VetContent>

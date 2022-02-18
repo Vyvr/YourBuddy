@@ -24,7 +24,7 @@ const EditUser = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState();
 
-  const [vetType, setVetType] = useState("false");
+  // const [vetType, setVetType] = useState("false");
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(true);
   const [passwordTooShort, setPasswordTooShort] = useState(false);
   const [isNameEmpty, setIsNameEmpty] = useState(false);
@@ -47,9 +47,6 @@ const EditUser = (props) => {
           throw new Error(responseData.message);
         }
         setUserData(responseData.existingUser);
-        responseData.existingUser.type.includes("vet")
-          ? setVetType(true)
-          : setVetType(false);
       } catch (err) {
         throw new Error(err.message);
       }
@@ -57,10 +54,6 @@ const EditUser = (props) => {
     };
     getUserData();
   }, [location.state.userId]);
-
-  const handleVetTypeChange = (e) => {
-    setVetType(e.target.checked);
-  };
 
   const sendData = async (data) => {
     if (!data.name || data.name.length === 0) {
@@ -174,7 +167,7 @@ const EditUser = (props) => {
               id="name"
               {...register("name")}
             />
-            <FormLabel for="name" className="form__label">
+            <FormLabel htmlFor="name" className="form__label">
               Name
             </FormLabel>
           </FormGroup>
@@ -189,7 +182,7 @@ const EditUser = (props) => {
               id="surname"
               {...register("surname")}
             />
-            <FormLabel for="surname" className="form__label">
+            <FormLabel htmlFor="surname" className="form__label">
               Surname
             </FormLabel>
           </FormGroup>
@@ -204,7 +197,7 @@ const EditUser = (props) => {
               id="mail"
               {...register("mail")}
             />
-            <FormLabel for="mail" className="form__label">
+            <FormLabel htmlFor="mail" className="form__label">
               E-mail
             </FormLabel>
           </FormGroup>
@@ -218,7 +211,7 @@ const EditUser = (props) => {
               id="password"
               {...register("password")}
             />
-            <FormLabel for="password" className="form__label">
+            <FormLabel htmlFor="password" className="form__label">
               New password
             </FormLabel>
           </FormGroup>
@@ -232,7 +225,7 @@ const EditUser = (props) => {
               id="rePassword"
               {...register("rePassword")}
             />
-            <FormLabel for="rePassword" className="form__label">
+            <FormLabel htmlFor="rePassword" className="form__label">
               Re-enter new password
             </FormLabel>
           </FormGroup>
@@ -245,7 +238,6 @@ const EditUser = (props) => {
               name="vetSwitch"
               id="vetSwitch"
               defaultChecked={userData.type.includes("vet") ? true : false}
-              onChange={handleVetTypeChange}
               {...register("vetType")}
             />
           </FormGroup>

@@ -181,7 +181,7 @@ const VisitDetails = (props) => {
     };
     getPatientDetails();
     getVisitData();
-  }, []);
+  }, [state.id, state.ownerName, state.patient]);
 
   const handleVaccineChange = (e) => {
     setVaccine(e.target.value);

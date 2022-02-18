@@ -226,6 +226,47 @@ const getVetVisits = async (req, res, next) => {
   });
 };
 
+const getUnsubmittedVetVisits = async (req, res, next) => {
+  const vetId = req.params.vetId;
+
+  let existingVet;
+
+  try {
+    existingVet = await User.findById(vetId);
+  } catch (err) {
+    const error = new HttpError(
+      "Searching vet failed. Please try again later",
+      500
+    );
+    return next(error);
+  }
+  if (!existingVet) {
+    const error = new HttpError("No vet found with provided id.", 404);
+    return next(error);
+  }
+
+  let vetVisits;
+  try {
+    vetVisits = await Visit.find({ vet: vetId }).lean();
+  } catch (err) {
+    const error = new HttpError(
+      "Searching vet's visits failed. Please try again later",
+      500
+    );
+    return next(error);
+  }
+
+  for (let visit of vetVisits) {
+    const date = new Date(visit.term);
+    //date.toString();
+    const momentDate = moment(date.toISOString()).format("DD/MM/YYYY", true);
+    visit.term = momentDate;
+  }
+  res.status(200).json({
+    visits: vetVisits,
+  });
+};
+
 const editVisit = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -285,4 +326,5 @@ exports.createVisit = createVisit;
 exports.getVisitDetails = getVisitDetails;
 exports.getPatientVisits = getPatientVisits;
 exports.getVetVisits = getVetVisits;
+exports.getUnsubmittedVetVisits = getUnsubmittedVetVisits;
 exports.editVisit = editVisit;

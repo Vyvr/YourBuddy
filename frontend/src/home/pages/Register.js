@@ -65,7 +65,7 @@ const Register = () => {
             id="name"
             {...register("name")}
           />
-          <FormLabel for="name" className="form__label">
+          <FormLabel htmlFor="name" className="form__label">
             Name
           </FormLabel>
         </FormGroup>
@@ -78,7 +78,7 @@ const Register = () => {
             id="surname"
             {...register("surname")}
           />
-          <FormLabel for="surname" className="form__label">
+          <FormLabel htmlFor="surname" className="form__label">
             Surname
           </FormLabel>
         </FormGroup>
@@ -91,7 +91,7 @@ const Register = () => {
             id="mail"
             {...register("mail")}
           />
-          <FormLabel for="mail" className="form__label">
+          <FormLabel htmlFor="mail" className="form__label">
             E-mail
           </FormLabel>
         </FormGroup>
@@ -104,7 +104,7 @@ const Register = () => {
             id="password"
             {...register("password")}
           />
-          <FormLabel for="password" className="form__label">
+          <FormLabel htmlFor="password" className="form__label">
             Password
           </FormLabel>
         </FormGroup>

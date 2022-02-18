@@ -54,7 +54,7 @@ const Login = () => {
         className="login-form"
         onSubmit={handleSubmit(authUserSubmitHandler)}
       >
-        <FormGroup class="form__group">
+        <FormGroup className="form__group">
           <FormInput
             type="input"
             className="form__field"
@@ -63,7 +63,7 @@ const Login = () => {
             id="mail"
             {...register("mail")}
           />
-          <FormLabel for="mail" className="form__label">
+          <FormLabel htmlFor="mail" className="form__label">
             E-mail
           </FormLabel>
         </FormGroup>
@@ -76,7 +76,7 @@ const Login = () => {
             id="password"
             {...register("password")}
           />
-          <FormLabel for="password" className="form__label">
+          <FormLabel htmlFor="password" className="form__label">
             Password
           </FormLabel>
           {failedLogin && (

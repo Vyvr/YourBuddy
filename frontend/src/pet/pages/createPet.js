@@ -94,7 +94,7 @@ const CreatePet = () => {
             id="name"
             {...register("name")}
           />
-          <FormLabel for="name" className="form__label">
+          <FormLabel htmlFor="name" className="form__label">
             Name
           </FormLabel>
         </FormGroup>
@@ -108,7 +108,7 @@ const CreatePet = () => {
             id="breed"
             {...register("breed")}
           />
-          <FormLabel for="breed" className="form__label">
+          <FormLabel htmlFor="breed" className="form__label">
             Breed
           </FormLabel>
         </FormGroup>
@@ -122,7 +122,7 @@ const CreatePet = () => {
             id="born"
             {...register("born")}
           />
-          <FormLabel for="born" className="form__label">
+          <FormLabel htmlFor="born" className="form__label">
             Born
           </FormLabel>
         </FormGroup>
@@ -136,7 +136,7 @@ const CreatePet = () => {
             id="weight"
             {...register("weight")}
           />
-          <FormLabel for="weight" className="form__label">
+          <FormLabel htmlFor="weight" className="form__label">
             Weight
           </FormLabel>
         </FormGroup>
