@@ -51,7 +51,7 @@ const VetDashboard = () => {
         }
 
         if (responseData.visits.length !== 0) {
-          setLoadedVisits(responseData.pets);
+          setLoadedVisits(responseData.visits);
         }
       } catch (err) {
         console.log(err.message);
@@ -105,9 +105,7 @@ const VetDashboard = () => {
     <div>
       <VetContent>
         <VetProfile className="vet-profile" name={name} surname={surname} />
-        {!isLoading && loadedVisits ? undefined : (
-          <NewVisits loadedPets={loadedVisits} />
-        )}
+        {!isLoading ? <NewVisits loadedVisits={loadedVisits} /> : undefined}
       </VetContent>
     </div>
   );

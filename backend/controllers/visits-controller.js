@@ -256,6 +256,11 @@ const getUnsubmittedVetVisits = async (req, res, next) => {
     return next(error);
   }
 
+  let index = 0;
+  vetVisits = vetVisits.filter((visit) => {
+    return visit.submitted === false;
+  });
+
   for (let visit of vetVisits) {
     const date = new Date(visit.term);
     //date.toString();
