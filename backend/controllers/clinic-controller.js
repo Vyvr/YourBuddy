@@ -348,6 +348,46 @@ const addWorker = async (req, res, next) => {
   res.status(201).json({ message: "Added worker to clinic successfully." });
 };
 
+const dismissWorker = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed. Please check your data",
+      422
+    );
+
+    return next(error);
+  }
+
+  const { uid, cid } = req.body;
+  const workerId = uid;
+  const clinicId = cid;
+
+  let clinic;
+
+  try {
+    clinic = await Clinic.findById(clinicId);
+  } catch (err) {
+    const error = new HttpError("Finding clinic error", 500);
+    return next(error);
+  }
+
+  if (!clinic) {
+    const error = new HttpError("No clinic found with proided id", 401);
+    return next(error);
+  }
+
+  try {
+    await Clinic.updateOne({ _id: clinicId }, { $pull: { workers: workerId } });
+  } catch (err) {
+    const error = new HttpError("Finding user error " + err, 500);
+    return next(error);
+  }
+
+  res.status(201).json({ message: "Worker dismissed successfully." });
+};
+
 const getAllClinicVets = async (req, res, next) => {
   const errors = validationResult(req);
 
@@ -400,4 +440,5 @@ exports.getClinic = getClinic;
 exports.getAllVetClinicsByVetId = getAllVetClinicsByVetId;
 exports.getAllClinics = getAllClinics;
 exports.addWorker = addWorker;
+exports.dismissWorker = dismissWorker;
 exports.getAllClinicVets = getAllClinicVets;

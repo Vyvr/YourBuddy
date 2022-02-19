@@ -4,72 +4,74 @@ import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+
+import { COLORS } from "../../shared/colors";
 import VetContent from "./../../shared/components/content/VetContent";
+import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  ButtonWrapper,
+  LoginButton,
+  ErrorLabel,
+  Select,
+} from "../../shared/components/forms/formTemplate";
 
-const Input = styled.input`
-  display: block;
-  height: 20px;
-  width: 280px;
-  padding-left: 20px;
+const SearchWrapper = styled.div`
   margin-top: 100px;
-  margin-left: auto;
-  margin-right: auto;
-
-  border: none;
-  background-color: #c95226;
-  color: #ffff;
-  border-radius: 20px;
-  transition-duration: 0.4s;
-
-  &:placeholder {
-    color: rgba(255, 255, 255, 0.774);
-  }
-
-  &:focus {
-    background-color: #e93e00cc;
-    color: white;
-    outline: 3px solid #c95226;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
-const SubmitButton = styled.button`
-  display: block;
-  margin-top: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 150px;
-`;
-
-const DisabledButton = styled.button`
+const DismissButton = styled.button`
   width: 100%;
   padding: 10px;
 
   border: none;
   text-decoration: none;
-  background-color: #c95226;
-  color: #ffff;
-  border-radius: 20px;
-  cursor: not-allowed;
+  background-color: ${COLORS.delete_button};
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 
   &:hover {
-    background-color: #c95226;
+    background-color: ${COLORS.delete_button_hover};
+    color: white;
     color: white;
   }
 `;
 
-const Table = styled.table`
-  margin-top: 10px;
+const HireButton = styled.button`
   width: 100%;
-  border-collapse: collapse;
-`;
+  padding: 10px;
 
-const HireButton = styled.button``;
+  border: none;
+  text-decoration: none;
+  background-color: ${COLORS.special_button};
+  color: ${COLORS.special_button_font};
+  font-weight: bold;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${COLORS.special_button_hover};
+    color: ${COLORS.special_button_font_hover};
+    color: white;
+  }
+`;
 
 const AddWorker = (props) => {
   const [inputText, setInputText] = useState("");
   const [potentialWorkers, setPotentialWorkers] = useState(null);
   const [loadedWorkers, setLoadedWorkers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [rerender, setRerender] = useState(false);
   let location = useLocation();
 
   useEffect(() => {
@@ -91,9 +93,11 @@ const AddWorker = (props) => {
       setIsLoading(false);
     };
     getClinicWorkers();
-  }, [location.state.id]);
+  }, [location.state.id, rerender]);
 
   const findWorker = async (data) => {
+    const regEx = "^[A-Za-z]+$";
+    if (!data || !data.match(regEx)) return;
     setIsLoading(true);
     data = data.replace(" ", "-").toLowerCase();
     try {
@@ -131,46 +135,93 @@ const AddWorker = (props) => {
     } catch (err) {
       throw new Error(err.message);
     }
+    setRerender(!rerender);
+  };
+
+  const dismissWorker = async (clinicId, workerId) => {
+    try {
+      await fetch("http://localhost:5000/api/clinic/dismiss-worker", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+
+        body: JSON.stringify({
+          uid: workerId,
+          cid: clinicId,
+        }),
+      });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+    setRerender(!rerender);
   };
 
   return (
     <VetContent>
-      <Input onChange={handleInputChange} />
-      <SubmitButton onClick={() => findWorker(inputText)}>Find</SubmitButton>
+      <SearchWrapper>
+        <FormGroup>
+          <FormInput
+            type="input"
+            className="field"
+            placeholder="Find vets"
+            name="find"
+            id="find"
+            onChange={handleInputChange}
+          />
+          <FormLabel htmlFor="find" className="label">
+            Find vets
+          </FormLabel>
+        </FormGroup>
+
+        <FormGroup>
+          <ButtonWrapper>
+            <LoginButton onClick={() => findWorker(inputText)}>
+              Find
+            </LoginButton>
+          </ButtonWrapper>
+        </FormGroup>
+      </SearchWrapper>
+
       <Table>
-        <thead>
+        <Thead>
           <tr>
             <th>Name</th>
             <th>Surname</th>
             <th>mail</th>
             <th></th>
           </tr>
-        </thead>
+        </Thead>
         <tbody>
           {!isLoading &&
             potentialWorkers &&
             potentialWorkers.map((worker) => {
               return (
-                <tr key={worker._id}>
+                <Tr key={worker._id}>
                   <td>{worker.name}</td>
                   <td>{worker.surname}</td>
                   <td>{worker.mail}</td>
                   <td>
                     {loadedWorkers.filter((e) => e._id === worker._id).length >
                     0 ? (
-                      <DisabledButton disabled={true}>Hired</DisabledButton>
+                      <DismissButton
+                        onClick={() => {
+                          dismissWorker(location.state.id, worker._id);
+                        }}
+                      >
+                        Dismiss
+                      </DismissButton>
                     ) : (
                       <HireButton
-                        onClick={() =>
-                          handleHireWorker(location.state.id, worker._id) &&
-                          window.location.reload(false)
-                        }
+                        onClick={() => {
+                          handleHireWorker(location.state.id, worker._id);
+                        }}
                       >
                         Hire
                       </HireButton>
                     )}
                   </td>
-                </tr>
+                </Tr>
               );
             })}
         </tbody>

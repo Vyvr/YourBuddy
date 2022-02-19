@@ -34,6 +34,7 @@ router.post(
 
 router.post("/delete-clinic", clinicController.deleteClinic);
 router.post("/add-worker", clinicController.addWorker);
+router.post("/dismiss-worker", clinicController.dismissWorker);
 router.get("/get-clinic", clinicController.getClinic);
 router.get(
   "/get-all-vet-clinics/:uid",
