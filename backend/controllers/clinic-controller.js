@@ -12,6 +12,7 @@ const createClinic = async (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    console.log(errors);
     const error = new HttpError(
       "Invalid data passed in creating clinic. Please check your data",
       422
@@ -28,23 +29,15 @@ const createClinic = async (req, res, next) => {
     block,
     apartment,
     zipCode,
-    fromHour,
-    fromMinutes,
-    toHour,
-    toMinutes,
+    open,
+    close,
   } = req.body;
 
   const createdClinic = new Clinic({
     name,
     owner,
-    from: {
-      hour: fromHour,
-      minutes: fromMinutes,
-    },
-    to: {
-      hour: toHour,
-      minutes: toMinutes,
-    },
+    open,
+    close,
     address: {
       country,
       city,
@@ -113,6 +106,7 @@ const createClinic = async (req, res, next) => {
     await vet.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "Creating clinic failed. Please try again later." + err,
       500
@@ -394,7 +388,8 @@ const getAllClinicVets = async (req, res, next) => {
     }
   }
 
-  res.json({ workers: workersList.map((worker) => worker.toObject({ getters: true }))
+  res.json({
+    workers: workersList.map((worker) => worker.toObject({ getters: true })),
   });
 };
 

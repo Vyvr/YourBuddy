@@ -14,7 +14,7 @@ router.post(
     check("country").not().isEmpty(),
     check("city").not().isEmpty(),
     check("street").not().isEmpty(),
-    check("block").not().isEmpty().bail().isInt(),
+    check("block").not().isEmpty().bail(),
     check("zipCode").not().isEmpty(),
   ],
   clinicController.createClinic

@@ -90,11 +90,8 @@ const ClinicDashboard = () => {
                 street={clinic.address.street}
                 block={clinic.address.block}
                 apartment={clinic.address.apartment}
-                zipCode={clinic.address.zipCode}
-                fromHour={clinic.from.fromHour}
-                fromMinutes={clinic.from.fromMinutes}
-                toHour={clinic.to.toHour}
-                toMinutes={clinic.to.toMinutes}
+                open={clinic.open}
+                close={clinic.close}
               />
             );
           })}
