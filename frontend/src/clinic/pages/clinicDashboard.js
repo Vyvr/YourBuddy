@@ -2,11 +2,48 @@
 
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 import VetContent from "./../../shared/components/content/VetContent";
 import ClinicCard from "./../components/clinicCard";
+import { COLORS } from "../../shared/colors";
 
 import getCookieValue from "../../scripts/getCookieValue";
+
+const GridWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  width: 100%;
+  height: 100%;
+`;
+
+const CreateClinicButton = styled.button`
+  width: 300px;
+  height: 200px;
+
+  cursor: pointer;
+
+  background-color: ${COLORS.menu_button};
+  box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
+  border: none;
+  color: ${COLORS.font};
+  font-weight: 600;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: 1s;
+
+  &:hover {
+    background-color: ${COLORS.menu_button_hover};
+    box-shadow: 0 30px 40px rgba(0, 0, 0, 0.5);
+  }
+`;
 
 const ClinicDashboard = () => {
   const [loadedClinics, setLoadedClinics] = useState();
@@ -38,7 +75,7 @@ const ClinicDashboard = () => {
 
   return (
     <VetContent>
-      <div className="clinics-list">
+      <GridWrapper className="clinics-list">
         {!isLoading &&
           loadedClinics &&
           loadedClinics.map((clinic) => {
@@ -62,11 +99,11 @@ const ClinicDashboard = () => {
             );
           })}
         <NavLink to="/vet/create-clinic">
-          <button className="vet-dashboard-create-clinic-button">
+          <CreateClinicButton className="vet-dashboard-create-clinic-button">
             Create clinic
-          </button>
+          </CreateClinicButton>
         </NavLink>
-      </div>
+      </GridWrapper>
     </VetContent>
   );
 };
