@@ -20,6 +20,8 @@ const Table = styled.table`
   table-layout: fixed;
   border-radius: 5px;
   font-size: 18px;
+  text-align: center;
+  text-justify: center;
 `;
 
 const Scrollable = styled.div`
