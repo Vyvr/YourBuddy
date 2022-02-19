@@ -26,7 +26,6 @@ const createVisit = async (req, res, next) => {
     patientOwnerId,
     description,
     hour,
-    minutes,
     clinicId,
   } = req.body;
 
@@ -103,7 +102,6 @@ const createVisit = async (req, res, next) => {
   const createdVisit = new Visit({
     term,
     hour,
-    minutes,
     vet: vetId,
     clinic: clinicId,
     patient: patientId,
@@ -112,6 +110,7 @@ const createVisit = async (req, res, next) => {
     vetName,
     patientName,
     ownerName,
+    status: "pending",
   });
 
   try {
@@ -313,6 +312,7 @@ const editVisit = async (req, res, next) => {
 
   existingVisit.description = description;
   existingVisit.submitted = true;
+  existingVisit.status = "sumbitted";
 
   try {
     await existingVisit.save();

@@ -223,7 +223,7 @@ const ClinicDashboard = () => {
 
         <FormGroup>
           <ButtonWrapper>
-            <LoginButton type="submit">Add new pet</LoginButton>
+            <LoginButton type="submit">Create new clinic</LoginButton>
           </ButtonWrapper>
         </FormGroup>
       </Form>

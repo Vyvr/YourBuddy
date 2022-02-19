@@ -17,6 +17,7 @@ const Table = styled.table`
   margin-left: auto;
   margin-right: auto;
 
+  table-layout: fixed;
   border-radius: 5px;
   font-size: 18px;
 `;
@@ -35,6 +36,7 @@ const Thead = styled.thead`
 `;
 
 const Tr = styled.tr`
+  cursor: pointer;
   &:nth-child(even) {
     background-color: ${COLORS.special_button};
   }

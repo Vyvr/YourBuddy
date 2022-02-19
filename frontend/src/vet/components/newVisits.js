@@ -66,6 +66,8 @@ const NewVisits = (props) => {
             <th>Owner</th>
             <th>Patient</th>
             <th>Date</th>
+            <th>Hour</th>
+            <th>Status</th>
           </Tr>
         </Thead>
         <tbody>
@@ -90,6 +92,8 @@ const NewVisits = (props) => {
                       <td>{v.ownerName}</td>
                       <td>{v.patientName}</td>
                       <td>{v.term}</td>
+                      <td>{v.hour}</td>
+                      <td>{v.status}</td>
                     </Tr>
                   );
                 })

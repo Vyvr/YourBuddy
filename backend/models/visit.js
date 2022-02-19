@@ -9,18 +9,7 @@ const visitSchema = new mongoose.Schema({
     min: Date.now() - 1 * 24 * 60 * 60 * 1000,
     required: true,
   },
-  hour: {
-    type: Number,
-    required: false,
-    min: 0,
-    max: 23,
-  },
-  minutes: {
-    type: Number,
-    required: false,
-    min: 0,
-    max: 59,
-  },
+  hour: { type: String, required: true },
   vet: { type: String, required: true },
   patient: { type: String, required: true },
   patient_owner: { type: String, required: true },
@@ -31,6 +20,7 @@ const visitSchema = new mongoose.Schema({
   ownerName: { type: String, required: true },
   drugs: [{ type: String, required: false }],
   submitted: { type: Boolean, default: false, required: true },
+  status: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Visit", visitSchema);

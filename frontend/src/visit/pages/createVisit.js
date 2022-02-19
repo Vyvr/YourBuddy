@@ -138,7 +138,7 @@ const CreateVisit = () => {
     const patient = location.state.id;
     const owner = location.state.owner;
 
-    if (!date || !vet || !patient || !owner) {
+    if (!date || !vet || !patient || !owner || !data.hour) {
       setCorrectData(false);
       return;
     }
@@ -157,6 +157,7 @@ const CreateVisit = () => {
             vetId: vet,
             patientId: patient,
             patientOwnerId: owner,
+            hour: data.hour,
             clinicId: clinicId,
           }),
         }
@@ -245,6 +246,18 @@ const CreateVisit = () => {
         </FormGroup>
 
         <FormGroup>
+          <FormInput
+            type="time"
+            className="form__field"
+            placeholder="Time"
+            name="time"
+            id="time"
+            {...register("hour")}
+          />
+          <FormLabel className="form__label">Hour:</FormLabel>
+        </FormGroup>
+
+        <FormGroup>
           <ButtonWrapper>
             <LoginButton
               type="submit"
@@ -275,6 +288,8 @@ const CreateVisit = () => {
             <th>Description</th>
             <th>Drugs</th>
             <th>Date</th>
+            <th>Hour</th>
+            <th>Status</th>
           </tr>
         </Thead>
 
@@ -294,6 +309,8 @@ const CreateVisit = () => {
                       })}
                     </td>
                     <td key={nanoid()}>{v.term}</td>
+                    <td>{v.hour}</td>
+                    <td>{v.status}</td>
                   </Tr>
                 );
               })

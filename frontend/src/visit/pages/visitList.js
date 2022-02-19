@@ -64,6 +64,8 @@ const VisitList = () => {
             <th>Patient</th>
             <th>Description</th>
             <th>Date</th>
+            <th>Hour</th>
+            <th>Status</th>
           </tr>
         </Thead>
         <tbody>
@@ -89,6 +91,8 @@ const VisitList = () => {
                       <td>{v.patientName}</td>
                       <td>{v.description}</td>
                       <td>{v.term}</td>
+                      <td>{v.hour}</td>
+                      <td>{v.status}</td>
                     </Tr>
                   );
                 })
