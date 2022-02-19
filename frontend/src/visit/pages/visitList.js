@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import VetContent from "../../shared/components/content/VetContent";
 
 import getCookieValue from "../../scripts/getCookieValue";
+import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
 
 const VisitList = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,20 +57,21 @@ const VisitList = () => {
 
   return (
     <VetContent>
-      <table className="visit-list-table">
-        <thead>
+      <Table className="visit-list-table">
+        <Thead>
           <tr>
             <th>Owner</th>
             <th>Patient</th>
+            <th>Description</th>
             <th>Date</th>
           </tr>
-        </thead>
+        </Thead>
         <tbody>
           {!isLoading && loadedVisits
             ? loadedVisits
                 .map((v) => {
                   return (
-                    <tr
+                    <Tr
                       key={v._id}
                       id={v.id}
                       onClick={() => {
@@ -85,14 +87,15 @@ const VisitList = () => {
                     >
                       <td>{v.ownerName}</td>
                       <td>{v.patientName}</td>
+                      <td>{v.description}</td>
                       <td>{v.term}</td>
-                    </tr>
+                    </Tr>
                   );
                 })
                 .reverse()
             : undefined}
         </tbody>
-      </table>
+      </Table>
     </VetContent>
   );
 };
