@@ -132,7 +132,7 @@ const NewVisits = () => {
           body: JSON.stringify({
             visitId,
             newStatus: status,
-            hour,
+            hour: hourChange,
           }),
         }
       );
@@ -148,7 +148,6 @@ const NewVisits = () => {
 
   const handleHourChange = (e) => {
     setHourChange(e.target.value);
-    console.log(hourChange);
   };
 
   return (
@@ -244,11 +243,11 @@ const NewVisits = () => {
                               </Edit>
                             </IconsWrapper>
                             {showHourInput && (
-                              <HourInputWrapper>
+                              <HourInputWrapper id={v._id}>
                                 <input
                                   type="time"
                                   defaultValue={v.hour}
-                                  onChange={(e) => handleHourChange}
+                                  onChange={(e) => handleHourChange(e)}
                                 />
                                 <Edit
                                   onClick={() =>
@@ -289,7 +288,7 @@ const NewVisits = () => {
                           </div>
                         )}
                         {v.status === "accepted" && "accepted"}
-                        {v.status === "proposition" && "pending"}
+                        {v.status === "proposition" && "waiting for feedback"}
                       </td>
                     </Tr>
                   );
