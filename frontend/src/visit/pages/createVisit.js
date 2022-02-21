@@ -70,6 +70,7 @@ const CreateVisit = () => {
   const [loadedVisits, setLoadedVisits] = useState();
   const [isLoading, setIsLoading] = useState();
   const [selectedOption, setSelectedOption] = useState();
+  const [selectedVet, setSelectedVet] = useState();
   const [correctData, setCorrectData] = useState(true);
   const [rerender, setRerender] = useState(false);
   const { register, handleSubmit, setValue } = useForm();
@@ -103,7 +104,31 @@ const CreateVisit = () => {
       setIsLoading(false);
     };
     getAllClinics();
-  }, [location.state.id]);
+  }, []);
+
+  useEffect(() => {
+    const getPetVisits = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/visit/get-patient-visits/" +
+            location.state.id
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        if (responseData.visits.length !== 0) {
+          setLoadedVisits(responseData.visits);
+        }
+      } catch (err) {
+        throw new Error(err.message);
+      }
+      setIsLoading(false);
+    };
+    getPetVisits();
+  }, [location.state.id, rerender]);
 
   const getAllClinicVets = async (clinicId) => {
     setIsLoading(true);
@@ -130,31 +155,8 @@ const CreateVisit = () => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const getPetVisits = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/visit/get-patient-visits/" +
-            location.state.id
-        );
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-
-        if (responseData.visits.length !== 0) {
-          setLoadedVisits(responseData.visits);
-        }
-      } catch (err) {
-        throw new Error(err.message);
-      }
-      setIsLoading(false);
-    };
-    getPetVisits();
-  }, [location.state.id, rerender]);
-
   const handleVetChange = (data) => {
+    setSelectedVet(data);
     setVetId(data);
   };
 
@@ -268,7 +270,10 @@ const CreateVisit = () => {
         </FormGroup>
 
         <FormGroup>
-          <Select onChange={(event) => handleVetChange(event.target.value)}>
+          <Select
+            value={selectedVet}
+            onChange={(event) => handleVetChange(event.target.value)}
+          >
             {!isLoading &&
               loadedVets &&
               loadedVets.map((vet) => {
