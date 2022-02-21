@@ -69,7 +69,7 @@ const CreateVisit = () => {
   const [vetId, setVetId] = useState();
   const [loadedVisits, setLoadedVisits] = useState();
   const [isLoading, setIsLoading] = useState();
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedClinic, setSelectedClinic] = useState();
   const [selectedVet, setSelectedVet] = useState();
   const [correctData, setCorrectData] = useState(true);
   const [rerender, setRerender] = useState(false);
@@ -91,11 +91,11 @@ const CreateVisit = () => {
         setLoadedClinics(responseData.clinics);
 
         if (responseData.clinics[0]) {
-          setSelectedOption(responseData.clinics[0].id);
+          setSelectedClinic(responseData.clinics[0].id);
           setClinicId(responseData.clinics[0].id);
           getAllClinicVets(responseData.clinics[0].id);
         } else {
-          setSelectedOption(null);
+          setSelectedClinic(null);
           setClinicId(null);
         }
       } catch (err) {
@@ -132,7 +132,7 @@ const CreateVisit = () => {
 
   const getAllClinicVets = async (clinicId) => {
     setIsLoading(true);
-    setSelectedOption(clinicId);
+    setSelectedClinic(clinicId);
     setClinicId(clinicId);
     try {
       const response = await fetch(
@@ -241,7 +241,7 @@ const CreateVisit = () => {
 
         <FormGroup>
           <Select
-            value={selectedOption}
+            value={selectedClinic}
             onChange={(event) => getAllClinicVets(event.target.value)}
           >
             {!isLoading &&
