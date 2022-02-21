@@ -37,28 +37,6 @@ const VetDashboard = () => {
       }
       setIsLoading(false);
     };
-
-    const getVisits = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/visit/get-unsumbitted-vet-visits/" +
-            getCookieValue("user_id")
-        );
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-
-        if (responseData.visits.length !== 0) {
-          setLoadedVisits(responseData.visits);
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
-      setIsLoading(false);
-    };
-    getVisits();
     getUserTypes();
   }, []);
 
@@ -105,7 +83,7 @@ const VetDashboard = () => {
     <div>
       <VetContent>
         <VetProfile className="vet-profile" name={name} surname={surname} />
-        {!isLoading ? <NewVisits loadedVisits={loadedVisits} /> : undefined}
+        <NewVisits />
       </VetContent>
     </div>
   );

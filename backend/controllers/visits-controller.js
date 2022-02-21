@@ -312,7 +312,51 @@ const editVisit = async (req, res, next) => {
 
   existingVisit.description = description;
   existingVisit.submitted = true;
-  existingVisit.status = "sumbitted";
+  existingVisit.status = "finished";
+
+  try {
+    await existingVisit.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong with saving updated visit to database",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ visit: existingVisit.toObject({ getters: true }) });
+};
+
+const changeStatus = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data", 422)
+    );
+  }
+
+  const { newStatus, visitId, hour } = req.body;
+
+  let existingVisit;
+
+  try {
+    existingVisit = await Visit.findById(visitId);
+  } catch (err) {
+    const error = new HttpError(
+      "Searching visit failed. Please try again later",
+      500
+    );
+    return next(error);
+  }
+  if (!existingVisit) {
+    const error = new HttpError("No visit found with provided id.", 404);
+    return next(error);
+  }
+
+  existingVisit.status = newStatus;
+
+  if (newStatus === "canceled") existingVisit.submitted = true;
+  if (newStatus === "proposition") existingVisit.hour = hour;
 
   try {
     await existingVisit.save();
@@ -333,3 +377,4 @@ exports.getPatientVisits = getPatientVisits;
 exports.getVetVisits = getVetVisits;
 exports.getUnsubmittedVetVisits = getUnsubmittedVetVisits;
 exports.editVisit = editVisit;
+exports.changeStatus = changeStatus;

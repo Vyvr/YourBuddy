@@ -18,5 +18,6 @@ router.get(
 
 router.post("/create-visit", visitsController.createVisit);
 router.post("/edit-visit", visitsController.editVisit);
+router.post("/change-visit-status", visitsController.changeStatus);
 
 module.exports = router;
