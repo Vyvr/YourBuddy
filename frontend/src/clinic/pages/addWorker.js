@@ -96,7 +96,7 @@ const AddWorker = (props) => {
   }, [location.state.id, rerender]);
 
   const findWorker = async (data) => {
-    const regEx = "^[A-Za-z]+$";
+    const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
     if (!data || !data.match(regEx)) return;
     setIsLoading(true);
     data = data.replace(" ", "-").toLowerCase();
@@ -168,6 +168,9 @@ const AddWorker = (props) => {
             name="find"
             id="find"
             onChange={handleInputChange}
+            onKeyUp={(e) => {
+              if (e.keyCode === 13) findWorker(inputText);
+            }}
           />
           <FormLabel htmlFor="find" className="label">
             Find vets
