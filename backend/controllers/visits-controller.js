@@ -312,7 +312,7 @@ const editVisit = async (req, res, next) => {
 
   existingVisit.description = description;
   existingVisit.submitted = true;
-  existingVisit.status = "finished";
+  existingVisit.status = "submitted";
 
   try {
     await existingVisit.save();

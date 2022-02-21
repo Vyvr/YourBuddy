@@ -119,7 +119,7 @@ const NewVisits = () => {
     });
   };
 
-  const handleStatusChange = async (status, visitId, hour) => {
+  const handleStatusChange = async (status, visitId) => {
     try {
       const response = await fetch(
         "http://localhost:5000/api/visit/change-visit-status",

@@ -21,6 +21,8 @@ import {
 } from "../../shared/components/forms/formTemplate";
 
 import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
+import CheckIcon from "../../resources/icons/check-square.svg";
+import CancelIcon from "../../resources/icons/x-square.svg";
 
 const StyledNameLabel = styled.label`
   color: ${COLORS.special_button_font};
@@ -41,6 +43,25 @@ const NameWrapper = styled.div`
   align-items: center;
 `;
 
+const Edit = styled.button`
+  opacity: 0.5;
+  transition: 0.5s;
+  all: unset;
+
+  width: 20px;
+  height: 20px;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+const IconsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 20px);
+  gap: 10px;
+`;
+
 const CreateVisit = () => {
   const [loadedVets, setLoadedVets] = useState();
   const [loadedClinics, setLoadedClinics] = useState();
@@ -50,30 +71,12 @@ const CreateVisit = () => {
   const [isLoading, setIsLoading] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [correctData, setCorrectData] = useState(true);
+  const [rerender, setRerender] = useState(false);
   const { register, handleSubmit, setValue } = useForm();
+
   let location = useLocation();
 
   useEffect(() => {
-    const getPetVisits = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/visit/get-patient-visits/" +
-            location.state.id
-        );
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-
-        if (responseData.visits.length !== 0) {
-          setLoadedVisits(responseData.visits);
-        }
-      } catch (err) {
-        throw new Error(err.message);
-      }
-      setIsLoading(false);
-    };
     const getAllClinics = async () => {
       setIsLoading(true);
       try {
@@ -94,7 +97,6 @@ const CreateVisit = () => {
           setSelectedOption(null);
           setClinicId(null);
         }
-        getPetVisits();
       } catch (err) {
         throw new Error(err.message);
       }
@@ -127,6 +129,30 @@ const CreateVisit = () => {
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    const getPetVisits = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/visit/get-patient-visits/" +
+            location.state.id
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        if (responseData.visits.length !== 0) {
+          setLoadedVisits(responseData.visits);
+        }
+      } catch (err) {
+        throw new Error(err.message);
+      }
+      setIsLoading(false);
+    };
+    getPetVisits();
+  }, [location.state.id, rerender]);
 
   const handleVetChange = (data) => {
     setVetId(data);
@@ -173,6 +199,33 @@ const CreateVisit = () => {
     setIsLoading(false);
 
     window.location.reload(false);
+  };
+
+  const handleStatusChange = async (status, visitId, hour) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/visit/change-visit-status",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            visitId,
+            newStatus: status,
+            hour,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setRerender(!rerender);
   };
 
   return (
@@ -310,7 +363,51 @@ const CreateVisit = () => {
                     </td>
                     <td key={nanoid()}>{v.term}</td>
                     <td>{v.hour}</td>
-                    <td>{v.status}</td>
+                    <td
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {v.status === "pending" && "pending"}
+                      {v.status === "canceled" && "canceled"}
+                      {v.status === "submitted" && "submitted"}
+                      {v.status === "accepted" && "accepted"}
+                      {v.status === "proposition" && (
+                        <IconsWrapper>
+                          <Edit
+                            onClick={() =>
+                              handleStatusChange("accepted", v._id)
+                            }
+                          >
+                            <img
+                              src={CheckIcon}
+                              alt="checkIcon"
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                              }}
+                            />
+                          </Edit>
+
+                          <Edit
+                            onClick={() =>
+                              handleStatusChange("canceled", v._id)
+                            }
+                          >
+                            <img
+                              src={CancelIcon}
+                              alt="cancelIcon"
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                              }}
+                            />
+                          </Edit>
+                        </IconsWrapper>
+                      )}
+                    </td>
                   </Tr>
                 );
               })
