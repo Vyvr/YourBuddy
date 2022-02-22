@@ -65,11 +65,13 @@ const IconsWrapper = styled.div`
 const CreateVisit = () => {
   const [loadedVets, setLoadedVets] = useState();
   const [loadedClinics, setLoadedClinics] = useState();
-  const [clinicId, setClinicId] = useState();
   const [vetId, setVetId] = useState();
   const [loadedVisits, setLoadedVisits] = useState();
   const [isLoading, setIsLoading] = useState();
   const [selectedClinic, setSelectedClinic] = useState();
+  const [selectedClinicObj, setSelectedClinicObj] = useState();
+  const [open, setOpen] = useState("");
+  const [close, setClose] = useState("");
   const [selectedVet, setSelectedVet] = useState();
   const [correctData, setCorrectData] = useState(true);
   const [rerender, setRerender] = useState(false);
@@ -91,12 +93,9 @@ const CreateVisit = () => {
         setLoadedClinics(responseData.clinics);
 
         if (responseData.clinics[0]) {
-          setSelectedClinic(responseData.clinics[0].id);
-          setClinicId(responseData.clinics[0].id);
-          getAllClinicVets(responseData.clinics[0].id);
+          getAllClinicVets(JSON.stringify(responseData.clinics[0]));
         } else {
           setSelectedClinic(null);
-          setClinicId(null);
         }
       } catch (err) {
         throw new Error(err.message);
@@ -130,13 +129,16 @@ const CreateVisit = () => {
     getPetVisits();
   }, [location.state.id, rerender]);
 
-  const getAllClinicVets = async (clinicId) => {
+  const getAllClinicVets = async (clinic) => {
     setIsLoading(true);
-    setSelectedClinic(clinicId);
-    setClinicId(clinicId);
+    setSelectedClinic(clinic);
+    const clinicObj = JSON.parse(clinic);
+    setSelectedClinicObj(clinicObj);
+    setOpen(clinicObj.open);
+    setClose(clinicObj.close);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/clinic/get-all-clinic-vets/" + clinicId
+        "http://localhost:5000/api/clinic/get-all-clinic-vets/" + clinicObj._id
       );
       const responseData = await response.json();
       if (!response.ok) {
@@ -165,8 +167,17 @@ const CreateVisit = () => {
     const vet = vetId;
     const patient = location.state.id;
     const owner = location.state.owner;
+    let obj = JSON.parse(selectedClinic);
 
-    if (!date || !vet || !patient || !owner || !data.hour) {
+    if (
+      !date ||
+      !vet ||
+      !patient ||
+      !owner ||
+      !data.hour ||
+      data.hour < open ||
+      data.hour > close
+    ) {
       setCorrectData(false);
       return;
     }
@@ -186,7 +197,7 @@ const CreateVisit = () => {
             patientId: patient,
             patientOwnerId: owner,
             hour: data.hour,
-            clinicId: clinicId,
+            clinicId: obj._id,
           }),
         }
       );
@@ -250,7 +261,7 @@ const CreateVisit = () => {
                 return (
                   <option
                     key={clinic._id}
-                    value={clinic._id}
+                    value={JSON.stringify(clinic)}
                     onSubmit={setValue("clinic", clinic._id)}
                   >
                     {clinic.name +
@@ -311,8 +322,8 @@ const CreateVisit = () => {
             placeholder="Time"
             name="time"
             id="time"
-            min={selectedClinic.open}
-            max={selectedClinic.close}
+            min={open}
+            max={close}
             {...register("hour")}
           />
           <FormLabel className="form__label">Hour:</FormLabel>
