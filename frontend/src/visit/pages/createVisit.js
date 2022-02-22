@@ -260,8 +260,9 @@ const CreateVisit = () => {
                       clinic.address.street +
                       " " +
                       clinic.address.block}{" "}
-                    {clinic.address.apartment ? "/" : ""}{" "}
-                    {clinic.address.apartment}
+                    {clinic.address.apartment ? "/" : ""}
+                    {clinic.address.apartment} {" | "} {clinic.open} -{" "}
+                    {clinic.close}
                   </option>
                 );
               })}
@@ -310,6 +311,8 @@ const CreateVisit = () => {
             placeholder="Time"
             name="time"
             id="time"
+            min={selectedClinic.open}
+            max={selectedClinic.close}
             {...register("hour")}
           />
           <FormLabel className="form__label">Hour:</FormLabel>
