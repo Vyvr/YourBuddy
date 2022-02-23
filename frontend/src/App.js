@@ -23,6 +23,7 @@ import ClinicDashboard from "./clinic/pages/clinicDashboard";
 import CreateClinic from "./clinic/pages/createClinic";
 import AddWorker from "./clinic/pages/addWorker";
 import CreatePet from "./pet/pages/createPet";
+import PetDetails from "./pet/pages/petDetails";
 import EditPet from "./pet/pages/editPet";
 import Hello from "./user/pages/hello";
 
@@ -75,6 +76,9 @@ const App = () => {
           </Route>
           <Route path="/user/create-pet" exact>
             <CreatePet />
+          </Route>
+          <Route path="/pet/pet-info" exact>
+            <PetDetails />
           </Route>
           <Route path="/user/edit-pet" exact>
             <EditPet />

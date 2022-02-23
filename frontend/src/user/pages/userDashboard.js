@@ -80,6 +80,7 @@ const UserDashboard = () => {
                 weight={pet.weight}
                 sex={pet.sex}
                 owner={pet.owner}
+                vaccinations={pet.vaccinations}
               />
             );
           })}

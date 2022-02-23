@@ -7,6 +7,7 @@ import styled from "styled-components";
 import petProfilePic from "../../resources/pet/pet_profile_pic.jpg";
 import EditIcon from "../../resources/icons/gear-fill.svg";
 import DocIcon from "../../resources/icons/doctor.svg";
+import InfoIcon from "../../resources/icons/info-circle-fill.svg";
 import { COLORS } from "../../shared/colors";
 
 const Wrapper = styled.div`
@@ -49,7 +50,7 @@ const LabelWrapper = styled.div`
 const PetPanel = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50px;
+  width: 70px;
   height: 10px;
   margin-top: 10px;
 `;
@@ -131,6 +132,27 @@ const PetCard = (props) => {
           <img
             src={EditIcon}
             alt="editIcon"
+            style={{ width: "20px", height: "20px" }}
+          />
+        </Edit>
+        <Edit
+          className="pet-info-button"
+          to={{
+            pathname: "/pet/pet-info",
+            state: {
+              id: props.id,
+              name: props.name,
+              born: props.born,
+              weight: props.weight,
+              breed: props.breed,
+              vaccinations: props.vaccinations,
+            },
+          }}
+          exact
+        >
+          <img
+            src={InfoIcon}
+            alt="infoIcon"
             style={{ width: "20px", height: "20px" }}
           />
         </Edit>
