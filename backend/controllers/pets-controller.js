@@ -208,7 +208,7 @@ const updatePetVaccinations = async (req, res, next) => {
     );
   }
 
-  const { petId, vaccinations } = req.body;
+  const { petId, vaccinations, term } = req.body;
 
   let existingPet;
 
@@ -226,14 +226,21 @@ const updatePetVaccinations = async (req, res, next) => {
     return next(error);
   }
 
+  let objVaccinations = [];
+
   vaccinations.forEach((v) => {
+    objVaccinations.push({ vaccination: v, term: term });
+  });
+
+  objVaccinations.forEach((v) => {
     if (!existingPet.vaccinations.includes(v)) existingPet.vaccinations.push(v);
   });
 
   let existingVaccinations = [...existingPet.vaccinations];
 
   existingVaccinations.forEach((v) => {
-    if (!vaccinations.includes(v)) {
+    if (!objVaccinations.includes(v)) {
+      console.log(v);
       const index = existingPet.vaccinations.indexOf(v);
       existingPet.vaccinations.splice(index, 1);
     }

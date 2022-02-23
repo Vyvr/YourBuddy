@@ -250,6 +250,12 @@ const CreateVisit = () => {
           </StyledNameLabel>
         </NameWrapper>
 
+        <NameWrapper className="form__group">
+          <StyledNameLabel className="form__label">
+            {location.state.name} vaccines:
+          </StyledNameLabel>
+        </NameWrapper>
+
         <FormGroup>
           <Select
             value={selectedClinic}

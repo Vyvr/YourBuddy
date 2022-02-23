@@ -145,13 +145,17 @@ const VisitDetails = (props) => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
+        if (!responseData.existingPet) {
+          setIsPatientDetailsLoading(false);
+          return;
+        }
         setPatientDetails(responseData.existingPet);
         setPatientDetails((patientDetails) => ({
           ...patientDetails,
           ownerName: state.ownerName,
         }));
         responseData.existingPet.vaccinations.forEach((v) => {
-          setVaccineList((vaccineList) => [...vaccineList, v]);
+          setVaccineList((vaccineList) => [...vaccineList, v.vaccination]);
         });
       } catch (err) {
         throw new Error(err.message);
@@ -268,6 +272,7 @@ const VisitDetails = (props) => {
           body: JSON.stringify({
             petId: state.patient,
             vaccinations: vaccineList,
+            term: state.term,
           }),
         }
       );
@@ -281,6 +286,16 @@ const VisitDetails = (props) => {
 
     window.location.reload(false);
   };
+
+  if (!patientDetails) {
+    return (
+      <VetContent>
+        <ContentWrapper>
+          <VisitInfo>Pet has been deleted</VisitInfo>
+        </ContentWrapper>
+      </VetContent>
+    );
+  }
 
   return (
     <VetContent>
@@ -324,7 +339,7 @@ const VisitDetails = (props) => {
                     ? vaccineList.map((v) => {
                         return (
                           <MedicinesList key={v}>
-                            {"- " + v}{" "}
+                            {"- " + v}
                             <DeleteButton
                               onClick={() => handleVaccineDelete(v)}
                             >
