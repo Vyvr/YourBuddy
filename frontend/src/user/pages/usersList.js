@@ -48,6 +48,7 @@ const UsersList = () => {
                 id={user._id}
                 name={user.name}
                 surname={user.surname}
+                mail={user.mail}
               />
             );
           })}

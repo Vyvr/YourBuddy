@@ -50,8 +50,10 @@ const PetInfo = () => {
 
       <Table>
         <Thead>
-          <th>Vaccine</th>
-          <th>Date</th>
+          <tr>
+            <th>Vaccine</th>
+            <th>Date</th>
+          </tr>
         </Thead>
 
         <tbody>

@@ -63,6 +63,8 @@ const UserCard = (props) => {
       <img src={profilePic} alt="profile_pic" className="profile-picture" />
       <div
         style={{
+          display: "flex",
+          flexDirection: "column",
           marginLeft: "10px",
           display: "flex",
           alignItems: "center",
@@ -76,6 +78,9 @@ const UserCard = (props) => {
         </div>
         <div className="surname" style={{ fontSize: "24px" }}>
           <label className="surname-label">{props.surname}</label>
+        </div>
+        <div className="mail" style={{ fontSize: "24px" }}>
+          <label className="mail-label">{props.mail}</label>
         </div>
       </div>
       <div
