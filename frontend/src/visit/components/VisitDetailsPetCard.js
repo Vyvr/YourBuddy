@@ -55,8 +55,8 @@ const VisitDetailsPetCard = (props) => {
           {props.patientDetails.vaccinations.length > 0
             ? props.patientDetails.vaccinations.map((v) => {
                 return (
-                  <div key={v.vaccination}>
-                    <span key={v.vaccination}>{v.vaccination + ", "}</span>
+                  <div key={v._id}>
+                    <span key={v._id}>{v.name + ", "}</span>
                   </div>
                 );
               })

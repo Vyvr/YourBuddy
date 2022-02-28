@@ -44,6 +44,7 @@ const PetInfo = () => {
         <NameWrapper className="form__group">
           <StyledNameLabel className="form__label">
             {location.state.name} vaccines list
+            {console.log(location.state)}
           </StyledNameLabel>
         </NameWrapper>
       </Wrapper>
@@ -52,6 +53,7 @@ const PetInfo = () => {
         <Thead>
           <tr>
             <th>Vaccine</th>
+            <th>Doctor</th>
             <th>Date</th>
           </tr>
         </Thead>
@@ -59,8 +61,9 @@ const PetInfo = () => {
         <tbody>
           {location.state.vaccinations.map((v) => {
             return (
-              <Tr key={v.vaccination}>
-                <td>{v.vaccination}</td>
+              <Tr key={v._id}>
+                <td>{v.name}</td>
+                <td>{v.doctor}</td>
                 <td>{v.term}</td>
               </Tr>
             );

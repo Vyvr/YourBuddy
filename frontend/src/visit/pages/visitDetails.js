@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import { nanoid } from "nanoid";
 
 import VetContent from "../../shared/components/content/VetContent";
 import VisitDetailsPetCard from "../components/VisitDetailsPetCard";
@@ -155,7 +156,7 @@ const VisitDetails = (props) => {
           ownerName: state.ownerName,
         }));
         responseData.existingPet.vaccinations.forEach((v) => {
-          setVaccineList((vaccineList) => [...vaccineList, v.vaccination]);
+          setVaccineList((vaccineList) => [...vaccineList, v.name]);
         });
       } catch (err) {
         throw new Error(err.message);
@@ -271,8 +272,10 @@ const VisitDetails = (props) => {
           },
           body: JSON.stringify({
             petId: state.patient,
+            visitId: state.id,
             vaccinations: vaccineList,
             term: state.term,
+            vetName: state.vetName,
           }),
         }
       );
@@ -338,7 +341,7 @@ const VisitDetails = (props) => {
                   {!isPatientDetailsLoading && vaccineList.length > 0
                     ? vaccineList.map((v) => {
                         return (
-                          <MedicinesList key={v}>
+                          <MedicinesList key={nanoid()}>
                             {"- " + v}
                             <DeleteButton
                               onClick={() => handleVaccineDelete(v)}
@@ -357,7 +360,7 @@ const VisitDetails = (props) => {
                   {!isPatientDetailsLoading && drugList.length > 0
                     ? drugList.map((d) => {
                         return (
-                          <MedicinesList key={d}>
+                          <MedicinesList key={nanoid()}>
                             {"- " + d}{" "}
                             <DeleteButton onClick={() => handleDrugDelete(d)}>
                               -

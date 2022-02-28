@@ -7,6 +7,7 @@ const { v4: uuid } = require("uuid");
 const HttpError = require("../models/http-error");
 const Pet = require("../models/pet");
 const User = require("../models/user");
+const Visit = require("../models/visit");
 
 const getPetsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
@@ -208,7 +209,7 @@ const updatePetVaccinations = async (req, res, next) => {
     );
   }
 
-  const { petId, vaccinations, term } = req.body;
+  const { petId, visitId, vaccinations, term, vetName } = req.body;
 
   let existingPet;
 
@@ -229,18 +230,26 @@ const updatePetVaccinations = async (req, res, next) => {
   let objVaccinations = [];
 
   vaccinations.forEach((v) => {
-    objVaccinations.push({ vaccination: v, term: term });
+    objVaccinations.push({
+      name: v,
+      visit: visitId,
+      term: term,
+      doctor: vetName,
+    });
   });
 
   objVaccinations.forEach((v) => {
-    if (!existingPet.vaccinations.includes(v)) existingPet.vaccinations.push(v);
+    if (!existingPet.vaccinations.some((e) => e.name === v.name)) {
+      existingPet.vaccinations.push(v);
+    }
   });
 
+  let vaccinePresent;
   let existingVaccinations = [...existingPet.vaccinations];
 
   existingVaccinations.forEach((v) => {
-    if (!objVaccinations.includes(v)) {
-      console.log(v);
+    vaccinePresent = objVaccinations.findIndex((e) => e.name === v.name);
+    if (vaccinePresent === -1) {
       const index = existingPet.vaccinations.indexOf(v);
       existingPet.vaccinations.splice(index, 1);
     }
@@ -253,7 +262,7 @@ const updatePetVaccinations = async (req, res, next) => {
       "Something went wrong with saving updated pet to database",
       500
     );
-    return next(error);
+    return next(err);
   }
 
   res.status(200).json({ visit: existingPet.toObject({ getters: true }) });
