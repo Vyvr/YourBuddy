@@ -198,6 +198,16 @@ const getPetData = async (req, res, next) => {
     return next(error);
   }
 
+  const today = new Date();
+
+  if (today.getMonth() < existingPet.born.getMonth()) {
+    existingPet.age.month = existingPet.born.getMonth() - today.getMonth();
+  } else {
+    existingPet.age.month = today.getMonth() - existingPet.born.getMonth();
+  }
+
+  existingPet.age.year = today.getFullYear() - existingPet.born.getFullYear();
+
   res.status(200).json({ existingPet });
 };
 

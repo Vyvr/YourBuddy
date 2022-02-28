@@ -3,16 +3,18 @@
 import React from "react";
 import styled from "styled-components";
 
+import { COLORS } from "../../shared/colors";
+
 const Content = styled.div`
   height: 100%;
   border-right: 1px solid black;
+  color: ${COLORS.font};
 `;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
   text-align: center;
-  border-bottom: 1px solid black;
 `;
 const InfoHeader = styled.label`
   font-size: 20px;
@@ -35,7 +37,10 @@ const VisitDetailsPetCard = (props) => {
       </Wrapper>
       <Wrapper>
         <InfoHeader>Age</InfoHeader>
-        <InfoData key="age">{props.patientDetails.age}</InfoData>
+        <InfoData key="age">
+          {props.patientDetails.age.year} years {props.patientDetails.age.month}{" "}
+          months
+        </InfoData>
       </Wrapper>
       <Wrapper>
         <InfoHeader>Breed</InfoHeader>
