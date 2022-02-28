@@ -209,7 +209,7 @@ const updatePetVaccinations = async (req, res, next) => {
     );
   }
 
-  const { petId, visitId, vaccinations, term, vetName } = req.body;
+  const { petId, visitId, vaccinations, term, vetName, vetId } = req.body;
 
   let existingPet;
 
@@ -235,6 +235,7 @@ const updatePetVaccinations = async (req, res, next) => {
       visit: visitId,
       term: term,
       doctor: vetName,
+      doctorId: vetId,
     });
   });
 

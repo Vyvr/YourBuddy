@@ -108,7 +108,8 @@ const NewVisits = () => {
     _term,
     _description,
     _patient,
-    _vetName
+    _vetName,
+    _vetId
   ) => {
     history.push("/vet/visit-details/" + _id, {
       id: _id,
@@ -118,6 +119,7 @@ const NewVisits = () => {
       description: _description,
       patient: _patient,
       vetName: _vetName,
+      vetId: _vetId,
     });
   };
 
@@ -184,7 +186,8 @@ const NewVisits = () => {
                           v.term,
                           v.description,
                           v.patient,
-                          v.vetName
+                          v.vetName,
+                          v.vet
                         );
                       }}
                     >

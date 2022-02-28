@@ -19,6 +19,7 @@ const petSchema = new mongoose.Schema({
       visit: { type: mongoose.Types.ObjectId, required: true, ref: "Visit" },
       term: { type: String, required: true },
       doctor: { type: String, required: true },
+      doctorId: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
     },
   ],
   owner: { type: mongoose.Types.ObjectId, required: true, ref: "User" },

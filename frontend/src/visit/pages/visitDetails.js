@@ -129,6 +129,7 @@ const VisitDetails = (props) => {
   const [isVisitDataLoading, setIsVisitDataLoading] = useState(false);
   const [patientDetails, setPatientDetails] = useState();
   const [vaccineList, setVaccineList] = useState([]);
+  const [vaccineDetails, setVaccineDetails] = useState([]);
   const [drugList, setDrugList] = useState([]);
   const [drug, setDrug] = useState("");
   const [vaccine, setVaccine] = useState("");
@@ -157,6 +158,7 @@ const VisitDetails = (props) => {
         }));
         responseData.existingPet.vaccinations.forEach((v) => {
           setVaccineList((vaccineList) => [...vaccineList, v.name]);
+          setVaccineDetails((vaccineDetails) => [...vaccineDetails, v]);
         });
       } catch (err) {
         throw new Error(err.message);
@@ -276,6 +278,7 @@ const VisitDetails = (props) => {
             vaccinations: vaccineList,
             term: state.term,
             vetName: state.vetName,
+            vetId: state.vetId,
           }),
         }
       );
@@ -343,6 +346,7 @@ const VisitDetails = (props) => {
                         return (
                           <MedicinesList key={nanoid()}>
                             {"- " + v}
+
                             <DeleteButton
                               onClick={() => handleVaccineDelete(v)}
                             >
