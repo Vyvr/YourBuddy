@@ -12,6 +12,7 @@ import getCookieValue from "../../scripts/getCookieValue";
 const PetList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
+  grid-template-rows: repeat(auto-fill, 300px);
   row-gap: 10px;
   margin-left: auto;
   margin-top: auto;

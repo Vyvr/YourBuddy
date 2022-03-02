@@ -8,7 +8,7 @@ const Content = (props) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "auto",
+        height: "calc(100% - 60px)",
         width: "100%",
       }}
     >

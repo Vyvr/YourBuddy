@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  margin-top: 15px;
   text-align: center;
 `;
 const InfoHeader = styled.label`
