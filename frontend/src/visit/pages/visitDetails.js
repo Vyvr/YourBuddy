@@ -7,6 +7,13 @@ import { nanoid } from "nanoid";
 
 import VetContent from "../../shared/components/content/VetContent";
 import VisitDetailsPetCard from "../components/VisitDetailsPetCard";
+import { COLORS } from "../../shared/colors";
+import {
+  FormGroup,
+  FormLabel,
+  FormInput,
+  LoginButton,
+} from "../../shared/components/forms/formTemplate";
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -28,10 +35,9 @@ const Wrapper = styled.div`
 const InsideWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: right;
+  justify-content: center;
   margin-top: 10px;
-  padding-right: 30px;
-  width: 50%;
+  width: 100%;
   height: 100%;
 `;
 
@@ -40,6 +46,29 @@ const ScrollableDiv = styled.div`
   word-wrap: normal;
   width: 100%;
   height: 100%;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background: rgba(0, 0, 0, 0.9);
+  }
 `;
 
 const DescriptionDiv = styled.div`
@@ -52,7 +81,9 @@ const DescriptionDiv = styled.div`
   height: 100%;
 `;
 
-const MedicinesInfo = styled.div``;
+const MedicinesInfo = styled.div`
+  margin-top: 10px;
+`;
 
 const MedicinesList = styled.div`
   display: flex;
@@ -62,15 +93,27 @@ const MedicinesList = styled.div`
 const Label = styled.label`
   font-size: 20px;
   font-weight: bold;
+  color: ${COLORS.font};
 `;
 
 const DeleteButton = styled.button`
   width: 20px;
   height: 20px;
-  background-color: #dc3545;
-  text-align: center;
-  padding: 0px;
   margin-left: 10px;
+  text-align: center;
+  background-color: ${COLORS.font};
+  color: white;
+  padding: 0px;
+
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: #6fb3b8;
+  }
 `;
 
 const Description = styled.textarea`
@@ -81,19 +124,12 @@ const Description = styled.textarea`
   margin-top: 10px;
   padding: 5px;
   border-radius: 5px;
-`;
+  border: 2px solid ${COLORS.font};
 
-const AddButton = styled.button`
-  margin-left: 10px;
-  width: 40px;
-  height: 35px;
-  font-weight: bold;
-`;
-
-const Input = styled.input`
-  font-family: inherit;
-  margin-left: 10px;
-  height: 20px;
+  &:focus {
+    outline: 0;
+    border: 3px solid ${COLORS.font};
+  }
 `;
 
 const PetInfo = styled.div`
@@ -313,31 +349,56 @@ const VisitDetails = (props) => {
             <PetInfo>
               <VisitDetailsPetCard patientDetails={patientDetails} />
             </PetInfo>
+
             <VisitInfo>
               <Wrapper>
                 <InsideWrapper>
-                  <Label>Add vaccine:</Label>
-                  <Input
-                    value={vaccine}
-                    onChange={handleVaccineChange}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") addVaccine();
-                    }}
-                  />
-                  <AddButton onClick={addVaccine}>+</AddButton>
+                  <FormGroup>
+                    <FormInput
+                      type="input"
+                      className="form__field"
+                      placeholder="Add vaccine"
+                      name="addVaccine"
+                      id="addVaccine"
+                      value={vaccine}
+                      onChange={handleVaccineChange}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") addVaccine();
+                      }}
+                    />
+                    <FormLabel htmlFor="addVaccine" className="form__label">
+                      Add vaccine
+                    </FormLabel>
+                  </FormGroup>
+                  <LoginButton onClick={addVaccine} style={{ width: "40px" }}>
+                    +
+                  </LoginButton>
                 </InsideWrapper>
+
                 <InsideWrapper>
-                  <Label>Add drug:</Label>
-                  <Input
-                    value={drug}
-                    onChange={handleDrugChange}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") addDrug();
-                    }}
-                  />
-                  <AddButton onClick={addDrug}>+</AddButton>
+                  <FormGroup>
+                    <FormInput
+                      type="input"
+                      className="form__field"
+                      placeholder="Add drug"
+                      name="addDrug"
+                      id="addDrug"
+                      value={drug}
+                      onChange={handleDrugChange}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") addDrug();
+                      }}
+                    />
+                    <FormLabel htmlFor="addDrug" className="form_label">
+                      Add drug
+                    </FormLabel>
+                  </FormGroup>
+                  <LoginButton onClick={addDrug} style={{ width: "40px" }}>
+                    +
+                  </LoginButton>
                 </InsideWrapper>
               </Wrapper>
+
               <MedicinesInfo>
                 <Label>Vaccines:</Label>
                 <ScrollableDiv>
@@ -345,7 +406,7 @@ const VisitDetails = (props) => {
                     ? vaccineList.map((v) => {
                         return (
                           <MedicinesList key={nanoid()}>
-                            {"- " + v}
+                            {"-" + v}
 
                             <DeleteButton
                               onClick={() => handleVaccineDelete(v)}
@@ -383,9 +444,12 @@ const VisitDetails = (props) => {
                 ></Description>
               </DescriptionDiv>
               <ButtonWrapper>
-                <SubmitButton onClick={handleSendData}>
+                <LoginButton
+                  onClick={handleSendData}
+                  style={{ width: "160px", height: "60px" }}
+                >
                   Sumbit visit
-                </SubmitButton>
+                </LoginButton>
               </ButtonWrapper>
             </VisitInfo>
           </ContentWrapper>
