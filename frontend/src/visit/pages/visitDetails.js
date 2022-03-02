@@ -153,11 +153,6 @@ const ButtonWrapper = styled.div`
   grid-column: 2 / span 2;
 `;
 
-const SubmitButton = styled.button`
-  height: 60px;
-  width: 160px;
-`;
-
 const VisitDetails = (props) => {
   const location = useLocation();
   const state = location.state;
@@ -233,6 +228,10 @@ const VisitDetails = (props) => {
   const addVaccine = () => {
     if (vaccine !== "") {
       setVaccineList((vaccineList) => [...vaccineList, vaccine]);
+      setVaccineDetails((vaccineDetails) => [
+        ...vaccineDetails,
+        { name: vaccine, doctorId: state.vetId },
+      ]);
       setVaccine("");
     }
   };
@@ -249,13 +248,19 @@ const VisitDetails = (props) => {
   };
 
   const handleVaccineDelete = (v) => {
-    let index = vaccineList.indexOf(v);
+    let index = vaccineList.indexOf(v.name);
+    let indexDetails = vaccineDetails.indexOf(v);
     let temp = vaccineList;
+    let tempDetails = vaccineDetails;
     if (index > -1) {
       temp.splice(index, 1);
+      tempDetails.splice(indexDetails, 1);
     }
     setVaccineList(temp);
     setVaccineList((vaccineList) => [...vaccineList]);
+
+    setVaccineDetails(tempDetails);
+    setVaccineDetails((vaccineDetails) => [...vaccineDetails]);
   };
 
   const handleDrugDelete = (v) => {
@@ -403,16 +408,17 @@ const VisitDetails = (props) => {
                 <Label>Vaccines:</Label>
                 <ScrollableDiv>
                   {!isPatientDetailsLoading && vaccineList.length > 0
-                    ? vaccineList.map((v) => {
+                    ? vaccineDetails.map((v) => {
                         return (
                           <MedicinesList key={nanoid()}>
-                            {"-" + v}
-
-                            <DeleteButton
-                              onClick={() => handleVaccineDelete(v)}
-                            >
-                              -
-                            </DeleteButton>
+                            {"-" + v.name}
+                            {v.doctorId === state.vetId && (
+                              <DeleteButton
+                                onClick={() => handleVaccineDelete(v)}
+                              >
+                                -
+                              </DeleteButton>
+                            )}
                           </MedicinesList>
                         );
                       })
