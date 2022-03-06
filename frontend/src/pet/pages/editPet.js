@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -13,16 +13,24 @@ import {
   ButtonWrapper,
   LoginButton,
   DeleteButton,
+  ErrorLabel,
+  ErrorLabelWrapper,
 } from "../../shared/components/forms/formTemplate";
 
 const EditPet = (props) => {
   const { register, handleSubmit } = useForm();
+  const [invalidData, setInvalidData] = useState(false);
   let location = useLocation();
   const history = useHistory();
 
   const birthDate = new Date(location.state.born).toISOString().split("T")[0];
 
   const editPetHandler = async (data) => {
+    if (!data.name || !data.born || !data.weight || !data.breed) {
+      setInvalidData(true);
+      return;
+    }
+
     try {
       await fetch("http://localhost:5000/api/pet/edit", {
         method: "POST",
@@ -131,6 +139,12 @@ const EditPet = (props) => {
             <LoginButton type="submit">Edit pet</LoginButton>
           </ButtonWrapper>
         </FormGroup>
+
+        {invalidData && (
+          <ErrorLabelWrapper>
+            <ErrorLabel>Invalid data passed</ErrorLabel>
+          </ErrorLabelWrapper>
+        )}
 
         <FormGroup>
           <ButtonWrapper>
