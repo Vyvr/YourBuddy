@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
@@ -18,11 +18,14 @@ import {
   CheckboxLabel,
   ButtonWrapper,
   LoginButton,
+  ErrorLabel,
+  ErrorLabelWrapper,
 } from "../../shared/components/forms/formTemplate";
 
 const CreatePet = () => {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
+  const [invalidData, setInvalidData] = useState(false);
   const male = useRef(null);
   const female = useRef(null);
   const other = useRef(null);
@@ -38,8 +41,10 @@ const CreatePet = () => {
       sex = "other";
     }
 
-    console.log(data);
-    console.log(sex);
+    if (!data.name || !data.born || !data.weight || !data.breed) {
+      setInvalidData(true);
+      return;
+    }
 
     try {
       await fetch("http://localhost:5000/api/pet/create", {
@@ -170,6 +175,12 @@ const CreatePet = () => {
             </CheckboxInsideWrapper>
           </CheckboxWrapper>
         </FormGroup>
+
+        {invalidData && (
+          <ErrorLabelWrapper>
+            <ErrorLabel>Invalid data passed</ErrorLabel>
+          </ErrorLabelWrapper>
+        )}
 
         <FormGroup>
           <ButtonWrapper>

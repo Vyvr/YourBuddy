@@ -24,7 +24,6 @@ const EditUser = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState();
 
-  // const [vetType, setVetType] = useState("false");
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(true);
   const [passwordTooShort, setPasswordTooShort] = useState(false);
   const [isNameEmpty, setIsNameEmpty] = useState(false);
@@ -282,54 +281,6 @@ const EditUser = (props) => {
           </FormGroup>
         </Form>
       )}
-      {/* {!isLoading && userData && (
-        <ContentWrapper>
-          <Wrapper>
-            <Label>Name:</Label>
-            <Input defaultValue={userData.name} onChange={handleNameChange} />
-          </Wrapper>
-          <Wrapper>
-            <Label>Surname:</Label>
-            <Input
-              defaultValue={userData.surname}
-              onChange={handleSurnameChange}
-            />
-          </Wrapper>
-          <Wrapper>
-            <Label>Mail:</Label>
-            <Input defaultValue={userData.mail} onChange={handleMailChange} />
-          </Wrapper>
-          <Wrapper>
-            <Label>Password:</Label>
-            <Input type="password" onChange={handlePasswordChange} />
-          </Wrapper>
-          <Wrapper>
-            <Label>Re-enter password:</Label>
-            <Input type="password" onChange={handleSecondPasswordChange} />
-          </Wrapper>
-          <Wrapper>
-            <Label>Are you vet?:</Label>
-            <Checkbox
-              type="checkbox"
-              defaultChecked={userData.type.includes("vet") ? true : false}
-              onChange={handleVetTypeChange}
-            />
-          </Wrapper>
-          {!isPasswordsMatch && (
-            <ErrorLabel>Your passwords doesn't match</ErrorLabel>
-          )}
-          {passwordTooShort && (
-            <ErrorLabel>Password minimum length is 6 characters</ErrorLabel>
-          )}
-          {isNameEmpty && <ErrorLabel>Name can't be empty</ErrorLabel>}
-          {isSurnameEmpty && <ErrorLabel>Surname can't be empty</ErrorLabel>}
-          {!isMail && <ErrorLabel>E-mail address is not valid</ErrorLabel>}
-          {isMailEmpty && (
-            <ErrorLabel>E-mail address can't be empty</ErrorLabel>
-          )}
-          <SubmitButton onClick={sendData}>Submit</SubmitButton>
-        </ContentWrapper>
-      )} */}
     </UserContent>
   );
 };
