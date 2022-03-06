@@ -75,7 +75,6 @@ const ClinicDashboard = () => {
     } catch (err) {
       console.log(err);
     }
-    console.log(dataCorrect);
   };
 
   return (

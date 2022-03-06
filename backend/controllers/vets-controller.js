@@ -50,7 +50,7 @@ const deleteVetWithClinics = async (req, res, next) => {
     const error = new HttpError("Finding vet error", 500);
     return next(error);
   }
-  console.log(vet.name);
+
   try {
     vetClinics = await Vet.findById(id).populate("clinics");
   } catch (err) {

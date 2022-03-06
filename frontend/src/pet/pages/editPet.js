@@ -55,7 +55,7 @@ const EditPet = (props) => {
 
   const deletePetHandler = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/pet/delete", {
+      await fetch("http://localhost:5000/api/pet/delete", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -64,8 +64,6 @@ const EditPet = (props) => {
           id: location.state.id,
         }),
       });
-      const responseData = await response.json();
-      console.log(responseData);
     } catch (err) {
       console.log(err);
     }
