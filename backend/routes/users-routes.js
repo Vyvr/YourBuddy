@@ -49,7 +49,6 @@ router.post(
     check("name").not().isEmpty(),
     check("surname").not().isEmpty(),
     check("mail").not().isEmpty().bail().isEmail(),
-    check("password").isLength({ min: 6 }),
   ],
   usersController.editUserCredentials
 );

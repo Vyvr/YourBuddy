@@ -92,11 +92,14 @@ const EditUser = (props) => {
       setIsNameEmpty(false);
       return;
     }
-    if (
-      !data.password ||
-      !data.rePassword ||
-      data.password !== data.rePassword
-    ) {
+    if (!data.password && !data.rePassword) {
+      setIsPasswordsMatch(true);
+      setIsMail(true);
+      setIsMailEmpty(false);
+      setPasswordTooShort(false);
+      setIsSurnameEmpty(false);
+      setIsNameEmpty(false);
+    } else if (data.password !== data.rePassword) {
       setIsPasswordsMatch(false);
       setIsMail(true);
       setIsMailEmpty(false);
@@ -104,8 +107,7 @@ const EditUser = (props) => {
       setIsSurnameEmpty(false);
       setIsNameEmpty(false);
       return;
-    }
-    if (data.password.length < 6) {
+    } else if (data.password.length < 6) {
       setPasswordTooShort(true);
       setIsMail(true);
       setIsMailEmpty(false);

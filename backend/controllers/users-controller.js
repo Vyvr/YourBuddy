@@ -256,6 +256,7 @@ const findUserPetsByUserId = async (req, res, next) => {
 
 const editUserCredentials = async (req, res, next) => {
   const errors = validationResult(req);
+  console.log(errors);
 
   if (!errors.isEmpty()) {
     const error = new HttpError(
@@ -283,7 +284,7 @@ const editUserCredentials = async (req, res, next) => {
   updatedUser.name = name;
   updatedUser.surname = surname;
   updatedUser.mail = mail;
-  updatedUser.password = password;
+  if (password) updatedUser.password = password;
 
   if (isVet && !updatedUser.type.includes("vet")) {
     updatedUser.type.push("vet");
