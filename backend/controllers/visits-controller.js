@@ -27,6 +27,7 @@ const createVisit = async (req, res, next) => {
     description,
     hour,
     clinicId,
+    clinicName,
   } = req.body;
 
   let existingUser;
@@ -103,7 +104,8 @@ const createVisit = async (req, res, next) => {
     term,
     hour,
     vet: vetId,
-    clinic: clinicId,
+    clinicId: clinicId,
+    clinicName,
     patient: patientId,
     patient_owner: patientOwnerId,
     description,
@@ -216,7 +218,6 @@ const getVetVisits = async (req, res, next) => {
 
   for (let visit of vetVisits) {
     const date = new Date(visit.term);
-    //date.toString();
     const momentDate = moment(date.toISOString()).format("DD/MM/YYYY", true);
     visit.term = momentDate;
   }

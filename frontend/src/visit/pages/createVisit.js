@@ -198,6 +198,7 @@ const CreateVisit = () => {
             patientOwnerId: owner,
             hour: data.hour,
             clinicId: obj._id,
+            clinicName: obj.name,
           }),
         }
       );
