@@ -9,14 +9,11 @@ import { COLORS } from "../../shared/colors";
 import VetContent from "./../../shared/components/content/VetContent";
 import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
 import {
-  Form,
   FormGroup,
   FormLabel,
   FormInput,
   ButtonWrapper,
   LoginButton,
-  ErrorLabel,
-  Select,
 } from "../../shared/components/forms/formTemplate";
 
 const SearchWrapper = styled.div`

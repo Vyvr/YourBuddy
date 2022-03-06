@@ -44,7 +44,6 @@ const PetInfo = () => {
         <NameWrapper className="form__group">
           <StyledNameLabel className="form__label">
             {location.state.name} vaccines list
-            {console.log(location.state)}
           </StyledNameLabel>
         </NameWrapper>
       </Wrapper>

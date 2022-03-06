@@ -66,7 +66,6 @@ const UserCard = (props) => {
           display: "flex",
           flexDirection: "column",
           marginLeft: "10px",
-          display: "flex",
           alignItems: "center",
           justifyContent: "center",
           color: "white",

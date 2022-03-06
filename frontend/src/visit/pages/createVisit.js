@@ -69,7 +69,6 @@ const CreateVisit = () => {
   const [loadedVisits, setLoadedVisits] = useState();
   const [isLoading, setIsLoading] = useState();
   const [selectedClinic, setSelectedClinic] = useState();
-  const [selectedClinicObj, setSelectedClinicObj] = useState();
   const [open, setOpen] = useState("");
   const [close, setClose] = useState("");
   const [selectedVet, setSelectedVet] = useState();
@@ -133,7 +132,6 @@ const CreateVisit = () => {
     setIsLoading(true);
     setSelectedClinic(clinic);
     const clinicObj = JSON.parse(clinic);
-    setSelectedClinicObj(clinicObj);
     setOpen(clinicObj.open);
     setClose(clinicObj.close);
     try {

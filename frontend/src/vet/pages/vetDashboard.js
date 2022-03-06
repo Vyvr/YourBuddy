@@ -14,7 +14,6 @@ const VetDashboard = () => {
   const [surname, setSurname] = useState("");
   const [userTypes, setUserTypes] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [loadedVisits, setLoadedVisits] = useState();
 
   useEffect(() => {
     setName(getCookieValue("userName"));
