@@ -256,8 +256,6 @@ const findUserPetsByUserId = async (req, res, next) => {
 
 const editUserCredentials = async (req, res, next) => {
   const errors = validationResult(req);
-  console.log(errors);
-
   if (!errors.isEmpty()) {
     const error = new HttpError(
       "Invalid data passed in editing user. Please check your data",

@@ -17,6 +17,7 @@ import {
   Switch,
   Label,
 } from "../../shared/components/forms/formTemplate";
+import ImageUpload from "../../shared/components/forms/imageUpload";
 
 import UserContent from "../../shared/components/content/UserContent";
 
@@ -30,6 +31,7 @@ const EditUser = (props) => {
   const [isSurnameEmpty, setIsSurnameEmpty] = useState(false);
   const [isMailEmpty, setIsMailEmpty] = useState(false);
   const [isMail, setIsMail] = useState(true);
+  const [picture, setPicture] = useState();
   const history = useHistory();
   let location = useLocation();
   const { register, handleSubmit } = useForm();
@@ -55,6 +57,7 @@ const EditUser = (props) => {
   }, [location.state.userId]);
 
   const sendData = async (data) => {
+    console.log(data);
     if (!data.name || data.name.length === 0) {
       setIsNameEmpty(true);
       setIsMail(true);
@@ -154,10 +157,22 @@ const EditUser = (props) => {
     }
   };
 
+  const handlePictureChange = (id, picture, isValid) => {
+    console.log(id, picture, isValid);
+  };
+
   return (
     <UserContent>
       {!isLoading && userData && (
-        <Form className="edit-user-form" onSubmit={handleSubmit(sendData)}>
+        <Form
+          className="edit-user-form"
+          onSubmit={handleSubmit(sendData)}
+          style={{ marginTop: "0px" }}
+        >
+          <FormGroup style={{ alignItems: "center", justifyContent: "center" }}>
+            <ImageUpload id="image" handlePictureChange={handlePictureChange} />
+          </FormGroup>
+
           <FormGroup className="form__group">
             <FormInput
               defaultValue={userData.name}
@@ -276,7 +291,7 @@ const EditUser = (props) => {
 
           <FormGroup>
             <ButtonWrapper>
-              <LoginButton type="submit">Submit</LoginButton>
+              <LoginButton type="submit">SUBMIT</LoginButton>
             </ButtonWrapper>
           </FormGroup>
         </Form>
