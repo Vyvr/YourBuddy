@@ -27,16 +27,39 @@ const UserDashboard = () => {
   const [uid, setUid] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadedPets, setLoadedPets] = useState();
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     setName(getCookieValue("userName"));
     setSurname(getCookieValue("userSurname"));
     setUid(getCookieValue("user_id"));
+
+    const getUserData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/user/" + getCookieValue("user_id")
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        if (responseData) {
+          setUserData(responseData.existingUser);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+      setIsLoading(false);
+    };
+    getUserData();
   }, []);
 
   useEffect(() => {
     const sendRequest = async () => {
       setIsLoading(true);
+
       try {
         const response = await fetch(
           "http://localhost:5000/api/pet/" + getCookieValue("userId")
@@ -59,12 +82,15 @@ const UserDashboard = () => {
 
   return (
     <UserContent>
-      <UserProfile
-        className="user-profile"
-        name={name}
-        surname={surname}
-        userId={uid}
-      />
+      {userData && (
+        <UserProfile
+          className="user-profile"
+          name={name}
+          surname={surname}
+          userId={uid}
+          image={userData.image}
+        />
+      )}
       <PetList className="pet-list">
         {!isLoading &&
           loadedPets &&

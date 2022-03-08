@@ -57,7 +57,6 @@ const EditUser = (props) => {
   }, [location.state.userId]);
 
   const sendData = async (data) => {
-    console.log(data);
     if (!data.name || data.name.length === 0) {
       setIsNameEmpty(true);
       setIsMail(true);
@@ -127,30 +126,25 @@ const EditUser = (props) => {
     setIsNameEmpty(false);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/user/edit-user-credentials",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-type": "application/json",
-          },
+      const formData = new FormData();
+      formData.append("id", location.state.userId);
+      formData.append("name", data.name);
+      formData.append("surname", data.surname);
+      formData.append("mail", data.mail);
+      formData.append("password", data.password);
+      formData.append("isVet", data.vetType);
+      formData.append("image", picture);
 
-          body: JSON.stringify({
-            id: location.state.userId,
-            name: data.name,
-            surname: data.surname,
-            mail: data.mail,
-            password: data.password,
-            isVet: data.vetType,
-          }),
-        }
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      await fetch("http://localhost:5000/api/user/edit-user-credentials", {
+        method: "POST",
+        credentials: "include",
+        mode: "no-cors",
+        headers: {
+          "Content-type": "application/json",
+        },
 
+        body: formData,
+      });
       history.push("/user/dashboard");
     } catch (err) {
       console.log(err);
@@ -158,7 +152,7 @@ const EditUser = (props) => {
   };
 
   const handlePictureChange = (id, picture, isValid) => {
-    console.log(id, picture, isValid);
+    setPicture(picture);
   };
 
   return (

@@ -16,7 +16,7 @@ const userSchema = new Schema({
   pets: [{ type: mongoose.Types.ObjectId, required: true, ref: "Pet" }],
   clinics: [{ type: mongoose.Types.ObjectId, required: true, ref: "Clinic" }],
   type: [{ type: String, enum: ["user", "vet"], required: true }],
-  profilePic: { type: String, required: false },
+  image: { type: String, required: false },
 });
 
 userSchema.pre("save", function (next) {

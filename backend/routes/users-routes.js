@@ -5,6 +5,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const usersController = require("../controllers/users-controller");
+const fileUpload = require("../middleware/file-upload");
 
 const router = express.Router();
 
@@ -45,6 +46,7 @@ router.post("/delete", usersController.deleteUser);
 
 router.post(
   "/edit-user-credentials",
+  fileUpload.single("image"),
   [
     check("name").not().isEmpty(),
     check("surname").not().isEmpty(),

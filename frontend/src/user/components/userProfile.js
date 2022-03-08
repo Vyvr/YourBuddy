@@ -73,7 +73,7 @@ const UserProfile = (props) => {
     <Wrapper className="user-profile-content">
       <ProfilePictureWrapper className="profile-picture-wrapper">
         <img
-          src={profilePic}
+          src={`http://localhost:5000/${props.image}`}
           alt="profile_pic"
           className="user-profile-picture"
         />

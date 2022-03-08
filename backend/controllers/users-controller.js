@@ -269,6 +269,14 @@ const editUserCredentials = async (req, res, next) => {
 
   let updatedUser;
 
+  let imagePath;
+
+  if (req.file) {
+    imagePath = req.file.path;
+  } else {
+    imagePath = "uploads/images/profile_pic.jpg";
+  }
+
   try {
     updatedUser = await User.findById(id);
   } catch (err) {
@@ -282,11 +290,19 @@ const editUserCredentials = async (req, res, next) => {
   updatedUser.name = name;
   updatedUser.surname = surname;
   updatedUser.mail = mail;
+  updatedUser.image = imagePath;
   if (password) updatedUser.password = password;
 
-  if (isVet && !updatedUser.type.includes("vet")) {
+  let vetBoolean;
+
+  if (isVet === "true") {
+    vetBoolean = true;
+  } else {
+    vetBoolean = false;
+  }
+  if (vetBoolean && !updatedUser.type.includes("vet")) {
     updatedUser.type.push("vet");
-  } else if (!isVet && updatedUser.type.includes("vet")) {
+  } else if (!vetBoolean && updatedUser.type.includes("vet")) {
     const index = updatedUser.type.indexOf("vet");
     updatedUser.type.splice(index, 1);
   }
@@ -320,7 +336,7 @@ const editUserCredentials = async (req, res, next) => {
     secure: true,
   });
 
-  res.cookie("isVet", isVet, {
+  res.cookie("isVet", vetBoolean, {
     httpOnly: false,
     secure: true,
   });
