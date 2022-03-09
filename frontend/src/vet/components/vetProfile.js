@@ -51,23 +51,19 @@ const VetDataLabel = styled.label`
   font-weight: 700;
 `;
 
+const VetProfileWrapper = styled.div`
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  color: ${COLORS.font};
+  font-size: 24px;
+  font-weight: 700;
+`;
+
 const VetProfile = (props) => {
   return (
-    // <div className="vet-profile-content">
-    //   <div className="vet-profile-picture-wrapper">
-    //     <img
-    //       src={profilePic}
-    //       alt="profile_pic"
-    //       className="vet-profile-picture"
-    //     />
-    //   </div>
-    //   <div className="vet-profile-name-surname">
-    //     <div className="vet-name-label">{props.name}</div>
-    //     <div className="vet-surname-label">{props.surname}</div>
-    //   </div>
-    // </div>
-
     <Wrapper className="vet-profile-content">
+      <VetProfileWrapper>Vet profile</VetProfileWrapper>
       <ProfilePictureWrapper className="profile-picture-wrapper">
         <img
           src={`http://localhost:5000/${props.image}`}

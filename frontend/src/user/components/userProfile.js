@@ -4,7 +4,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-import profilePic from "../../resources/user/profile_pic.jpg";
 import EditIcon from "../../resources/icons/gear-fill.svg";
 
 import { COLORS } from "../../shared/colors";
@@ -56,7 +55,7 @@ const UserDataLabel = styled.label`
 const Edit = styled(NavLink)`
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 16px;
   opacity: 0.5;
   transition: 0.5s;
 
@@ -68,9 +67,19 @@ const Edit = styled(NavLink)`
   }
 `;
 
+const UserProfileWrapper = styled.div`
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  color: ${COLORS.font};
+  font-size: 24px;
+  font-weight: 700;
+`;
+
 const UserProfile = (props) => {
   return (
     <Wrapper className="user-profile-content">
+      <UserProfileWrapper>User profile</UserProfileWrapper>
       <ProfilePictureWrapper className="profile-picture-wrapper">
         <img
           src={`http://localhost:5000/${props.image}`}
