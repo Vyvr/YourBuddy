@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import profilePic from "../../resources/user/profile_pic.jpg";
 import styled from "styled-components";
 
 import { COLORS } from "../../shared/colors";
