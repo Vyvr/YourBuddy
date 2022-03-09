@@ -60,6 +60,7 @@ const signup = async (req, res, next) => {
     pets: [],
     clinics: [],
     type: ["user"],
+    image: "uploads/images/profile_pic.jpg",
   });
 
   try {
@@ -92,7 +93,7 @@ const login = async (req, res, next) => {
   }
 
   if (!existingUser) {
-    const error = new HttpError(
+    const errosr = new HttpError(
       "Invalid credentials specified. Could not log in...",
       401
     );
@@ -273,9 +274,10 @@ const editUserCredentials = async (req, res, next) => {
 
   if (req.file) {
     imagePath = req.file.path;
-  } else {
-    imagePath = "uploads/images/profile_pic.jpg";
   }
+  // else {
+  //   imagePath = "uploads/images/profile_pic.jpg";
+  // }
 
   try {
     updatedUser = await User.findById(id);
@@ -290,7 +292,7 @@ const editUserCredentials = async (req, res, next) => {
   updatedUser.name = name;
   updatedUser.surname = surname;
   updatedUser.mail = mail;
-  updatedUser.image = imagePath;
+  if (imagePath) updatedUser.image = imagePath;
   if (password) updatedUser.password = password;
 
   let vetBoolean;

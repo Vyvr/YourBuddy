@@ -13,30 +13,34 @@ const VetDashboard = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [userTypes, setUserTypes] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setName(getCookieValue("userName"));
     setSurname(getCookieValue("userSurname"));
 
-    const getUserTypes = async () => {
+    const getUserData = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "http://localhost:5000/api/user/get-user-types/" +
-            getCookieValue("user_id")
+          "http://localhost:5000/api/user/" + getCookieValue("user_id")
         );
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        setUserTypes(responseData);
+
+        if (responseData) {
+          setUserData(responseData.existingUser);
+          setUserTypes(responseData.existingUser.type);
+        }
       } catch (err) {
-        throw new Error(err.message);
+        console.log(err.message);
       }
       setIsLoading(false);
     };
-    getUserTypes();
+    getUserData();
   }, []);
 
   const becomeVetHandler = async () => {
@@ -81,7 +85,14 @@ const VetDashboard = () => {
   return (
     <div>
       <VetContent>
-        <VetProfile className="vet-profile" name={name} surname={surname} />
+        {userData && (
+          <VetProfile
+            className="vet-profile"
+            name={name}
+            surname={surname}
+            image={userData.image}
+          />
+        )}
         <NewVisits />
       </VetContent>
     </div>

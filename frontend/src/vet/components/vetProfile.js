@@ -70,7 +70,7 @@ const VetProfile = (props) => {
     <Wrapper className="vet-profile-content">
       <ProfilePictureWrapper className="profile-picture-wrapper">
         <img
-          src={profilePic}
+          src={`http://localhost:5000/${props.image}`}
           alt="profile_pic"
           className="user-profile-picture"
         />
