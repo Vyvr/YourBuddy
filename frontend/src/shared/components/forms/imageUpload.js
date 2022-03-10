@@ -70,6 +70,7 @@ const ImageUpload = (props) => {
             maxHeight: "300px",
             borderRadius: "30px",
             border: "1px solid black",
+            textAlign: "center",
           }}
         >
           {previewUrl && (
@@ -85,7 +86,7 @@ const ImageUpload = (props) => {
               }}
             />
           )}
-          {!previewUrl && <p>Please pick an image.</p>}
+          {!previewUrl && <p>Please pick an image to change your avatar.</p>}
         </div>
         <LoginButton
           type="button"
