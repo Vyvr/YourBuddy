@@ -86,7 +86,7 @@ const ImageUpload = (props) => {
               }}
             />
           )}
-          {!previewUrl && <p>Please pick an image to change your avatar.</p>}
+          {!previewUrl && <p>{props.description}</p>}
         </div>
         <LoginButton
           type="button"

@@ -21,11 +21,13 @@ import {
   ErrorLabel,
   ErrorLabelWrapper,
 } from "../../shared/components/forms/formTemplate";
+import ImageUpload from "../../shared/components/forms/imageUpload";
 
 const CreatePet = () => {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
   const [invalidData, setInvalidData] = useState(false);
+  const [picture, setPicture] = useState();
   const male = useRef(null);
   const female = useRef(null);
   const other = useRef(null);
@@ -87,9 +89,20 @@ const CreatePet = () => {
     male.current.checked = false;
   };
 
+  const handlePictureChange = (id, picture, isValid) => {
+    setPicture(picture);
+  };
+
   return (
     <UserContent>
-      <Form onSubmit={handleSubmit(addPetHandler)}>
+      <Form onSubmit={handleSubmit(addPetHandler)} style={{ marginTop: "0px" }}>
+        <FormGroup style={{ alignItems: "center", justifyContent: "center" }}>
+          <ImageUpload
+            id="image"
+            handlePictureChange={handlePictureChange}
+            description="Please pick an image to change your's pet avatar (if not picked will be use default)"
+          />
+        </FormGroup>
         <FormGroup className="form__group">
           <FormInput
             type="input"

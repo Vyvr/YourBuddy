@@ -164,7 +164,11 @@ const EditUser = (props) => {
           style={{ marginTop: "0px" }}
         >
           <FormGroup style={{ alignItems: "center", justifyContent: "center" }}>
-            <ImageUpload id="image" handlePictureChange={handlePictureChange} />
+            <ImageUpload
+              id="image"
+              handlePictureChange={handlePictureChange}
+              description="Please pick an image to change your avatar."
+            />
           </FormGroup>
 
           <FormGroup className="form__group">
