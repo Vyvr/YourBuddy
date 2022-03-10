@@ -108,6 +108,7 @@ const UserDashboard = () => {
                 sex={pet.sex}
                 owner={pet.owner}
                 vaccinations={pet.vaccinations}
+                image={pet.image}
               />
             );
           })}

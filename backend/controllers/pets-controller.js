@@ -56,7 +56,13 @@ const createPet = async (req, res, next) => {
   }
   const { name, born, weight, owner, breed, sex } = req.body;
 
-  console.log(req.body);
+  let imagePath;
+
+  if (req.file) {
+    imagePath = req.file.path;
+  } else {
+    imagePath = "uploads/images/pet.jpg";
+  }
 
   const createdPet = new Pet({
     name,
@@ -65,7 +71,10 @@ const createPet = async (req, res, next) => {
     owner,
     breed,
     sex,
+    image: imagePath,
   });
+
+  console.log(createdPet);
 
   let user;
 

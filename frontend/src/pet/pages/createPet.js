@@ -49,20 +49,23 @@ const CreatePet = () => {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("born", data.born);
+      formData.append("weight", data.weight);
+      formData.append("breed", data.breed);
+      formData.append("sex", sex);
+      formData.append("owner", getCookieValue("user_id"));
+      formData.append("image", picture);
       await fetch("http://localhost:5000/api/pet/create", {
         method: "POST",
+        credentials: "include",
+        mode: "no-cors",
         headers: {
           "Content-type": "application/json",
         },
 
-        body: JSON.stringify({
-          name: data.name,
-          born: data.born,
-          weight: data.weight,
-          breed: data.breed,
-          sex: sex,
-          owner: getCookieValue("user_id"),
-        }),
+        body: formData,
       });
     } catch (err) {
       console.log(err);

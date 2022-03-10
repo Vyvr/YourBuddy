@@ -61,7 +61,7 @@ const signup = async (req, res, next) => {
     pets: [],
     clinics: [],
     type: ["user"],
-    image: "uploads/images/profile_pic.jpg",
+    image: "uploads/images/user.png",
   });
 
   try {

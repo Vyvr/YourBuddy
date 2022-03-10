@@ -73,7 +73,7 @@ const PetCard = (props) => {
   return (
     <Wrapper className="pet-card-content">
       <img
-        src={petProfilePic}
+        src={`http://localhost:5000/${props.image}`}
         alt="pet_profile_pic"
         className="pet-profile-picture"
       />
