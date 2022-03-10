@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 const { v4: uuid } = require("uuid");
+const fs = require("fs");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -270,15 +271,6 @@ const editUserCredentials = async (req, res, next) => {
 
   let updatedUser;
 
-  let imagePath;
-
-  if (req.file) {
-    imagePath = req.file.path;
-  }
-  // else {
-  //   imagePath = "uploads/images/profile_pic.jpg";
-  // }
-
   try {
     updatedUser = await User.findById(id);
   } catch (err) {
@@ -287,6 +279,15 @@ const editUserCredentials = async (req, res, next) => {
       500
     );
     return next(error);
+  }
+
+  let imagePath;
+
+  if (req.file) {
+    imagePath = req.file.path;
+    if (updatedUser.image) {
+      await fs.unlink(updatedUser.image, () => {});
+    }
   }
 
   updatedUser.name = name;
