@@ -19,6 +19,7 @@ router.post(
 );
 router.post(
   "/edit",
+  fileUpload.single("image"),
   [
     check("name").not().isEmpty(),
     check("weight").not().isEmpty().bail().isInt({ min: 0 }),

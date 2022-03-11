@@ -40,6 +40,19 @@ const VisitDetailsPetCard = (props) => {
     <Content>
       <InsideContent>
         <Wrapper>
+          <img
+            src={`http://localhost:5000/${props.patientDetails.image}`}
+            alt="pet_profile_pic"
+            className="pet-profile-picture"
+            style={{
+              width: "150px",
+              height: "150px",
+              border: "none",
+              borderRadius: "50%",
+            }}
+          />
+        </Wrapper>
+        <Wrapper>
           <InfoHeader>Patient</InfoHeader>
           <InfoData key="name">{props.patientDetails.name}</InfoData>
         </Wrapper>

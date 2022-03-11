@@ -16,10 +16,12 @@ import {
   ErrorLabel,
   ErrorLabelWrapper,
 } from "../../shared/components/forms/formTemplate";
+import ImageUpload from "../../shared/components/forms/imageUpload";
 
 const EditPet = (props) => {
   const { register, handleSubmit } = useForm();
   const [invalidData, setInvalidData] = useState(false);
+  const [picture, setPicture] = useState();
   let location = useLocation();
   const history = useHistory();
 
@@ -32,19 +34,22 @@ const EditPet = (props) => {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("id", location.state.id);
+      formData.append("name", data.name);
+      formData.append("born", data.born);
+      formData.append("weight", data.weight);
+      formData.append("breed", data.breed);
+      formData.append("image", picture);
       await fetch("http://localhost:5000/api/pet/edit", {
         method: "POST",
+        credentials: "include",
+        mode: "no-cors",
         headers: {
           "Content-type": "application/json",
         },
 
-        body: JSON.stringify({
-          id: location.state.id,
-          name: data.name,
-          born: data.born,
-          weight: data.weight,
-          breed: data.breed,
-        }),
+        body: formData,
       });
     } catch (err) {
       console.log(err);
@@ -69,9 +74,25 @@ const EditPet = (props) => {
     }
   };
 
+  const handlePictureChange = (id, picture, isValid) => {
+    setPicture(picture);
+  };
+
   return (
     <UserContent>
-      <Form className="edit-pet-form" onSubmit={handleSubmit(editPetHandler)}>
+      <Form
+        className="edit-pet-form"
+        onSubmit={handleSubmit(editPetHandler)}
+        style={{ marginTop: "0px" }}
+      >
+        <FormGroup style={{ alignItems: "center", justifyContent: "center" }}>
+          <ImageUpload
+            id="image"
+            handlePictureChange={handlePictureChange}
+            description="Please pick an image to change your's pet avatar."
+          />
+        </FormGroup>
+
         <FormGroup className="form__group">
           <FormInput
             type="input"

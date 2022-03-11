@@ -167,6 +167,8 @@ const CreateVisit = () => {
     const owner = location.state.owner;
     let obj = JSON.parse(selectedClinic);
 
+    console.log(date, vet, patient, owner, obj);
+
     if (
       !date ||
       !vet ||

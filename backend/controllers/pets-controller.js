@@ -3,6 +3,7 @@
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const { v4: uuid } = require("uuid");
+const fs = require("fs");
 
 const HttpError = require("../models/http-error");
 const Pet = require("../models/pet");
@@ -140,10 +141,20 @@ const editPet = async (req, res, next) => {
     return next(error);
   }
 
+  let imagePath;
+
+  if (req.file) {
+    imagePath = req.file.path;
+    if (updatedPet.image) {
+      await fs.unlink(updatedPet.image, () => {});
+    }
+  }
+
   updatedPet.name = name;
   updatedPet.born = born;
   updatedPet.weight = weight;
   updatedPet.breed = breed;
+  if (imagePath) updatedPet.image = imagePath;
 
   try {
     await updatedPet.save();
@@ -181,6 +192,10 @@ const deletePet = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError("Finding user error " + err, 500);
     return next(error);
+  }
+
+  if (existingPet.image !== "uploads/images/pet.jpg") {
+    await fs.unlink(existingPet.image, () => {});
   }
 
   try {
