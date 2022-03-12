@@ -86,6 +86,7 @@ const login = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ mail: lowerCaseMail });
   } catch (err) {
+    console.log("HERE");
     const error = new HttpError(
       "Logging in failed. Please try again later.",
       500
@@ -94,7 +95,7 @@ const login = async (req, res, next) => {
   }
 
   if (!existingUser) {
-    const errosr = new HttpError(
+    const error = new HttpError(
       "Invalid credentials specified. Could not log in...",
       401
     );
