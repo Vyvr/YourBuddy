@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import EditIcon from "../../resources/icons/gear-fill.svg";
 import HireIcon from "../../resources/icons/hire-worker.svg";
+import WorkersIcon from "../../resources/icons/person-lines-fill.svg";
 import { COLORS } from "../../shared/colors";
 
 const Wrapper = styled.div`
@@ -38,7 +39,7 @@ const Edit = styled(NavLink)`
 const IconsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50px;
+  width: 70px;
   height: 10px;
   margin-top: 10px;
 `;
@@ -100,53 +101,25 @@ const clinicCard = (props) => {
             style={{ width: "20px", height: "20px" }}
           />
         </Edit>
+
+        <Edit
+          className="workers-list-button"
+          to={{
+            pathname: "/vet/workers-list",
+            state: {
+              id: props.id,
+            },
+          }}
+          exact
+        >
+          <img
+            src={WorkersIcon}
+            alt="workersIcon"
+            style={{ width: "20px", height: "20px" }}
+          />
+        </Edit>
       </IconsWrapper>
     </Wrapper>
-
-    // <div className="clinic-card-content">
-    //   <div className="clinic-name-div">{props.name}</div>
-    //   <div className="clinic-address-div">
-    //     {props.city}, {props.street} {props.block}
-    //     {props.apartment ? "/" : ""}
-    //     {props.apartment}
-    //   </div>
-    //   <NavLink
-    //     className="edit-clinic-button"
-    //     to={{
-    //       pathname: "/vet/edit-clinic",
-    //       state: {
-    //         name: props.name,
-    //         owner: props.owner,
-    //         country: props.country,
-    //         city: props.city,
-    //         street: props.street,
-    //         block: props.block,
-    //         apartment: props.apartment,
-    //         zipCode: props.zipCode,
-    //         fromHour: props.fromHour,
-    //         fromMinutes: props.fromMinutes,
-    //         toHour: props.toHour,
-    //         toMinutes: props.toMinutes,
-    //       },
-    //     }}
-    //     exact
-    //   >
-    //     EDIT
-    //   </NavLink>
-    //   <br />
-    //   <NavLink
-    //     className="add-worker-button"
-    //     to={{
-    //       pathname: "/vet/add-worker",
-    //       state: {
-    //         id: props.id,
-    //       },
-    //     }}
-    //     exact
-    //   >
-    //     Add worker
-    //   </NavLink>
-    // </div>
   );
 };
 

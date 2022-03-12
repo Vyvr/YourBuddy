@@ -92,6 +92,7 @@ const ClinicDashboard = () => {
                 apartment={clinic.address.apartment}
                 open={clinic.open}
                 close={clinic.close}
+                workers={clinic.workers}
               />
             );
           })}
