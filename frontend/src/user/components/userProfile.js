@@ -80,7 +80,6 @@ const UserProfile = (props) => {
   return (
     <Wrapper className="user-profile-content">
       <UserProfileWrapper>User profile</UserProfileWrapper>
-      {console.log(props.image)}
       <ProfilePictureWrapper className="profile-picture-wrapper">
         <img
           src={`http://localhost:5000/${props.image}`}

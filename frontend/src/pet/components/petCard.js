@@ -4,7 +4,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-import petProfilePic from "../../resources/pet/pet_profile_pic.jpg";
 import EditIcon from "../../resources/icons/gear-fill.svg";
 import DocIcon from "../../resources/icons/doctor.svg";
 import InfoIcon from "../../resources/icons/info-circle-fill.svg";
