@@ -108,9 +108,7 @@ const AddWorker = (props) => {
       const filtered = responseData.existingUsers.filter((worker) =>
         worker.type.includes("vet")
       );
-      console.log(filtered);
       setPotentialWorkers(filtered);
-      // setPotentialWorkers(responseData.existingUsers);
     } catch (err) {
       throw new Error(err.message);
     }
