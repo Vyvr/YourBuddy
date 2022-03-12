@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./Header";
+import HeaderLogo from "../HeaderLogo";
 
 const MenuButton = styled.button`
   && {
@@ -40,6 +41,7 @@ const VetHeader = () => {
 
   return (
     <Header>
+      <HeaderLogo />
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         <NavLink to="/vet/dashboard" style={{ marginLeft: "auto" }}>
           <MenuButton>YOUR PROFILE</MenuButton>

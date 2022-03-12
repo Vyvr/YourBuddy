@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./Header";
+import HeaderLogo from "../HeaderLogo";
 import getCookieValue from "../../../scripts/getCookieValue";
 
 const MenuButton = styled.button`
@@ -50,6 +51,7 @@ const UserHeader = () => {
 
   return (
     <Header>
+      <HeaderLogo />
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         <NavLink to="/user/dashboard" style={{ marginLeft: "auto" }}>
           <MenuButton>YOUR PROFILE</MenuButton>
