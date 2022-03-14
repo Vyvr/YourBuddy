@@ -15,15 +15,7 @@ import {
   ButtonWrapper,
   LoginButton,
 } from "../../shared/components/forms/formTemplate";
-
-const SearchWrapper = styled.div`
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
+import SearchWrapper from "../../shared/components/SearchWrapper";
 
 const DismissButton = styled.button`
   width: 100%;

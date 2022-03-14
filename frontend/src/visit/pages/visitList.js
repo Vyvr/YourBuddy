@@ -7,10 +7,13 @@ import VetContent from "../../shared/components/content/VetContent";
 
 import getCookieValue from "../../scripts/getCookieValue";
 import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
+import SearchVisit from "../components/SearchVisit";
 
 const VisitList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedVisits, setLoadedVisits] = useState();
+  const [searchData, setSearchData] = useState();
+
   useEffect(() => {
     const sendRequest = async () => {
       setIsLoading(true);
@@ -59,8 +62,14 @@ const VisitList = () => {
     });
   };
 
+  const fromSearchComponent = (data) => {
+    setSearchData(data);
+  };
+
   return (
     <VetContent>
+      <SearchVisit getSearchData={fromSearchComponent} />
+      {console.log(searchData)}
       <Table className="visit-list-table">
         <Thead>
           <tr>
