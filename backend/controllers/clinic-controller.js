@@ -122,7 +122,7 @@ const editClinic = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      "Invalid data passed. Please check your data",
+      // "Invalid data passed. Please check your data",
       422
     );
 
@@ -138,10 +138,8 @@ const editClinic = async (req, res, next) => {
     block,
     apartment,
     zipCode,
-    fromHour,
-    fromMinutes,
-    toHour,
-    toMinutes,
+    open,
+    close,
   } = req.body;
 
   const clinicId = id;
@@ -165,40 +163,38 @@ const editClinic = async (req, res, next) => {
   updatedClinic.block = block;
   updatedClinic.apartment = apartment;
   updatedClinic.zipCode = zipCode;
-  updatedClinic.fromHour = fromHour;
-  updatedClinic.fromMinutes = fromMinutes;
-  updatedClinic.toHour = toHour;
-  updatedClinic.toMinutes = toMinutes;
+  updatedClinic.open = open;
+  updatedClinic.close = close;
 
-  try {
-    const options = {
-      provider: "google",
-      apiKey: "AIzaSyDwWIsHgxjgAGmtL9sZ0WSNKaxf_hQ8D9U",
-    };
-    const geocoder = Geocoder(options);
-    const locationInfo = await geocoder.geocode(
-      country +
-        " " +
-        city +
-        " " +
-        street +
-        " " +
-        block +
-        " " +
-        apartment +
-        " " +
-        zipCode
-    );
+  // try {
+  //   const options = {
+  //     provider: "google",
+  //     apiKey: "AIzaSyDwWIsHgxjgAGmtL9sZ0WSNKaxf_hQ8D9U",
+  //   };
+  //   const geocoder = Geocoder(options);
+  //   const locationInfo = await geocoder.geocode(
+  //     country +
+  //       " " +
+  //       city +
+  //       " " +
+  //       street +
+  //       " " +
+  //       block +
+  //       " " +
+  //       apartment +
+  //       " " +
+  //       zipCode
+  //   );
 
-    updatedClinic.address.lat = locationInfo[0].latitude;
-    updatedClinic.address.lon = locationInfo[0].longitude;
-  } catch (err) {
-    const error = new HttpError(
-      "Finding lat and lon failed. Please try again later.",
-      500
-    );
-    return next(error);
-  }
+  //   updatedClinic.address.lat = locationInfo[0].latitude;
+  //   updatedClinic.address.lon = locationInfo[0].longitude;
+  // } catch (err) {
+  //   const error = new HttpError(
+  //     "Finding lat and lon failed. Please try again later.",
+  //     500
+  //   );
+  //   return next(error);
+  // }
 
   try {
     await updatedClinic.save();

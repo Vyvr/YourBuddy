@@ -90,6 +90,7 @@ const ClinicDashboard = () => {
                 street={clinic.address.street}
                 block={clinic.address.block}
                 apartment={clinic.address.apartment}
+                zipCode={clinic.address.zipCode}
                 open={clinic.open}
                 close={clinic.close}
                 workers={clinic.workers}

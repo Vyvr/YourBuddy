@@ -62,6 +62,7 @@ const clinicCard = (props) => {
           to={{
             pathname: "/vet/edit-clinic",
             state: {
+              id: props.id,
               name: props.name,
               owner: props.owner,
               country: props.country,
@@ -70,10 +71,8 @@ const clinicCard = (props) => {
               block: props.block,
               apartment: props.apartment,
               zipCode: props.zipCode,
-              fromHour: props.fromHour,
-              fromMinutes: props.fromMinutes,
-              toHour: props.toHour,
-              toMinutes: props.toMinutes,
+              open: props.open,
+              close: props.close,
             },
           }}
           exact
