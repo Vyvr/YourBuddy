@@ -14,29 +14,29 @@ const VisitList = () => {
   const [loadedVisits, setLoadedVisits] = useState();
   const [searchData, setSearchData] = useState();
 
-  useEffect(() => {
-    const sendRequest = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/visit/get-vet-visits/" +
-            getCookieValue("user_id")
-        );
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
+  // useEffect(() => {
+  //   const sendRequest = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:5000/api/visit/get-vet-visits/" +
+  //           getCookieValue("user_id")
+  //       );
+  //       const responseData = await response.json();
+  //       if (!response.ok) {
+  //         throw new Error(responseData.message);
+  //       }
 
-        if (responseData.visits.length !== 0) {
-          setLoadedVisits(responseData.visits);
-        }
-      } catch (err) {
-        throw new Error(err.message);
-      }
-      setIsLoading(false);
-    };
-    sendRequest();
-  }, []);
+  //       if (responseData.visits.length !== 0) {
+  //         setLoadedVisits(responseData.visits);
+  //       }
+  //     } catch (err) {
+  //       throw new Error(err.message);
+  //     }
+  //     setIsLoading(false);
+  //   };
+  //   sendRequest();
+  // }, []);
 
   const history = useHistory();
 
@@ -69,7 +69,6 @@ const VisitList = () => {
   return (
     <VetContent>
       <SearchVisit getSearchData={fromSearchComponent} />
-      {console.log(searchData)}
       <Table className="visit-list-table">
         <Thead>
           <tr>
@@ -83,8 +82,9 @@ const VisitList = () => {
           </tr>
         </Thead>
         <tbody>
-          {!isLoading && loadedVisits
-            ? loadedVisits
+          {console.log(searchData)}
+          {searchData
+            ? searchData
                 .map((v) => {
                   return (
                     <Tr

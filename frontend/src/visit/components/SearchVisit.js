@@ -1,6 +1,8 @@
 /** @format */
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+
+import getCookieValue from "../../scripts/getCookieValue";
 
 import {
   FormGroup,
@@ -22,6 +24,7 @@ import searchByPatient from "../scripts/searchByPatient";
 import searchAllVisits from "../scripts/searchAllVisits";
 
 const SearchVisit = ({ getSearchData }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedVisits, setSearchedVisits] = useState();
 
@@ -31,40 +34,46 @@ const SearchVisit = ({ getSearchData }) => {
   const clinic = useRef(null);
   const allVisits = useRef(null);
 
+  useEffect(() => {
+    const sendRequest = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/visit/get-vet-visits/" +
+            getCookieValue("user_id")
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        if (responseData.visits.length !== 0) {
+          getSearchData(responseData.visits);
+        }
+      } catch (err) {
+        throw new Error(err.message);
+      }
+      setIsLoading(false);
+    };
+    sendRequest();
+  }, []);
+
   const searchVisit = async (data) => {
     // const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
     // if (!data || !data.match(regEx)) return;
     // data = data.replace(" ", "-").toLowerCase();
 
     if (owner.current.checked) {
-      setSearchedVisits(searchByOwner(data));
+      searchByOwner(data).then((val) => getSearchData(val));
     } else if (patient.current.checked) {
-      setSearchedVisits(searchByPatient(data));
+      searchByPatient(data).then((val) => getSearchData(val));
     } else if (date.current.checked) {
-      setSearchedVisits(searchByDate(data));
+      searchByDate(data).then((val) => getSearchData(val));
     } else if (clinic.current.checked) {
-      setSearchedVisits(searchByClinic(data));
+      searchByClinic(data).then((val) => getSearchData(val));
     } else {
-      setSearchedVisits(searchAllVisits());
+      searchAllVisits().then((val) => getSearchData(val));
     }
-    getSearchData(searchedVisits);
-    // setIsLoading(true)
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:5000/api/user/get-users-by-name-and-surname/" + data
-    //   );
-    //   const responseData = await response.json();
-    //   if (!response.ok) {
-    //     throw new Error(responseData.message);
-    //   }
-    //   const filtered = responseData.existingUsers.filter((worker) =>
-    //     worker.type.includes("vet")
-    //   );
-    //   setPotentialWorkers(filtered);
-    // } catch (err) {
-    //   throw new Error(err.message);
-    // }
-    // setIsLoading(false);
   };
 
   const handleSearchChange = (event) => {
