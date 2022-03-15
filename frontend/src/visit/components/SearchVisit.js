@@ -59,11 +59,11 @@ const SearchVisit = ({ getSearchData }) => {
   }, []);
 
   const searchVisit = async (data) => {
-    // const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
-    // if (!data || !data.match(regEx)) return;
-    // data = data.replace(" ", "-").toLowerCase();
-
     if (owner.current.checked) {
+      const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
+      if (!data || !data.match(regEx)) return;
+      data = data.replace(" ", "-").toLowerCase();
+
       searchByOwner(data).then((val) => getSearchData(val));
     } else if (patient.current.checked) {
       searchByPatient(data).then((val) => getSearchData(val));
