@@ -440,6 +440,7 @@ const getUsersByNameAndSurname = async (req, res, next) => {
       "Something went wrong with finding new worker.",
       401
     );
+    return next(error);
   }
 
   res.json({

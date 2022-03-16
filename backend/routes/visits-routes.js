@@ -16,6 +16,18 @@ router.get(
   visitsController.getVetVisitsByOwner
 );
 router.get(
+  "/get-vet-visits-by-patient/:vetId/:patientName",
+  visitsController.getVetVisitsByPatient
+);
+router.get(
+  "/get-vet-visits-by-clinic/:vetId/:clinicName",
+  visitsController.getVetVisitsByClinic
+);
+router.get(
+  "/get-vet-visits-by-date/:vetId/:date",
+  visitsController.getVetVisitsByDate
+);
+router.get(
   "/get-unsumbitted-vet-visits/:vetId",
   visitsController.getUnsubmittedVetVisits
 );

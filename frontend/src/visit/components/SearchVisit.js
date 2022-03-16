@@ -27,6 +27,7 @@ const SearchVisit = ({ getSearchData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedVisits, setSearchedVisits] = useState();
+  const [inputType, setInputType] = useState("input");
 
   const owner = useRef(null);
   const patient = useRef(null);
@@ -59,17 +60,21 @@ const SearchVisit = ({ getSearchData }) => {
   }, []);
 
   const searchVisit = async (data) => {
+    const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
+
     if (owner.current.checked) {
-      const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
       if (!data || !data.match(regEx)) return;
       data = data.replace(" ", "-").toLowerCase();
-
       searchByOwner(data).then((val) => getSearchData(val));
     } else if (patient.current.checked) {
+      if (!data || !data.match(regEx)) return;
+      data = data.replace(" ", "-").toLowerCase();
       searchByPatient(data).then((val) => getSearchData(val));
     } else if (date.current.checked) {
       searchByDate(data).then((val) => getSearchData(val));
     } else if (clinic.current.checked) {
+      if (!data || !data.match(regEx)) return;
+      data = data.replace(" ", "-").toLowerCase();
       searchByClinic(data).then((val) => getSearchData(val));
     } else {
       searchAllVisits().then((val) => getSearchData(val));
@@ -86,6 +91,7 @@ const SearchVisit = ({ getSearchData }) => {
     clinic.current.checked = false;
     allVisits.current.checked = false;
     owner.current.checked = true;
+    setInputType("input");
   };
   const handlePatientChange = () => {
     patient.current.checked = true;
@@ -93,6 +99,7 @@ const SearchVisit = ({ getSearchData }) => {
     clinic.current.checked = false;
     allVisits.current.checked = false;
     owner.current.checked = false;
+    setInputType("input");
   };
   const handleDateChange = () => {
     patient.current.checked = false;
@@ -100,6 +107,7 @@ const SearchVisit = ({ getSearchData }) => {
     clinic.current.checked = false;
     allVisits.current.checked = false;
     owner.current.checked = false;
+    setInputType("date");
   };
   const handleClinicChange = () => {
     patient.current.checked = false;
@@ -107,6 +115,7 @@ const SearchVisit = ({ getSearchData }) => {
     clinic.current.checked = true;
     allVisits.current.checked = false;
     owner.current.checked = false;
+    setInputType("input");
   };
   const handleAllVisitsChange = () => {
     patient.current.checked = false;
@@ -114,13 +123,14 @@ const SearchVisit = ({ getSearchData }) => {
     clinic.current.checked = false;
     allVisits.current.checked = true;
     owner.current.checked = false;
+    setInputType("input");
   };
 
   return (
     <SearchWrapper>
       <FormGroup>
         <FormInput
-          type="input"
+          type={inputType}
           className="field"
           placeholder="Search"
           name="search"
