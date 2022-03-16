@@ -47,10 +47,6 @@ const VetHeader = () => {
           <MenuButton>YOUR PROFILE</MenuButton>
         </NavLink>
 
-        <NavLink to="/vet/patients">
-          <MenuButton>PATIENTS</MenuButton>
-        </NavLink>
-
         <NavLink to="/vet/visit-list">
           <MenuButton>ALL VISITS</MenuButton>
         </NavLink>

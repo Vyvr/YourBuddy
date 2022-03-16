@@ -66,35 +66,35 @@ const createClinic = async (req, res, next) => {
     return next(error);
   }
 
-  try {
-    const options = {
-      provider: "google",
-      apiKey: "AIzaSyDwWIsHgxjgAGmtL9sZ0WSNKaxf_hQ8D9U",
-    };
-    const geocoder = Geocoder(options);
-    const locationInfo = await geocoder.geocode(
-      country +
-        " " +
-        city +
-        " " +
-        street +
-        " " +
-        block +
-        " " +
-        apartment +
-        " " +
-        zipCode
-    );
+  // try {
+  //   const options = {
+  //     provider: "google",
+  //     apiKey: "AIzaSyDwWIsHgxjgAGmtL9sZ0WSNKaxf_hQ8D9U",
+  //   };
+  //   const geocoder = Geocoder(options);
+  //   const locationInfo = await geocoder.geocode(
+  //     country +
+  //       " " +
+  //       city +
+  //       " " +
+  //       street +
+  //       " " +
+  //       block +
+  //       " " +
+  //       apartment +
+  //       " " +
+  //       zipCode
+  //   );
 
-    createdClinic.address.lat = locationInfo[0].latitude;
-    createdClinic.address.lon = locationInfo[0].longitude;
-  } catch (err) {
-    const error = new HttpError(
-      "Finding lat and lon failed. Please try again later.",
-      500
-    );
-    return next(error);
-  }
+  //   createdClinic.address.lat = locationInfo[0].latitude;
+  //   createdClinic.address.lon = locationInfo[0].longitude;
+  // } catch (err) {
+  //   const error = new HttpError(
+  //     "Finding lat and lon failed. Please try again later.",
+  //     500
+  //   );
+  //   return next(error);
+  // }
 
   try {
     const sess = await mongoose.startSession();
@@ -156,15 +156,19 @@ const editClinic = async (req, res, next) => {
     return next(error);
   }
 
+  console.log(updatedClinic.address.city, city);
+
   updatedClinic.name = name;
-  updatedClinic.country = country;
-  updatedClinic.city = city;
-  updatedClinic.street = street;
-  updatedClinic.block = block;
-  updatedClinic.apartment = apartment;
-  updatedClinic.zipCode = zipCode;
+  updatedClinic.address.country = country;
+  updatedClinic.address.city = city;
+  updatedClinic.address.street = street;
+  updatedClinic.address.block = block;
+  updatedClinic.address.apartment = apartment;
+  updatedClinic.address.zipCode = zipCode;
   updatedClinic.open = open;
   updatedClinic.close = close;
+
+  console.log(updatedClinic.address.city, city);
 
   // try {
   //   const options = {
