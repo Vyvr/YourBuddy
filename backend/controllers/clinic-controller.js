@@ -156,8 +156,6 @@ const editClinic = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(updatedClinic.address.city, city);
-
   updatedClinic.name = name;
   updatedClinic.address.country = country;
   updatedClinic.address.city = city;
@@ -167,8 +165,6 @@ const editClinic = async (req, res, next) => {
   updatedClinic.address.zipCode = zipCode;
   updatedClinic.open = open;
   updatedClinic.close = close;
-
-  console.log(updatedClinic.address.city, city);
 
   // try {
   //   const options = {
@@ -201,6 +197,7 @@ const editClinic = async (req, res, next) => {
   // }
 
   try {
+    updatedClinic.markModified("object");
     await updatedClinic.save();
   } catch (err) {
     const error = new HttpError(
