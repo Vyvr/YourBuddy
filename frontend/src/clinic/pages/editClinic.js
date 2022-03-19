@@ -12,6 +12,7 @@ import {
   FormInput,
   ButtonWrapper,
   LoginButton,
+  DeleteButton,
   ErrorLabelWrapper,
   ErrorLabel,
 } from "../../shared/components/forms/formTemplate";
@@ -70,6 +71,31 @@ const EditClinic = () => {
       const responseData = await response.json();
       if (!response.ok) {
         setDataCorrect(false);
+        throw new Error(responseData.message);
+      }
+      history.push("/vet/clinic-dashboard");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteClinic = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/clinic/delete-clinic",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            id: location.state.id,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
         throw new Error(responseData.message);
       }
       history.push("/vet/clinic-dashboard");
@@ -233,6 +259,11 @@ const EditClinic = () => {
         <FormGroup>
           <ButtonWrapper>
             <LoginButton type="submit">Submit changes</LoginButton>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <DeleteButton type="button" onClick={deleteClinic}>
+              Delete clinic
+            </DeleteButton>
           </ButtonWrapper>
         </FormGroup>
       </Form>
