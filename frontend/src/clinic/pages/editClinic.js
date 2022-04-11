@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import VetContent from "./../../shared/components/content/VetContent";
+import DeleteClinicPopup from "../components/deleteClinicPopup";
 import {
   Form,
   FormGroup,
@@ -40,6 +41,7 @@ const LabelWrapper = styled.div`
 const EditClinic = () => {
   const { register, handleSubmit } = useForm();
   const [dataCorrect, setDataCorrect] = useState(true);
+  const [showPopUp, setShowPopup] = useState(false);
   const history = useHistory();
   let location = useLocation();
 
@@ -79,29 +81,8 @@ const EditClinic = () => {
     }
   };
 
-  const deleteClinic = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/clinic/delete-clinic",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            id: location.state.id,
-          }),
-        }
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-      history.push("/vet/clinic-dashboard");
-    } catch (err) {
-      console.log(err);
-    }
+  const deleteClinicPopup = () => {
+    setShowPopup(!showPopUp);
   };
 
   return (
@@ -261,12 +242,21 @@ const EditClinic = () => {
             <LoginButton type="submit">Submit changes</LoginButton>
           </ButtonWrapper>
           <ButtonWrapper>
-            <DeleteButton type="button" onClick={deleteClinic}>
+            <DeleteButton type="button" onClick={deleteClinicPopup}>
               Delete clinic
             </DeleteButton>
           </ButtonWrapper>
         </FormGroup>
       </Form>
+
+      {showPopUp ? (
+        <DeleteClinicPopup
+          clinicId={location.state.id}
+          clinicName={location.state.name}
+        >
+          <LoginButton onClick={deleteClinicPopup}>Close</LoginButton>
+        </DeleteClinicPopup>
+      ) : undefined}
     </VetContent>
   );
 };

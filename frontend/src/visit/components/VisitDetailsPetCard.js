@@ -9,13 +9,12 @@ const Content = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
-
   border-right: 1px solid #f1f2f4;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   border-image: linear-gradient(rgba(0, 0, 0, 0.1), transparent) 0;
-
   color: ${COLORS.font};
 `;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
