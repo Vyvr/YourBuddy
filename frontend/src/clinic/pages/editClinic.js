@@ -254,7 +254,9 @@ const EditClinic = () => {
           clinicId={location.state.id}
           clinicName={location.state.name}
         >
-          <LoginButton onClick={deleteClinicPopup}>Close</LoginButton>
+          <LoginButton onClick={deleteClinicPopup} type="button">
+            Close
+          </LoginButton>
         </DeleteClinicPopup>
       ) : undefined}
     </VetContent>

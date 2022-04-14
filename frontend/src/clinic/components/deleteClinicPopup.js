@@ -13,6 +13,7 @@ import {
   DeleteButton,
   ErrorLabelWrapper,
   ErrorLabel,
+  Label,
 } from "../../shared/components/forms/formTemplate";
 
 const Popup = styled.div`
@@ -40,9 +41,15 @@ const PopupInner = styled.div`
 const DeleteClinicPopup = (props) => {
   const history = useHistory();
   const [name, setName] = useState("");
+  const [correctName, setCorrectName] = useState(true);
 
-  const deleteClinic = async () => {
-    if (name != props.clinicName) return;
+  const deleteClinic = async (e) => {
+    e.preventDefault();
+    if (name != props.clinicName) {
+      setCorrectName(false);
+      return;
+    }
+    setCorrectName(true);
     try {
       const response = await fetch(
         "http://localhost:5000/api/clinic/delete-clinic",
@@ -74,12 +81,12 @@ const DeleteClinicPopup = (props) => {
   return (
     <Popup>
       <PopupInner>
-        <Form>
+        <Form onSubmit={(e) => deleteClinic}>
           <FormGroup>
             <FormInput
               type="input"
               className="form__field"
-              placeholder="Name"
+              placeholder="Clinic Name"
               name="name"
               id="name"
               onChange={handleNameChange}
@@ -88,14 +95,22 @@ const DeleteClinicPopup = (props) => {
               Clinic name
             </FormLabel>
           </FormGroup>
+
+          {!correctName && (
+            <ErrorLabel style={{ marginTop: "10px", fontSize: "18px" }}>
+              Wrong clinic name
+            </ErrorLabel>
+          )}
+
           <ButtonWrapper style={{ marginTop: "10px" }}>
             <DeleteButton
               style={{ marginRight: "30px" }}
               onClick={deleteClinic}
-              type="button"
+              type="sumbit"
             >
               Delete Clinic
             </DeleteButton>
+
             {props.children}
           </ButtonWrapper>
         </Form>
