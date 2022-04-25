@@ -31,6 +31,8 @@ const LogoutButton = styled.button`
   }
 `;
 
+const ButtonsWrapper = styled.div``;
+
 const UserHeader = () => {
   const [isVet, setIsVet] = useState(false);
 
@@ -52,7 +54,7 @@ const UserHeader = () => {
   return (
     <Header>
       <HeaderLogo />
-      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+      <ButtonsWrapper>
         <NavLink to="/user/dashboard" style={{ marginLeft: "auto" }}>
           <MenuButton>YOUR PROFILE</MenuButton>
         </NavLink>
@@ -67,8 +69,8 @@ const UserHeader = () => {
             <MenuButton>VET PANEL</MenuButton>
           </NavLink>
         )}
-      </div>
-      <NavLink to="/" onClick={logout} style={{ marginLeft: "auto" }}>
+      </ButtonsWrapper>
+      <NavLink to="/" onClick={logout}>
         <LogoutButton>LOGOUT</LogoutButton>
       </NavLink>
     </Header>

@@ -45,10 +45,12 @@ const Wrapper = styled.div`
   }
 `;
 
+const ChildrenWrapper = styled.div``;
+
 const Header = (props) => {
   return (
     <Wrapper>
-      <div className="children_wrapper">{props.children}</div>
+      <ChildrenWrapper>{props.children}</ChildrenWrapper>
     </Wrapper>
   );
 };
