@@ -27,7 +27,7 @@ const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError("Invalid inputs passed, please check your data", 422)
+      new HttpError("Invalid inputs passed, please check your data", 421)
     );
   }
   const { name, surname, mail, password } = req.body;
@@ -289,11 +289,12 @@ const editUserCredentials = async (req, res, next) => {
       await fs.unlink(updatedUser.image, () => {});
     }
   }
+  if (imagePath) updatedUser.image = imagePath;
 
   updatedUser.name = name;
   updatedUser.surname = surname;
   updatedUser.mail = mail;
-  if (imagePath) updatedUser.image = imagePath;
+
   if (password) updatedUser.password = password;
 
   let vetBoolean;

@@ -167,8 +167,6 @@ const CreateVisit = () => {
     const owner = location.state.owner;
     let obj = JSON.parse(selectedClinic);
 
-    console.log(date, vet, patient, owner, obj);
-
     if (
       !date ||
       !vet ||
@@ -212,7 +210,7 @@ const CreateVisit = () => {
     setCorrectData(true);
     setIsLoading(false);
 
-    window.location.reload(false);
+    setRerender(!rerender);
   };
 
   const handleStatusChange = async (status, visitId, hour) => {
@@ -248,12 +246,6 @@ const CreateVisit = () => {
         <NameWrapper className="form__group">
           <StyledNameLabel className="form__label">
             Create visit for {location.state.name}
-          </StyledNameLabel>
-        </NameWrapper>
-
-        <NameWrapper className="form__group">
-          <StyledNameLabel className="form__label">
-            {location.state.name} vaccines:
           </StyledNameLabel>
         </NameWrapper>
 

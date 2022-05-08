@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import validator from "validator";
 
 import AuthContent from "../../shared/components/content/AuthContent";
 import {
@@ -20,8 +21,35 @@ const Register = () => {
   const { register, handleSubmit } = useForm();
   const history = useHistory();
   const [failedRegistration, setFailedRegistration] = useState(false);
+  const [failedMessage, setFailedMessage] = useState("");
 
   const authUserSubmitHandler = async (data) => {
+    if (data.name.length === 0) {
+      setFailedRegistration(true);
+      setFailedMessage("Name is empty");
+      return;
+    }
+    if (data.surname.length === 0) {
+      setFailedRegistration(true);
+      setFailedMessage("Surname is empty");
+      return;
+    }
+    if (data.mail.length === 0) {
+      setFailedRegistration(true);
+      setFailedMessage("Mail is empty");
+      return;
+    }
+    if (!validator.isEmail(data.mail)) {
+      setFailedRegistration(true);
+      setFailedMessage("Mail is not valid");
+      return;
+    }
+    if (data.password !== data.rePassword) {
+      setFailedRegistration(true);
+      setFailedMessage("Passwords doesn't match");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:5000/api/user/signup", {
         method: "POST",
@@ -36,7 +64,18 @@ const Register = () => {
           password: data.password,
         }),
       });
-      if (response.status === 422) setFailedRegistration(true);
+      if (response.status === 422) {
+        setFailedRegistration(true);
+        setFailedMessage("User with that e-mail already exists");
+      }
+      if (response.status === 500) {
+        setFailedRegistration(true);
+        setFailedMessage("Database error. Please try again later");
+      }
+      if (response.status === 421) {
+        setFailedRegistration(true);
+        setFailedMessage("Invalid inputs passed");
+      }
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
@@ -69,6 +108,7 @@ const Register = () => {
             Name
           </FormLabel>
         </FormGroup>
+
         <FormGroup className="form__group">
           <FormInput
             type="input"
@@ -82,6 +122,7 @@ const Register = () => {
             Surname
           </FormLabel>
         </FormGroup>
+
         <FormGroup className="form__group">
           <FormInput
             type="input"
@@ -95,6 +136,7 @@ const Register = () => {
             E-mail
           </FormLabel>
         </FormGroup>
+
         <FormGroup className="form__group">
           <FormInput
             type="password"
@@ -108,11 +150,27 @@ const Register = () => {
             Password
           </FormLabel>
         </FormGroup>
+
+        <FormGroup className="form__group">
+          <FormInput
+            type="password"
+            className="form__field"
+            placeholder="Re-type password"
+            name="re-password"
+            id="re-password"
+            {...register("rePassword")}
+          />
+          <FormLabel htmlFor="re-password" className="form__label">
+            Re-type password
+          </FormLabel>
+        </FormGroup>
+
         {failedRegistration && (
           <ErrorLabelWrapper>
-            <ErrorLabel>Passed data is incorrect. Try again.</ErrorLabel>
+            <ErrorLabel>{failedMessage}</ErrorLabel>
           </ErrorLabelWrapper>
         )}
+
         <FormGroup>
           <ButtonWrapper>
             <LoginButton type="submit">Register</LoginButton>

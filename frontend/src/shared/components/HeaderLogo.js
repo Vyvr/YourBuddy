@@ -6,10 +6,6 @@ import styled from "styled-components";
 import { COLORS } from "../colors";
 
 const LogoLabel = styled.label`
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-
   font-family: "Brush Script MT";
   font-size: 30px;
   color: white;
@@ -18,7 +14,6 @@ const LogoLabel = styled.label`
 `;
 
 const LogoWrapper = styled.button`
-  /* position: relative; */
   && {
     height: 60px;
     width: 150px;
@@ -33,21 +28,6 @@ const LogoWrapper = styled.button`
       background-color: ${COLORS.font};
     }
   }
-
-  /* && {
-    height: 60px;
-    width: 150px;
-    border: none;
-    cursor: pointer;
-    background-color: #fd6769;
-    color: white;
-    font-weight: 700;
-    transition: 0.5s;
-    border-radius: 0px;
-    border-top-left-radius: 30px;
-    &:hover {
-      background-color: #d45759;
-    } */
 `;
 
 const HeaderLogo = () => {

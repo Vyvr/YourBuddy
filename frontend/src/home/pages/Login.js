@@ -83,7 +83,7 @@ const Login = () => {
         {failedLogin && (
           <FormGroup>
             <ErrorLabelWrapper>
-              <ErrorLabel>Passed data is incorrect</ErrorLabel>
+              <ErrorLabel>Mail or password is incorrect</ErrorLabel>
             </ErrorLabelWrapper>
           </FormGroup>
         )}
