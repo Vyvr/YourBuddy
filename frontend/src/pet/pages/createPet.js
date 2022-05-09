@@ -1,12 +1,12 @@
 /** @format */
 
-import React, { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import React, { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
-import getCookieValue from "./../../scripts/getCookieValue";
+import getCookieValue from './../../scripts/getCookieValue';
 
-import UserContent from "../../shared/components/content/UserContent";
+import UserContent from '../../shared/components/content/UserContent';
 import {
   Form,
   FormGroup,
@@ -20,8 +20,8 @@ import {
   LoginButton,
   ErrorLabel,
   ErrorLabelWrapper,
-} from "../../shared/components/forms/formTemplate";
-import ImageUpload from "../../shared/components/forms/imageUpload";
+} from '../../shared/components/forms/formTemplate';
+import ImageUpload from '../../shared/components/forms/imageUpload';
 
 const CreatePet = () => {
   const history = useHistory();
@@ -36,11 +36,11 @@ const CreatePet = () => {
     let sex;
 
     if (male.current.checked) {
-      sex = "male";
+      sex = 'male';
     } else if (female.current.checked) {
-      sex = "female";
+      sex = 'female';
     } else {
-      sex = "other";
+      sex = 'other';
     }
 
     if (!data.name || !data.born || !data.weight || !data.breed) {
@@ -50,19 +50,19 @@ const CreatePet = () => {
 
     try {
       const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("born", data.born);
-      formData.append("weight", data.weight);
-      formData.append("breed", data.breed);
-      formData.append("sex", sex);
-      formData.append("owner", getCookieValue("user_id"));
-      formData.append("image", picture);
-      await fetch("http://localhost:5000/api/pet/create", {
-        method: "POST",
-        credentials: "include",
-        mode: "no-cors",
+      formData.append('name', data.name);
+      formData.append('born', data.born);
+      formData.append('weight', data.weight);
+      formData.append('breed', data.breed);
+      formData.append('sex', sex);
+      formData.append('owner', getCookieValue('user_id'));
+      formData.append('image', picture);
+      await fetch('http://localhost:5000/api/pet/create', {
+        method: 'POST',
+        credentials: 'include',
+        mode: 'no-cors',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
 
         body: formData,
@@ -70,7 +70,7 @@ const CreatePet = () => {
     } catch (err) {
       console.log(err);
     }
-    history.push("/user/dashboard");
+    history.push('/user/dashboard');
     window.location.reload();
   };
 
@@ -98,8 +98,13 @@ const CreatePet = () => {
 
   return (
     <UserContent>
-      <Form onSubmit={handleSubmit(addPetHandler)} style={{ marginTop: "0px" }}>
-        <FormGroup style={{ alignItems: "center", justifyContent: "center" }}>
+      <Form
+        onSubmit={handleSubmit(addPetHandler)}
+        style={{ marginTop: '0px' }}
+      >
+        <FormGroup
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+        >
           <ImageUpload
             id="image"
             handlePictureChange={handlePictureChange}
@@ -113,7 +118,7 @@ const CreatePet = () => {
             placeholder="Name"
             name="name"
             id="name"
-            {...register("name")}
+            {...register('name')}
           />
           <FormLabel htmlFor="name" className="form__label">
             Name
@@ -127,7 +132,7 @@ const CreatePet = () => {
             placeholder="Breed"
             name="breed"
             id="breed"
-            {...register("breed")}
+            {...register('breed')}
           />
           <FormLabel htmlFor="breed" className="form__label">
             Breed
@@ -141,7 +146,7 @@ const CreatePet = () => {
             placeholder="Date"
             name="born"
             id="born"
-            {...register("born")}
+            {...register('born')}
           />
           <FormLabel htmlFor="born" className="form__label">
             Born
@@ -155,7 +160,7 @@ const CreatePet = () => {
             placeholder="Weight"
             name="weight"
             id="weight"
-            {...register("weight")}
+            {...register('weight')}
           />
           <FormLabel htmlFor="weight" className="form__label">
             Weight

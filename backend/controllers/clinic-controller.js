@@ -1,12 +1,12 @@
 /** @format */
 
-const mongoose = require("mongoose");
-const Geocoder = require("node-geocoder");
-const { validationResult } = require("express-validator");
+const mongoose = require('mongoose');
+const Geocoder = require('node-geocoder');
+const { validationResult } = require('express-validator');
 
-const HttpError = require("../models/http-error");
-const Vet = require("../models/user");
-const Clinic = require("../models/clinic");
+const HttpError = require('../models/http-error');
+const Vet = require('../models/user');
+const Clinic = require('../models/clinic');
 
 const createClinic = async (req, res, next) => {
   const errors = validationResult(req);
@@ -14,7 +14,7 @@ const createClinic = async (req, res, next) => {
   if (!errors.isEmpty()) {
     console.log(errors);
     const error = new HttpError(
-      "Invalid data passed in creating clinic. Please check your data",
+      'Invalid data passed in creating clinic. Please check your data',
       422
     );
     return next(error);
@@ -56,13 +56,16 @@ const createClinic = async (req, res, next) => {
     vet = await Vet.findOne({ _id: owner });
   } catch (err) {
     const error = new HttpError(
-      "Creating new clinic failed. Please try again later.",
+      'Creating new clinic failed. Please try again later.',
       500
     );
     return next(error);
   }
   if (!vet) {
-    const error = new HttpError("No vet found with provided id.", 404);
+    const error = new HttpError(
+      'No vet found with provided id.',
+      404
+    );
     return next(error);
   }
 
@@ -108,7 +111,7 @@ const createClinic = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     const error = new HttpError(
-      "Creating clinic failed. Please try again later." + err,
+      'Creating clinic failed. Please try again later.' + err,
       500
     );
     return next(error);
@@ -150,7 +153,7 @@ const editClinic = async (req, res, next) => {
     updatedClinic = await Clinic.findById(clinicId);
   } catch (err) {
     const error = new HttpError(
-      "Finding clinic to edit failed. Please try again later.",
+      'Finding clinic to edit failed. Please try again later.',
       500
     );
     return next(error);
@@ -197,17 +200,19 @@ const editClinic = async (req, res, next) => {
   // }
 
   try {
-    updatedClinic.markModified("object");
+    updatedClinic.markModified('object');
     await updatedClinic.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong with saving updated clinic to database",
+      'Something went wrong with saving updated clinic to database',
       500
     );
     return next(error);
   }
 
-  res.status(200).json({ clinic: updatedClinic.toObject({ getters: true }) });
+  res
+    .status(200)
+    .json({ clinic: updatedClinic.toObject({ getters: true }) });
 };
 
 const deleteClinic = async (req, res, next) => {
@@ -216,11 +221,11 @@ const deleteClinic = async (req, res, next) => {
   try {
     await Clinic.findByIdAndDelete({ _id: id });
   } catch (err) {
-    const error = new HttpError("Failed to delete clinic", 500);
+    const error = new HttpError('Failed to delete clinic', 500);
     return next(error);
   }
 
-  res.json({ message: "Clinic deleted!", id });
+  res.json({ message: 'Clinic deleted!', id });
 };
 
 const getClinic = async (req, res, next) => {
@@ -228,7 +233,7 @@ const getClinic = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      "Invalid data passed. Please check your data",
+      'Invalid data passed. Please check your data',
       422
     );
 
@@ -244,7 +249,7 @@ const getClinic = async (req, res, next) => {
     clinic = await Clinic.findById(clinicId);
   } catch (err) {
     const error = new HttpError(
-      "Finding clinic failed. Please try again later.",
+      'Finding clinic failed. Please try again later.',
       500
     );
     return next(error);
@@ -256,10 +261,10 @@ const getClinic = async (req, res, next) => {
 const getAllVetClinicsByVetId = async (req, res, next) => {
   const uid = req.params.uid;
   try {
-    vetClinics = await Vet.findById(uid).populate("clinics");
+    vetClinics = await Vet.findById(uid).populate('clinics');
   } catch (err) {
     const error = new HttpError(
-      "Fetching clinics failed, please try again later" + err,
+      'Fetching clinics failed, please try again later' + err,
       500
     );
     return next(error);
@@ -277,13 +282,15 @@ const getAllClinics = async (req, res, next) => {
     clinics = await Clinic.find();
   } catch (err) {
     const error = new HttpError(
-      "Failed to get all clinics. Try again later",
+      'Failed to get all clinics. Try again later',
       500
     );
     return next(error);
   }
   res.json({
-    clinics: clinics.map((clinic) => clinic.toObject({ getters: true })),
+    clinics: clinics.map((clinic) =>
+      clinic.toObject({ getters: true })
+    ),
   });
 };
 
@@ -292,7 +299,7 @@ const addWorker = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      "Invalid data passed. Please check your data",
+      'Invalid data passed. Please check your data',
       422
     );
 
@@ -309,24 +316,30 @@ const addWorker = async (req, res, next) => {
   try {
     worker = await Vet.findById(workerId);
   } catch (err) {
-    const error = new HttpError("Finding worker error", 500);
+    const error = new HttpError('Finding worker error', 500);
     return next(error);
   }
 
   if (!worker === undefined) {
-    const error = new HttpError("No worker found with proided id", 401);
+    const error = new HttpError(
+      'No worker found with proided id',
+      401
+    );
     return next(error);
   }
 
   try {
     clinic = await Clinic.findById(clinicId);
   } catch (err) {
-    const error = new HttpError("Finding clinic error", 500);
+    const error = new HttpError('Finding clinic error', 500);
     return next(error);
   }
 
   if (!clinic) {
-    const error = new HttpError("No clinic found with proided id", 401);
+    const error = new HttpError(
+      'No clinic found with proided id',
+      401
+    );
     return next(error);
   }
 
@@ -336,13 +349,15 @@ const addWorker = async (req, res, next) => {
     await clinic.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong with saving updated clinic type to database",
+      'Something went wrong with saving updated clinic type to database',
       500
     );
     return next(error);
   }
 
-  res.status(201).json({ message: "Added worker to clinic successfully." });
+  res
+    .status(201)
+    .json({ message: 'Added worker to clinic successfully.' });
 };
 
 const dismissWorker = async (req, res, next) => {
@@ -350,7 +365,7 @@ const dismissWorker = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      "Invalid data passed. Please check your data",
+      'Invalid data passed. Please check your data',
       422
     );
 
@@ -366,23 +381,29 @@ const dismissWorker = async (req, res, next) => {
   try {
     clinic = await Clinic.findById(clinicId);
   } catch (err) {
-    const error = new HttpError("Finding clinic error", 500);
+    const error = new HttpError('Finding clinic error', 500);
     return next(error);
   }
 
   if (!clinic) {
-    const error = new HttpError("No clinic found with proided id", 401);
+    const error = new HttpError(
+      'No clinic found with proided id',
+      401
+    );
     return next(error);
   }
 
   try {
-    await Clinic.updateOne({ _id: clinicId }, { $pull: { workers: workerId } });
+    await Clinic.updateOne(
+      { _id: clinicId },
+      { $pull: { workers: workerId } }
+    );
   } catch (err) {
-    const error = new HttpError("Finding user error " + err, 500);
+    const error = new HttpError('Finding user error ' + err, 500);
     return next(error);
   }
 
-  res.status(201).json({ message: "Worker dismissed successfully." });
+  res.status(201).json({ message: 'Worker dismissed successfully.' });
 };
 
 const getAllClinicVets = async (req, res, next) => {
@@ -390,7 +411,7 @@ const getAllClinicVets = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      "Invalid data passed. Please check your data",
+      'Invalid data passed. Please check your data',
       422
     );
 
@@ -404,12 +425,15 @@ const getAllClinicVets = async (req, res, next) => {
   try {
     clinic = await Clinic.findById(clinicId);
   } catch (err) {
-    const error = new HttpError("Finding clinic error", 500);
+    const error = new HttpError('Finding clinic error', 500);
     return next(error);
   }
 
   if (!clinic) {
-    const error = new HttpError("No clinic found with proided id", 401);
+    const error = new HttpError(
+      'No clinic found with proided id',
+      401
+    );
     return next(error);
   }
 
@@ -420,13 +444,15 @@ const getAllClinicVets = async (req, res, next) => {
       vet = await Vet.findById(worker);
       workersList.push(vet);
     } catch (err) {
-      const error = new HttpError("Finding worker error", 500);
+      const error = new HttpError('Finding worker error', 500);
       next(error);
     }
   }
 
   res.json({
-    workers: workersList.map((worker) => worker.toObject({ getters: true })),
+    workers: workersList.map((worker) =>
+      worker.toObject({ getters: true })
+    ),
   });
 };
 

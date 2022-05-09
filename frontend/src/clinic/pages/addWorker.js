@@ -1,21 +1,25 @@
 /** @format */
 
-import React from "react";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { COLORS } from "../../shared/colors";
-import VetContent from "./../../shared/components/content/VetContent";
-import { Table, Thead, Tr } from "../../shared/components/table/tableTemplate";
+import { COLORS } from '../../shared/colors';
+import VetContent from './../../shared/components/content/VetContent';
+import {
+  Table,
+  Thead,
+  Tr,
+} from '../../shared/components/table/tableTemplate';
 import {
   FormGroup,
   FormLabel,
   FormInput,
   ButtonWrapper,
   LoginButton,
-} from "../../shared/components/forms/formTemplate";
-import SearchWrapper from "../../shared/components/SearchWrapper";
+} from '../../shared/components/forms/formTemplate';
+import SearchWrapper from '../../shared/components/SearchWrapper';
 
 const DismissButton = styled.button`
   width: 100%;
@@ -56,7 +60,7 @@ const HireButton = styled.button`
 `;
 
 const AddWorker = (props) => {
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
   const [potentialWorkers, setPotentialWorkers] = useState(null);
   const [loadedWorkers, setLoadedWorkers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +72,7 @@ const AddWorker = (props) => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "http://localhost:5000/api/clinic/get-all-clinic-vets/" +
+          'http://localhost:5000/api/clinic/get-all-clinic-vets/' +
             location.state.id
         );
         const responseData = await response.json();
@@ -85,20 +89,21 @@ const AddWorker = (props) => {
   }, [location.state.id, rerender]);
 
   const findWorker = async (data) => {
-    const regEx = "[A-Za-z]+|[A-Za-z ][A-Za-z]";
+    const regEx = '[A-Za-z]+|[A-Za-z ][A-Za-z]';
     if (!data || !data.match(regEx)) return;
     setIsLoading(true);
-    data = data.replace(" ", "-").toLowerCase();
+    data = data.replace(' ', '-').toLowerCase();
     try {
       const response = await fetch(
-        "http://localhost:5000/api/user/get-users-by-name-and-surname/" + data
+        'http://localhost:5000/api/user/get-users-by-name-and-surname/' +
+          data
       );
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
       }
       const filtered = responseData.existingUsers.filter((worker) =>
-        worker.type.includes("vet")
+        worker.type.includes('vet')
       );
       setPotentialWorkers(filtered);
     } catch (err) {
@@ -113,10 +118,10 @@ const AddWorker = (props) => {
 
   const handleHireWorker = async (clinicId, workerId) => {
     try {
-      await fetch("http://localhost:5000/api/clinic/add-worker", {
-        method: "POST",
+      await fetch('http://localhost:5000/api/clinic/add-worker', {
+        method: 'POST',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
 
         body: JSON.stringify({
@@ -132,10 +137,10 @@ const AddWorker = (props) => {
 
   const dismissWorker = async (clinicId, workerId) => {
     try {
-      await fetch("http://localhost:5000/api/clinic/dismiss-worker", {
-        method: "POST",
+      await fetch('http://localhost:5000/api/clinic/dismiss-worker', {
+        method: 'POST',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
 
         body: JSON.stringify({
@@ -197,11 +202,14 @@ const AddWorker = (props) => {
                   <td>{worker.surname}</td>
                   <td>{worker.mail}</td>
                   <td>
-                    {loadedWorkers.filter((e) => e._id === worker._id).length >
-                    0 ? (
+                    {loadedWorkers.filter((e) => e._id === worker._id)
+                      .length > 0 ? (
                       <DismissButton
                         onClick={() => {
-                          dismissWorker(location.state.id, worker._id);
+                          dismissWorker(
+                            location.state.id,
+                            worker._id
+                          );
                         }}
                       >
                         Dismiss
@@ -209,7 +217,10 @@ const AddWorker = (props) => {
                     ) : (
                       <HireButton
                         onClick={() => {
-                          handleHireWorker(location.state.id, worker._id);
+                          handleHireWorker(
+                            location.state.id,
+                            worker._id
+                          );
                         }}
                       >
                         Hire
