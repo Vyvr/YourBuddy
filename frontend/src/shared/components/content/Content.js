@@ -1,15 +1,15 @@
 /** @format */
 
-import React from "react";
+import React from 'react';
 
 const Content = (props) => {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "calc(100% - 60px)",
-        width: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'calc(100% - 60px)',
+        width: '100%',
       }}
     >
       {props.children}
