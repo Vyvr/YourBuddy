@@ -8,19 +8,9 @@ import {
 } from 'react-transition-group';
 
 import HomeContent from '../../shared/components/content/HomeContent';
+import imagesPath from '../imagesPath';
 
 import './slides.css';
-import pic1 from '../images/1.jpg';
-import pic2 from '../images/2.jpg';
-import pic3 from '../images/3.jpg';
-import pic4 from '../images/4.jpg';
-import pic5 from '../images/5.jpg';
-import pic6 from '../images/6.jpg';
-
-const picsDirectory = '../images/';
-
-const imagesPath = [pic1, pic2, pic3, pic4, pic5, pic6];
-// const imagesPath = [pic6];
 
 const ImgContent = styled.div`
   display: flex;
@@ -37,13 +27,9 @@ const ImgWrapper = styled.div`
 
 const Img = styled.img`
   position: absolute;
-
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  /* min-width: 100%;
-  min-height: 100%; */
 `;
 
 const TextWrapper = styled.div`
@@ -60,15 +46,6 @@ const LogoText = styled.div`
   font-weight: bold;
   font-size: 90px;
   font-family: 'Cookie', cursive;
-`;
-
-const ImageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: grey;
 `;
 
 const Home = () => {
@@ -104,44 +81,6 @@ const Home = () => {
           </TransitionGroup>
         </ImgWrapper>
       </ImgContent>
-
-      {/* <TextWrapper>
-        <TopText>
-          <label>Take care of your pets</label>
-        </TopText>
-        <TopText>
-          <label>with</label>
-        </TopText>
-        <LogoText>
-          <label>Your Buddy</label>
-        </LogoText>
-      </TextWrapper> */}
-
-      {/* <ImgContent>
-        <ImgWrapper>
-          <TransitionGroup>
-            <CSSTransition
-              key={imagesPath[frame]}
-              timeout={1000}
-              classNames="slide-right"
-            >
-              <Img src={imagesPath[frame]} />
-            </CSSTransition>
-          </TransitionGroup>
-        </ImgWrapper>
-
-        <ImgWrapper>
-          <TransitionGroup>
-            <CSSTransition
-              key={imagesPath[frame]}
-              timeout={1000}
-              classNames="slide-left"
-            >
-              <Img src={imagesPath[frame]} />
-            </CSSTransition>
-          </TransitionGroup>
-        </ImgWrapper>
-      </ImgContent> */}
     </HomeContent>
   );
 };
