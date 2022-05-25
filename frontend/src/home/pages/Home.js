@@ -9,8 +9,11 @@ import {
 
 import HomeContent from '../../shared/components/content/HomeContent';
 import imagesPath from '../imagesPath';
+import Facebook from './../icons/facebook.svg';
+import Instagram from './../icons/instagram.svg';
 
 import './slides.css';
+import { Link } from 'react-router-dom';
 
 const ImgContent = styled.div`
   display: flex;
@@ -55,7 +58,7 @@ const Home = () => {
     const handleAnimation = () => {
       setFrame((frame) => (frame + 1) % imagesPath.length);
     };
-    const interval = setInterval(handleAnimation, 6000); // 300 ms is pretty short. Did you mean 3000?
+    const interval = setInterval(handleAnimation, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -66,6 +69,28 @@ const Home = () => {
         <LogoText>of your pets</LogoText>
         <LogoText>with</LogoText>
         <LogoText>Your Buddy</LogoText>
+        <LogoText
+          style={{
+            fontFamily: 'Myriad Pro Regular',
+            'margin-top': '10px',
+            fontSize: '22px',
+          }}
+        >
+          Join us:
+          <br />
+          <a
+            href="https://www.facebook.com/mlucinski"
+            style={{ height: '30px', marginRight: '5px' }}
+          >
+            <img src={Facebook} style={{ height: '30px' }} />
+          </a>
+          <a
+            href="https://www.instagram.com/m_lutek/"
+            style={{ height: '30px', marginLeft: '5px' }}
+          >
+            <img src={Instagram} style={{ height: '30px' }} />
+          </a>
+        </LogoText>
       </TextWrapper>
 
       <ImgContent>

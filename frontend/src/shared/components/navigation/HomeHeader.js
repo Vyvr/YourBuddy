@@ -1,11 +1,12 @@
 /** @format */
 
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import HeaderLogo from '../HeaderLogo';
 
-import Header from "./Header";
-import { COLORS } from "../../../shared/colors";
+import Header from './Header';
+import { COLORS } from '../../../shared/colors';
 
 const RegisterButton = styled.button`
   && {
@@ -30,10 +31,8 @@ const LoginButton = styled.button`
 const HomeHeader = () => {
   return (
     <Header>
-      <NavLink to="/user/user-list">
-        <button>USERS LIST</button>
-      </NavLink>
-      <NavLink to="/login" style={{ marginLeft: "auto" }}>
+      <HeaderLogo />
+      <NavLink to="/login" style={{ marginLeft: 'auto' }}>
         <LoginButton>LOGIN</LoginButton>
       </NavLink>
       <NavLink to="/register">
