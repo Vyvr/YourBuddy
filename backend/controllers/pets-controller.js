@@ -75,8 +75,6 @@ const createPet = async (req, res, next) => {
     image: imagePath,
   });
 
-  console.log(createdPet);
-
   let user;
 
   try {
@@ -145,7 +143,7 @@ const editPet = async (req, res, next) => {
 
   if (req.file) {
     imagePath = req.file.path;
-    if (updatedPet.image) {
+    if (updatedPet.image && updatedPet.image !== "uploads/images/pet.jpg") {
       await fs.unlink(updatedPet.image, () => {});
     }
   }
