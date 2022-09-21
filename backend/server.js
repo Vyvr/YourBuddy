@@ -15,7 +15,7 @@ const visitRoutes = require("./routes/visits-routes");
 const HttpError = require("./models/http-error");
 
 const databaseURL =
-  "mongodb+srv://lutek:qwer44xD@yourbuddy.d2bzh.mongodb.net/YourBuddy?retryWrites=true&w=majority";
+  "";
 
 const app = express();
 
